@@ -25,9 +25,9 @@ I'm always interested in discussing documentation systems, developer experience,
 
 **Ideal Opportunities:**
 
-- Senior Technical Writer roles at developer-focused companies
-- Documentation systems and strategy positions
-- Developer experience and API documentation work
+- Senior IC roles: Principal Technical Writer, Senior Technical Writer, Content Strategist, UX Writer
+- Documentation Architecture, Systems, and Strategy positions
+- Developer experience and API documentation work at developer-focused companies
 
 **What Excites Me:**
 
