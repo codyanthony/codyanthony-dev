@@ -4,6 +4,11 @@ description: Designing integrated console UX and documentation for new billing m
 ---
 
 import { Card, CardGrid, Aside, LinkCard } from "@astrojs/starlight/components";
+import { Image } from "astro:assets";
+import rosaGetStarted from "../../../assets/rosa-get-started.png";
+import rosaContractsHcp from "../../../assets/rosa-contracts-hcp.png";
+import rosaHelpPanel from "../../../assets/rosa-help-panel.png";
+import rosaContractWizard from "../../../assets/rosa-contract-wizard.png";
 
 This project demonstrates integrated console UX and documentation design for ROSA with hosted control planes (HCP), a new Red Hat OpenShift deployment model launched in Q2 2023. I designed console UI text and comprehensive user documentation in parallel, treating them as components of a unified product experience.
 
@@ -19,7 +24,7 @@ The project required close collaboration with AWS and Red Hat product teams to s
 
 </Aside>
 
-![ROSA Console Get Started Page](/rosa-get-started.png)
+<Image src={rosaGetStarted} alt="ROSA Console Get Started Page" />
 _ROSA console get started page guiding customers through enablement workflow_
 
 ## The Challenge
@@ -34,7 +39,7 @@ The console contract experience needed to remediate this Marketplace friction wh
 
 The challenge extended beyond billing flows alone. Customers experience ROSA as a unified product journey, from contract enablement through cluster deployment. Success required intuitive contract activation for both billing models, clear differentiation between Classic and HCP topologies, seamless transition from AWS console to Red Hat console for cluster creation, and consistent terminology across AWS and Red Hat materials.
 
-![ROSA Contracts Page](/rosa-contracts-hcp.png)
+<Image src={rosaContractsHcp} alt="ROSA Contracts Page" />
 _Contracts page showing ROSA with hosted control planes option with consistent terminology_
 
 ## My Approach
@@ -64,14 +69,14 @@ Over multiple design iterations, I developed UI text for six different states of
 
 The states spanned the complete customer journey: initial not-enabled state explaining what customers gain by enabling, setup in progress with reassuring messaging, successfully enabled with clear next steps to create clusters, and various error states with specific guidance for resolution. The homepage banner welcomed customers to ROSA and explained the value proposition, while the pricing card provided clear explanation of HCP versus Classic pricing models to support customer decision-making.
 
-![ROSA Help Panel](/rosa-help-panel.png)
+<Image src={rosaHelpPanel} alt="ROSA Help Panel" />
 _Help panel providing contextual guidance on ROSA enablement requirements_
 
 ### Help Panel Content
 
 I created help panel content from scratch for this net-new console experience. The help content explained why AWS Marketplace integration is required for HCP, how the billing model differs from Classic, and what prerequisites customers need before enabling. This contextual help answered customer questions at the point of need, reducing the need to navigate away from the console to find basic information.
 
-![Contract Purchase Wizard](/rosa-contract-wizard.png)
+<Image src={rosaContractWizard} alt="Contract Purchase Wizard" />
 _Contract purchase workflow with clear UI text guiding customers through billing setup_
 
 [View ROSA Console →](https://console.aws.amazon.com/rosa)

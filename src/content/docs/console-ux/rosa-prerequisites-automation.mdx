@@ -4,6 +4,10 @@ description: Designing automated prerequisite validation and getting started doc
 ---
 
 import { Card, CardGrid, Aside, LinkCard } from "@astrojs/starlight/components";
+import { Image } from "astro:assets";
+import rosaPrereqGetStarted from "../../../assets/rosa-prereq-get-started.png";
+import rosaPrereqServiceQuotasHp from "../../../assets/rosa-prereq-service-quotas-hp.png";
+import rosaPrereqVerifyHp from "../../../assets/rosa-prereq-verify-hp.png";
 
 This project demonstrates the development of an automated prerequisite validation experience for the console, as well as getting started documentation for Red Hat OpenShift Service on AWS (ROSA), a managed service for deploying containerized applications with Red Hat OpenShift on AWS.
 I created UI text and help panels for the new console experience, and getting started documentation for the ROSA User Guide as components of a cohesive Day 1 experience, shipping with console's launch in Q4 2022.
@@ -20,7 +24,7 @@ The work addressed two customer friction points: manual prerequisite verificatio
 
 </Aside>
 
-![ROSA Get Started Page](/rosa-prereq-get-started.png)
+<Image src={rosaPrereqGetStarted} alt="ROSA Get Started Page" />
 _ROSA Get Started page with automated prerequisite validation checking account readiness before cluster deployment_
 
 ## The Challenge
@@ -38,7 +42,7 @@ Compounding this automation gap, AWS lacked native getting started documentation
 - ELB: Service-linked roles for load balancer management
 - AWS Marketplace: Contract enablement requirements
 
-![Service Quotas Help Panel](/rosa-prereq-service-quotas-hp.png)
+<Image src={rosaPrereqServiceQuotasHp} alt="Service Quotas Help Panel" />
 _Service Quotas help panel explaining why EC2 and EBS quota limits matter for ROSA cluster creation_
 
 ## Designing the Prerequisite Validation Experience
@@ -68,7 +72,7 @@ I created contextualized help panels addressing knowledge gaps for customers com
 
 Each help panel linked to detailed documentation for customers needing deeper configuration guidance, creating a natural path from console validation to comprehensive AWS documentation.
 
-![Help Panel Screenshot](/rosa-prereq-verify-hp.png)
+<Image src={rosaPrereqVerifyHp} alt="Help Panel Screenshot" />
 _Help panel providing contextual guidance on ROSA enablement prerequisites and automated validation process_
 
 ## Designing the Documentation Experience

@@ -4,6 +4,12 @@ description: Creating integrated console workflows and deployment documentation 
 ---
 
 import { Card, CardGrid, Aside, LinkCard } from "@astrojs/starlight/components";
+import { Image } from "astro:assets";
+import evsGetStarted from "../../../assets/evs-get-started.png";
+import evsDnsHostnames from "../../../assets/evs-dns-hostnames.png";
+import evsDnsHelpPanel1 from "../../../assets/evs-dns-help-panel-1.png";
+import evsDnsContraintText from "../../../assets/evs-dns-contraint-text.png";
+import evsNetworkConfigHelpPanel from "../../../assets/evs-network-config-help-panel.png";
 
 This project demonstrates integrated console UX and deployment documentation for Amazon Elastic VMware Service (Amazon EVS), an AWS platform that enables enterprises to migrate VMware-based workloads to the cloud without re-architecting applications. I created console UI text, 28 help panels, and deployment documentation from scratch as integrated components of a unified Day 1 experience, shipping on schedule with the service's general availability launch.
 
@@ -19,7 +25,7 @@ The work spanned private preview, public preview, and general availability launc
 
 </Aside>
 
-![EVS Console Get Started Page](/evs-get-started.png)
+<Image src={evsGetStarted} alt="EVS Console Get Started Page" />
 _EVS console Get Started page guiding customers through deployment prerequisites_
 
 ## The Challenge
@@ -41,7 +47,7 @@ Early customer testing revealed a deployment barrier: free-form DNS hostname inp
 **Knowledge gaps:**
 VMware administrators migrating to AWS needed contextual guidance bridging on-prem VMware concepts with AWS service integration patterns.
 
-![DNS Hostname Configuration Step](/evs-dns-hostnames.png)
+<Image src={evsDnsHostnames} alt="DNS Hostname Configuration Step" />
 _DNS hostname configuration step where validation failures revealed need for improved guidance_
 
 ## Addressing DNS Validation Friction
@@ -58,10 +64,10 @@ When public preview customer feedback revealed DNS validation as a primary frict
 - Field-level instructional text and validation error messaging ("Hostname is required")
 - Confirmation checkbox with acknowledgement text that hostname inputs match DNS records (required to ensure alignment with custom DNS provider configurations)
 
-![DNS Configuration Help Panel](/evs-dns-help-panel-1.png)
+<Image src={evsDnsHelpPanel1} alt="DNS Configuration Help Panel" />
 _Management appliance DNS hostnames help panel explaining DNS configuration requirements_
 
-![DNS Validation Error](/evs-dns-contraint-text.png)
+<Image src={evsDnsContraintText} alt="DNS Validation Error" />
 _Validation error state when customers attempt to continue without required hostname inputs_
 
 **Documentation improvements:**
@@ -95,7 +101,7 @@ Beyond DNS validation fixes, the project involved creating the complete EVS cons
 - Field-level contextual help for complex inputs (VPC Route Server, VLAN subnets, DNS hostnames, VMware licensing)
 - Troubleshooting guidance for common validation errors
 
-![Network Configuration Help Panel](/evs-network-config-help-panel.png)
+<Image src={evsNetworkConfigHelpPanel} alt="Network Configuration Help Panel" />
 _Network configuration step with contextual help guiding customers through complex VLAN subnet requirements_
 
 The help panels addressed VMware admin knowledge gaps about AWS services. For example, the VPC Route Server help panel explained BGP routing requirements and peer ASN configuration. These concepts were familiar to network engineers but potentially new to customers migrating from on-prem VMware.

@@ -4,6 +4,8 @@ description: Leveraging historical operational data to influence EVS Service Quo
 ---
 
 import { Card, CardGrid, Aside } from "@astrojs/starlight/components";
+import { Image } from "astro:assets";
+import evsServiceQuotasValidation from "../../../assets/evs-service-quotas-validation.png";
 
 This project demonstrates how cross-service knowledge sharing influenced the Service Quotas implementation for Amazon EVS. I recognized operational patterns from prior managed service launches and contributed those learnings during EVS public preview planning. This helped stakeholders adopt an automated solution that scales with customer demand while reducing friction and support overhead.
 
@@ -65,7 +67,7 @@ This strategic decision positioned EVS for better customer experience and operat
 - Minimized manual triage of routine quota increase requests
 - Scalable solution aligned with AWS service integration best practices
 
-![EVS Service Quotas Validation](/evs-service-quotas-validation.png)
+<Image src={evsServiceQuotasValidation} alt="EVS Service Quotas Validation" />
 _EVS Service Quotas validation in Create Environment wizard - validating On-Demand Standard instances quota requirements_
 
 <CardGrid>
