@@ -1,9 +1,9 @@
 ---
 title: About
-description: Documentation Strategist & Developer Experience Architect specializing in API documentation, architecture guides, and scalable documentation systems
+description: Senior Technical Writer specializing in API documentation, architecture guides, and developer experience
 ---
 
-I'm a Documentation Strategist and Architect with over a decade of experience bridging the gap between complex engineering and developer success. I ship docs like software: versioned, automated, and continuously improved. My work spans API reference documentation, technical architecture guides, console UX microcopy, and documentation systems that scale quality across organizations.
+I'm a Senior Technical Writer with 8+ years of experience creating documentation for cloud infrastructure, developer tools, and enterprise software. I specialize in API documentation, technical architecture guides, console UX microcopy, and documentation systems that scale quality across organizations.
 
 ## Core Competencies
 

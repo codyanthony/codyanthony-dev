@@ -13,13 +13,13 @@ export default defineConfig({
     starlight({
       title: "Cody Anthony",
       description:
-        "Documentation Strategist & Developer Experience Architect with over a decade bridging complex engineering and developer success. Portfolio includes API documentation, architecture guides, console UX, and scalable documentation systems.",
+        "Senior Technical Writer specializing in cloud infrastructure and developer tools. Portfolio includes API documentation, architecture guides, console UX, and scalable documentation systems.",
       head: [
         {
           tag: "meta",
           attrs: {
             property: "og:title",
-            content: "Cody Anthony — Documentation Strategist & Developer Experience Architect",
+            content: "Cody Anthony — Senior Technical Writer",
           },
         },
         {
@@ -27,7 +27,7 @@ export default defineConfig({
           attrs: {
             property: "og:description",
             content:
-              "Documentation Strategist & Developer Experience Architect with over a decade bridging complex engineering and developer success. API documentation, architecture guides, console UX, and documentation systems.",
+              "Senior Technical Writer specializing in cloud infrastructure and developer tools. API documentation, architecture guides, console UX, and documentation systems.",
           },
         },
         {
