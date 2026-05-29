@@ -22,10 +22,18 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# Local tooling — not for public consumption
-# (CLAUDE.md is tracked: it's shared project guidance, version-controlled with the code)
-.claude/
+# Local tooling — not for public consumption.
+# CLAUDE.md is tracked (shared project guidance, versioned with the code).
+# .claude/ local settings are ignored, but the reusable blog authoring
+# commands/skills are tracked.
+.claude/*
+!.claude/skills/
+!.claude/commands/
+!.claude/README.md
 scripts/
 
 # Photo source set (189MB) — used to generate site headshot and LinkedIn assets
 Cody Pro Photos 2026/
+
+# Drop-in source repo for OpenCode skills/commands — reference only, not part of this site
+opencode-commands/
