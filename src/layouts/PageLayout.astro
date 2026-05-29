@@ -1,0 +1,25 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  /** When true, content rendered without the narrow prose container so pages can manage their own widths. */
+  fullWidth?: boolean;
+}
+
+const { title, description, ogImage, fullWidth = false } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} ogImage={ogImage}>
+  {
+    fullWidth ? (
+      <slot />
+    ) : (
+      <article class="prose">
+        <slot />
+      </article>
+    )
+  }
+</BaseLayout>

@@ -1,0 +1,20 @@
+---
+interface Props {
+  title: string;
+  href: string;
+  description?: string;
+}
+
+const { title, href, description } = Astro.props;
+const isExternal = /^https?:\/\//.test(href);
+---
+
+<a
+  class="link-card"
+  href={href}
+  target={isExternal ? "_blank" : undefined}
+  rel={isExternal ? "noopener noreferrer" : undefined}
+>
+  <h3 class="link-card__title">{title}</h3>
+  {description && <p class="link-card__description">{description}</p>}
+</a>

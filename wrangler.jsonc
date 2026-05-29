@@ -1,18 +1,13 @@
 {
-	"name": "cloudflare-portfolio",
-  "pages_build_output_dir": "dist",
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "codyanthony-dev",
   "compatibility_date": "2025-12-14",
-  "compatibility_flags": [
-    "nodejs_compat",
-    "global_fetch_strictly_public"
-  ],
-	"observability": {
-    "enabled": true
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
   },
-  "kv_namespaces": [
-    {
-      "binding": "VISITOR_COUNT",
-      "id": "0030dcaee1bb40eb94634bb77eb57a20"
-    }
-  ]
+  "observability": {
+    "enabled": true
+  }
 }

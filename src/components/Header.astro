@@ -1,0 +1,56 @@
+---
+const pathname = Astro.url.pathname.replace(/\/+$/, "/");
+
+function isCurrent(href: string) {
+  const normalized = href.replace(/\/+$/, "/");
+  if (normalized === "/") return pathname === "/";
+  return pathname === normalized || pathname.startsWith(normalized);
+}
+
+const navLinks = [
+  { href: "/case-studies/", label: "Case Studies" },
+  { href: "/about/", label: "About" },
+];
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-header__brand" href="/">Cody Anthony</a>
+
+    <button
+      class="site-header__menu-toggle"
+      type="button"
+      aria-label="Toggle navigation menu"
+      aria-controls="site-nav"
+      aria-expanded="false"
+      data-menu-toggle
+    >
+      ☰
+    </button>
+
+    <nav class="site-header__nav" id="site-nav" aria-label="Primary">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            aria-current={isCurrent(link.href) ? "page" : undefined}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+  const nav = document.getElementById("site-nav");
+  if (toggle && nav) {
+    toggle.addEventListener("click", () => {
+      const isOpen = nav.dataset.open === "true";
+      nav.dataset.open = isOpen ? "false" : "true";
+      toggle.setAttribute("aria-expanded", String(!isOpen));
+    });
+  }
+</script>

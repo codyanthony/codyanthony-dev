@@ -1,0 +1,116 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const entries = (await getCollection("case-studies", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const contentDesign = entries.filter((e) => e.data.section === "content-design");
+const technicalDocs = entries.filter(
+  (e) => e.data.section === "technical-documentation"
+);
+const docStrategy = entries.filter(
+  (e) => e.data.section === "documentation-strategy"
+);
+
+function hrefFor(entry: (typeof entries)[number]) {
+  return `/case-studies/${entry.id.replace(/\.(md|mdx)$/, "")}/`;
+}
+---
+
+<BaseLayout
+  title="Case Studies"
+  description="Three tracks of work: content design case studies, technical documentation artifacts, and documentation strategy initiatives."
+>
+  <section class="section">
+    <div class="prose-wide">
+      <p class="section__eyebrow">Case Studies</p>
+      <h1>Case studies in content design, technical documentation, and documentation strategy.</h1>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="prose-wide">
+      <header class="cs-section__header">
+        <p class="section__eyebrow">Section 1 / Content Design</p>
+        <h2>Content Design</h2>
+        <p class="section__lede">
+          Narrative case studies that show product UX shaped through content.
+          Console microcopy, help panels, integrated content and UI design,
+          and upstream influence on product decisions. For content design,
+          content strategy, and product content design roles.
+        </p>
+      </header>
+
+      <ul class="cs-list">
+        {
+          contentDesign.map((entry) => (
+            <li class="cs-list__item">
+              <a class="cs-list__link" href={hrefFor(entry)}>
+                <span class="cs-list__title">{entry.data.title}</span>
+                <span class="cs-list__description">{entry.data.description}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="prose-wide">
+      <header class="cs-section__header">
+        <p class="section__eyebrow">Section 2 / Technical Documentation</p>
+        <h2>Technical Documentation</h2>
+        <p class="section__lede">
+          Production technical documentation artifacts. API references,
+          architecture guides, and getting started documentation. Each case
+          study links to a real deliverable you can evaluate as a sample. For
+          senior technical writer and developer documentation roles.
+        </p>
+      </header>
+
+      <ul class="cs-list">
+        {
+          technicalDocs.map((entry) => (
+            <li class="cs-list__item">
+              <a class="cs-list__link" href={hrefFor(entry)}>
+                <span class="cs-list__title">{entry.data.title}</span>
+                <span class="cs-list__description">{entry.data.description}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="prose-wide">
+      <header class="cs-section__header">
+        <p class="section__eyebrow">Section 3 / Documentation Strategy</p>
+        <h2>Documentation Strategy</h2>
+        <p class="section__lede">
+          Multi-year initiatives in documentation infrastructure, content
+          modernization, and systems-level redesign. The work spans years
+          and the entire organization. For Documentation Strategist, Lead
+          Documentation Engineer, and senior IC docs roles.
+        </p>
+      </header>
+
+      <ul class="cs-list">
+        {
+          docStrategy.map((entry) => (
+            <li class="cs-list__item">
+              <a class="cs-list__link" href={hrefFor(entry)}>
+                <span class="cs-list__title">{entry.data.title}</span>
+                <span class="cs-list__description">{entry.data.description}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

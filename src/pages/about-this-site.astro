@@ -1,0 +1,208 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="About This Site"
+  description="The technical decisions behind codyanthony.dev: Astro, MDX, content collections, Cloudflare Workers Static Assets, and the philosophy that drove the stack choice."
+>
+  <section class="section">
+    <div class="prose">
+      <p class="section__eyebrow">About This Site</p>
+      <h1>The technical decisions behind this portfolio.</h1>
+      <p>
+        This page explains the engineering choices that shape codyanthony.dev.
+        Each one reflects the docs-as-code, docs-as-product philosophy I apply
+        to enterprise documentation work.
+      </p>
+
+      <h2>Stack at a glance</h2>
+      <ul>
+        <li>
+          <strong>Framework:</strong> Astro 5 with the official MDX integration.
+          Output is <code>static</code>; every route is prerendered at build time.
+        </li>
+        <li>
+          <strong>Content:</strong> Typed collections under <code>src/content/case-studies/</code>.
+          Frontmatter is validated against a Zod schema at build time.
+        </li>
+        <li>
+          <strong>Styling:</strong> Hand-rolled CSS in a single <code>global.css</code>.
+          No Tailwind, no CSS-in-JS, no theme dependency.
+        </li>
+        <li>
+          <strong>UI framework runtime:</strong> None today. The site ships zero
+          JavaScript files by default. Astro's islands architecture supports
+          adding React/Vue/Svelte/Solid components later if an interactive embed
+          needs one.
+        </li>
+        <li>
+          <strong>Hosting:</strong> Cloudflare Workers Static Assets. All deployment
+          configuration lives in <code>wrangler.jsonc</code>.
+        </li>
+        <li>
+          <strong>Image pipeline:</strong> Sharp via Astro's image pipeline.
+          Hash-stamped WebP variants generated per-density at build time.
+        </li>
+        <li>
+          <strong>AI tooling:</strong> Claude with project context (via Model
+          Context Protocol servers) for code generation, refactoring, and review.
+        </li>
+      </ul>
+
+      <h2>Content as typed data</h2>
+      <p>
+        Case studies live in a typed collection. Each entry's frontmatter is
+        validated against a Zod schema at build time. Missing or malformed
+        frontmatter fails the build with a typed error pointing at the offending
+        file.
+      </p>
+      <pre><code>{`// src/content.config.ts
+const caseStudies = defineCollection({
+  loader: glob({
+    pattern: "**/*.{md,mdx}",
+    base: "./src/content/case-studies",
+  }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    section: z.enum([
+      "content-design",
+      "technical-documentation",
+      "documentation-strategy",
+    ]),
+    order: z.number().default(100),
+    draft: z.boolean().default(false),
+    pdf: z.object({
+      href: z.string(),
+      label: z.string().default("Download PDF sample"),
+    }).optional(),
+  }),
+});`}</code></pre>
+      <p>
+        The schema is the source of truth for the taxonomy. Adding a new section
+        means updating the enum; the build fails until existing entries match
+        the new shape. The pattern catches taxonomy drift before it ships.
+      </p>
+
+      <h2>Deployment as code</h2>
+      <p>
+        Deployment configuration lives entirely in <code>wrangler.jsonc</code>.
+        No web-console clicks, no <code>.env</code> files, no CI pipeline
+        definitions outside the repo.
+      </p>
+      <pre><code>{`// wrangler.jsonc
+{
+  "name": "codyanthony-dev",
+  "compatibility_date": "2025-12-14",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  },
+  "observability": { "enabled": true }
+}`}</code></pre>
+      <p>
+        The <code>assets.directory: "./dist"</code> line is the entire serving
+        model. Every route is prerendered at build; Cloudflare's edge serves
+        prebuilt HTML directly. No Worker entry compiles into the bundle today,
+        so the deployment surface stays purely static.
+      </p>
+
+      <h2>Trade-offs made</h2>
+
+      <h3>Workers Static Assets over Cloudflare Pages</h3>
+      <p>
+        Pages would have worked. Workers Static Assets is the same edge network
+        with a single configuration surface (<code>wrangler.jsonc</code>) and a
+        clear extension path (Workers) if SSR or KV becomes useful later. Pages
+        would have meant two configuration surfaces (<code>wrangler.jsonc</code>{" "}
+        plus the Pages dashboard) and a more involved migration when compute is
+        eventually added.
+      </p>
+
+      <h3>Astro over Next.js</h3>
+      <p>
+        Next.js is the industry default. For a static-first content portfolio,
+        Astro ships fewer kilobytes by default and treats Markdown/MDX as
+        first-class content without third-party loaders. The trade-off is a
+        smaller ecosystem; for this scope, that hasn't mattered.
+      </p>
+
+      <h3>No UI framework runtime</h3>
+      <p>
+        Adding <code>@astrojs/react</code> ships roughly 95 KB gzipped of
+        framework code to every visitor before any of my code runs. The site's
+        interactive needs amount to a mobile menu toggle (a six-line inline
+        script) and image hover effects (CSS). That runtime cost isn't
+        justified. The architecture still supports adding any framework via
+        Astro's islands model if a future case study needs an interactive embed.
+      </p>
+
+      <h3>From Starlight to bare Astro</h3>
+      <p>
+        An earlier iteration ran on Astro's{" "}
+        <a
+          href="https://starlight.astro.build"
+          target="_blank"
+          rel="noopener noreferrer">Starlight</a> documentation theme. Starlight
+        is the right tool when you're building developer docs at scale; it's the
+        wrong tool when the brief is a minimalist editorial portfolio. The
+        rebrand stripped Starlight, retaining Astro itself, the MDX pipeline,
+        and content collections, the parts that genuinely belong in a content-first
+        codebase.
+      </p>
+
+      <h2>By the numbers</h2>
+      <ul>
+        <li>
+          <strong>Build time:</strong> ~1.2 seconds for 16 prerendered pages,
+          full image pipeline included.
+        </li>
+        <li>
+          <strong>JavaScript files shipped to the browser:</strong> 0. No
+          framework runtime, no client-side router, no hydration cost. The only
+          inline JavaScript is the six-line mobile menu toggle.
+        </li>
+        <li>
+          <strong>Headshot:</strong> 7.2 KB at 1× WebP, 11 KB at 2× retina WebP.
+          Generated from a single source JPEG via Astro's image pipeline.
+        </li>
+        <li>
+          <strong>Social-share card:</strong> 43 KB at 1200×630, composed from
+          an inline SVG and rendered to PNG via sharp at build time.
+        </li>
+        <li>
+          <strong>Total <code>./dist</code> size:</strong> 2.2 MB. Most of that
+          weight is case-study screenshots.
+        </li>
+      </ul>
+
+      <h2>Local workflow</h2>
+      <pre><code>{`pnpm dev             # Local dev server at http://localhost:4321
+pnpm build           # Compile production build into ./dist/
+pnpm preview         # Preview the build locally
+pnpm astro check     # TypeScript + Astro diagnostics
+npx wrangler deploy  # Deploy to Cloudflare Workers`}</code></pre>
+
+      <h2>AI-assisted development</h2>
+      <p>
+        This site was developed using Claude as a co-author for code generation,
+        refactoring, and review. Each component module, route handler, and CSS
+        rewrite was proposed by the model. I conducted code review, integration
+        testing, and version control. Model context flows through MCP (Model
+        Context Protocol) servers that keep the agent aligned with the project's
+        framework conventions and content guardrails.
+      </p>
+
+      <h2>Source</h2>
+      <p>
+        This portfolio is built completely in the open.{" "}
+        <a
+          href="https://github.com/codyanthony/codyanthony-dev"
+          target="_blank"
+          rel="noopener noreferrer">View the repository on GitHub →</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

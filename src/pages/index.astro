@@ -1,0 +1,213 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import LinkCard from "../components/LinkCard.astro";
+import headshot from "../assets/cody-anthony.jpg";
+
+const allCaseStudies = await getCollection("case-studies", ({ data }) => !data.draft);
+
+const featuredIds = [
+  "console-ux/evs-day1-deployment",
+  "api-documentation/evs-createenvironment",
+  "systems-strategy/adoc-modernization",
+];
+
+const featuredEntries = featuredIds.map((id) => {
+  const entry = allCaseStudies.find(
+    (e) => e.id.replace(/\.(md|mdx)$/, "") === id
+  );
+  if (!entry) throw new Error(`Featured case study not found: ${id}`);
+  return entry;
+});
+---
+
+<BaseLayout
+  title="Cody Anthony"
+  description="Technical content designer for complex software products. Content strategy, documentation systems, AI workflows."
+>
+  <section class="identity">
+    <div class="container">
+      <div class="identity__grid">
+        <div class="hero-text-col">
+          <h1 class="identity__name">Cody Anthony</h1>
+          <p class="identity__lede">
+            I design the content infrastructure for complex software products,
+            moving documentation out of silos and into the core product
+            lifecycle to ensure long-term accuracy and scalability.
+          </p>
+          <div class="identity__cta">
+            <Button
+              href="/cody-anthony-resume.pdf"
+              variant="primary"
+              icon="↓"
+              download={true}
+              external={false}
+            >
+              Download Resume (PDF)
+            </Button>
+            <Button
+              href="https://linkedin.com/in/codyanthony"
+              variant="default"
+              external={true}
+            >
+              Connect on LinkedIn
+            </Button>
+          </div>
+        </div>
+        <div class="hero-image-col">
+          <div class="portrait">
+            <Image
+              src={headshot}
+              alt="Cody Anthony"
+              width={320}
+              height={320}
+              densities={[2]}
+              class="portrait__img"
+              loading="eager"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose">
+      <p class="section__eyebrow">The Core Philosophy</p>
+      <h2>Documentation belongs in the engineering loop.</h2>
+      <p>
+        I bridge the gap between software engineering and developer experience.
+        I author developer documentation and architect the docs-as-code
+        infrastructure, content strategies, and agentic AI workflows that
+        scale it with the software.
+      </p>
+      <p>This approach is built on three principles:</p>
+      <ul>
+        <li>
+          <strong>Docs-as-Product:</strong> Engaging with UX and engineering
+          during design shapes the interface itself, so the product is
+          intuitive before docs ship. By the time I write, I've already helped
+          shape the thing I'm writing about.
+        </li>
+        <li>
+          <strong>Docs-as-Data:</strong> Documentation engineered as
+          structured, reusable data. I componentize content into self-contained
+          chunks that LLMs, AI agents, and human readers can each consume on
+          their own terms.
+        </li>
+        <li>
+          <strong>Jobs-to-Be-Done &amp; Instructional Design:</strong>{" "}
+          Content structured around the jobs developers are trying to do.
+          Learning theory and user-centered design cut friction and shorten
+          time-to-first-success.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose-wide">
+      <p class="section__eyebrow">Core Capabilities</p>
+      <h2>What I deliver across the product lifecycle.</h2>
+
+      <div class="capabilities">
+        <div class="capability">
+          <div class="capability__number">01 /</div>
+          <div>
+            <h3 class="capability__title">Technical Authoring &amp; DX</h3>
+            <p class="capability__tagline">
+              Developer guides, API references, UX copy, and cross-functional
+              standards
+            </p>
+            <p class="capability__body">
+              I partner with Product, Engineering, and UX from the design phase
+              forward, shaping documentation standards before they're written
+              and the product itself before it ships. I build and validate every
+              configuration I document in test environments before publishing.
+            </p>
+          </div>
+        </div>
+
+        <div class="capability">
+          <div class="capability__number">02 /</div>
+          <div>
+            <h3 class="capability__title">Content Infrastructure</h3>
+            <p class="capability__tagline">
+              Platform-scale architecture, legacy migrations, and self-service
+              governance
+            </p>
+            <p class="capability__body">
+              I migrate enterprise documentation off legacy XML into decoupled,
+              component-based formats. Then I write the contribution runbooks
+              and structural guardrails that keep the system intact long after
+              the migration ships.
+            </p>
+          </div>
+        </div>
+
+        <div class="capability">
+          <div class="capability__number">03 /</div>
+          <div>
+            <h3 class="capability__title">AI Engineering &amp; Automation</h3>
+            <p class="capability__tagline">
+              Agentic workflows, automated content pipelines, and AI-assisted
+              development
+            </p>
+            <p class="capability__body">
+              I integrate LLMs like Claude into agentic workflows that compress
+              technical research and drafting timelines from days to hours.
+              Documentation ships at engineering velocity instead of
+              accumulating as the debt that drags legacy platforms down.
+            </p>
+          </div>
+        </div>
+
+        <div class="capability">
+          <div class="capability__number">04 /</div>
+          <div>
+            <h3 class="capability__title">
+              Information Scaffolding &amp; Onboarding
+            </h3>
+            <p class="capability__tagline">
+              Console microcopy, task sequencing, and cognitive load reduction
+            </p>
+            <p class="capability__body">
+              I sequence each technical workflow so developers meet the right
+              information when they need it, applying instructional design to
+              both the prose and the console microcopy. Each page is designed
+              for the moment the developer reaches it.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose-wide">
+      <p class="section__eyebrow">Featured Work</p>
+      <h2>Selected case studies.</h2>
+
+      <div class="featured-grid">
+        {
+          featuredEntries.map((entry) => (
+            <LinkCard
+              title={entry.data.title}
+              href={`/case-studies/${entry.id.replace(/\.(md|mdx)$/, "")}/`}
+              description={entry.data.description}
+            />
+          ))
+        }
+      </div>
+
+      <div style="margin-top: var(--sp-8);">
+        <Button href="/case-studies/" variant="primary">
+          View All Case Studies →
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

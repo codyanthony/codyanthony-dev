@@ -1,0 +1,212 @@
+---
+title: EVS Day 1 Deployment Experience
+description: Console microcopy, 28 help panels, and deployment documentation designed together as a unified Day 1 experience for Amazon EVS, shipped on schedule with general availability.
+section: content-design
+order: 30
+---
+
+import Aside from "@components/Aside.astro";
+import Card from "@components/Card.astro";
+import CardGrid from "@components/CardGrid.astro";
+import LinkCard from "@components/LinkCard.astro";
+import { Image } from "astro:assets";
+import evsGetStarted from "../../../assets/evs-get-started.png";
+import evsDnsHostnames from "../../../assets/evs-dns-hostnames.png";
+import evsDnsHelpPanel1 from "../../../assets/evs-dns-help-panel-1.png";
+import evsDnsContraintText from "../../../assets/evs-dns-contraint-text.png";
+import evsNetworkConfigHelpPanel from "../../../assets/evs-network-config-help-panel.png";
+
+This project demonstrates integrated console UX and deployment documentation for Amazon Elastic VMware Service (Amazon EVS), an AWS platform that enables enterprises to migrate VMware-based workloads to the cloud without re-architecting applications. I created console UI text, 28 help panels, and deployment documentation from scratch as integrated components of a unified Day 1 experience, shipping on schedule with the service's general availability launch.
+
+The work spanned private preview, public preview, and general availability launch. I collaborated with EVS product, UX, engineering, and solution architect teams to address complex networking requirements, DNS validation friction identified during public preview, and cross-service documentation coordination across AWS and VMware components.
+
+<Aside type="tip" title="At a Glance">
+
+- **Challenge:** New console for AWS service enabling VMware workload migration; early customer testing revealed DNS validation as a primary source of configuration friction.
+- **My Role:** Console UI Text + Help Panels + Deployment Documentation
+- **Timeline:** 12-month release cycle (Private Preview → Public Preview → GA)
+- **Team:** EVS PMs, UX Designer, Console Developers, Solution Architects, Engineers
+- **Impact:** Secured rapid approval from UX Leadership; DNS improvements increased customer success rates.
+
+</Aside>
+
+<Image src={evsGetStarted} alt="EVS Console Get Started Page" />
+_EVS console Get Started page guiding customers through deployment prerequisites_
+
+## The Challenge
+
+### Reducing Day 1 Friction for VMware Workload Migration
+
+Amazon EVS enables enterprises to migrate VMware-based workloads from on-prem to AWS. Enterprise customers increasingly required flexible, customer-managed cloud alternatives to modernize their VMware workloads. However, the standard VCF deployment experience can involve manual processes with multiple friction points. Amazon EVS needed to simplify VCF deployment while supporting complex networking requirements to ensure successful customer adoption.
+
+**Complex networking requirements:**
+
+- BGP routing configuration with VPC Route Server
+- VLAN subnet allocation across 10+ network types
+- Cross-service dependencies with VPC, IPAM, Service Quotas, Route 53
+- Coordination requirements between AWS and VMware components
+
+**DNS validation friction:**
+Early customer testing revealed a deployment barrier: free-form DNS hostname inputs with no console-side validation were a significant source of configuration friction. Customers frequently entered invalid hostnames that resulted in validation failures late in the provisioning workflow, requiring them to restart the setup process and impacting first-deployment success rates.
+
+**Knowledge gaps:**
+VMware administrators migrating to AWS needed contextual guidance bridging on-prem VMware concepts with AWS service integration patterns.
+
+<Image src={evsDnsHostnames} alt="DNS Hostname Configuration Step" />
+_DNS hostname configuration step where validation failures revealed need for improved guidance_
+
+## Addressing DNS Validation Friction
+
+### Coordinated Console and Documentation Fixes
+
+When public preview customer feedback revealed DNS validation as a primary friction point, I worked with PMs, UX, and engineering to address the issue across console and documentation surfaces.
+
+**Console improvements:**
+
+- Page introductory text explaining DNS hostname requirements and where to configure DNS records (VPC DHCP option set)
+- Info callout clarifying constraint that confused customers (enter hostname, not FQDN) with link to detailed user guide topic
+- Two contextualized help panels: "Management appliance DNS hostnames" explaining DNS configuration requirements, and "Confirm and Continue" guiding customers through validation checkpoint
+- Field-level instructional text and validation error messaging ("Hostname is required")
+- Confirmation checkbox with acknowledgement text that hostname inputs match DNS records (required to ensure alignment with custom DNS provider configurations)
+
+<Image src={evsDnsHelpPanel1} alt="DNS Configuration Help Panel" />
+_Management appliance DNS hostnames help panel explaining DNS configuration requirements_
+
+<Image src={evsDnsContraintText} alt="DNS Validation Error" />
+_Validation error state when customers attempt to continue without required hostname inputs_
+
+**Documentation improvements:**
+
+Major revisions across Getting Started and Setting Up pages, shipped with GA launch:
+
+- Expanded [DNS configuration requirements](https://docs.aws.amazon.com/evs/latest/userguide/getting-started.html#getting-started-config-dns-ntp-dhcp)
+- Added [DHCP options set configuration](https://docs.aws.amazon.com/evs/latest/userguide/setting-up.html#vpc-dhcp)
+- Enhanced [deployment prerequisites checklist](https://docs.aws.amazon.com/evs/latest/userguide/evs-deployment-prereq-checklist.html) surfacing DNS requirements earlier
+
+These coordinated updates addressed high-priority customer feedback identified by business leadership in weekly reviews.
+
+## Complete Console and Documentation Scope
+
+### Building the Full Day 1 Experience
+
+Beyond DNS validation fixes, the project involved creating the complete EVS console and documentation experience. I led weekly console UI text workshops with PMs, UX designers, and console developers, providing feedback through multiple Figma design reviews that influenced overall design language and console element choices.
+
+**Console UI text:**
+
+- Wizard step instructions across 6-step environment creation workflow
+- Form field labels and descriptions
+- Error messaging for validation failures
+- Success and status messaging
+- Modal dialogs and confirmation flows
+
+**Help panel system (28 panels total):**
+
+- Main environments page overview
+- Wizard-level guidance for each of 6 steps
+- Field-level contextual help for complex inputs (VPC Route Server, VLAN subnets, DNS hostnames, VMware licensing)
+- Troubleshooting guidance for common validation errors
+
+<Image src={evsNetworkConfigHelpPanel} alt="Network Configuration Help Panel" />
+_Network configuration step with contextual help guiding customers through complex VLAN subnet requirements_
+
+The help panels addressed VMware admin knowledge gaps about AWS services. For example, the VPC Route Server help panel explained BGP routing requirements and peer ASN configuration. These concepts were familiar to network engineers but potentially new to customers migrating from on-prem VMware.
+
+**Cross-functional collaboration:**
+
+- Daily engineering syncs for API design input
+- Weekly enablement meetings with solution architects gathering deployment pattern insights
+- Weekly networking documentation syncs coordinating cross-service documentation
+- Weekly business reviews reporting progress to product and business leadership
+
+## Documentation Experience
+
+### Deployment Documentation Enabling First Success
+
+Simultaneously with console work, I created deployment documentation across private preview, public preview, and GA launch phases.
+
+**Private Preview Documentation:**
+
+- Getting started procedures
+- Service overview and terminology glossary
+- Architectural reference material
+- Migration planning guidance
+
+**Public Preview Documentation:**
+
+<LinkCard
+  title="Getting Started with Amazon EVS"
+  description="Complete deployment workflow from prerequisites through first environment creation"
+  href="https://docs.aws.amazon.com/evs/latest/userguide/getting-started.html"
+/>
+
+<LinkCard
+  title="Setting Up Amazon EVS"
+  description="VPC DHCP configuration requirements and account setup prerequisites"
+  href="https://docs.aws.amazon.com/evs/latest/userguide/setting-up.html#vpc-dhcp"
+/>
+
+<LinkCard
+  title="Deployment Prerequisites Checklist"
+  description="Pre-flight checklist ensuring prerequisite configurations are completed before environment deployment"
+  href="https://docs.aws.amazon.com/evs/latest/userguide/evs-deployment-prereq-checklist.html"
+/>
+
+## Impact and Outcomes
+
+### Launch Success
+
+Console, help panels, and documentation shipped on schedule through all three milestones: private preview, public preview, and general availability. Coordinated parallel launch across all EVS surfaces: user guide, API guide, CloudFormation, console, help panels, and documentation landing page. Post-GA work continued with major networking feature enhancements.
+
+### Process Efficiency
+
+The 28 help panels passed UX design review on first submission, validating the decision to develop UI text through embedded weekly workshops rather than post-design retrofitting. Early PM/UX/engineering alignment on DNS validation messaging enabled coordinated fixes across console and documentation without requiring separate review cycles for each surface.
+
+### Customer Impact
+
+DNS validation improvements addressed the root cause of deployment friction identified through early customer testing. The help panel system enabled self-service deployment for VMware administrators new to AWS. Documentation supported independent first deployments while solution architects remained essential partners in teaching complex VMware concepts and providing deployment pattern expertise.
+
+<CardGrid>
+  <Card title="Deployment Success">
+    DNS improvements significantly reduced configuration errors identified in
+    early testing.
+  </Card>
+  <Card title="Independent Deployment">
+    Help panel system enabled self-service for VMware administrators new to AWS.
+  </Card>
+  <Card title="Reduced Friction">
+    Integrated console and documentation guidance supported first-time
+    deployment success.
+  </Card>
+  <Card title="Cross-Platform Knowledge">
+    Contextual help bridged on-prem VMware and AWS cloud concepts.
+  </Card>
+</CardGrid>
+
+## Key Takeaways
+
+### Start with Customer Data
+
+Deployment failure patterns weren't discovered until public preview customer testing. Building feedback mechanisms early (syncs with product/engineering and field teams, business reviews, Voice-of-the-Customer (VoC) data analysis) enabled rapid response when friction emerged.
+
+### Console and Docs Must Solve the Same Problems
+
+DNS validation required coordinated fixes across console (validation alerts, error messaging) and documentation (configuration guidance, prerequisites). Treating them as unified experience accelerated resolution.
+
+### Embedded Participation Enables Rapid Iteration
+
+Weekly workshops and daily engineering syncs meant I could contribute to DNS solution design rather than document decisions after the fact. Being in the room when product decisions happened accelerated both console and documentation improvements.
+
+## View Live Work
+
+<CardGrid>
+  <LinkCard
+    title="Amazon EVS Documentation"
+    description="Published user guides on docs.aws.amazon.com"
+    href="https://docs.aws.amazon.com/evs/latest/userguide/"
+  />
+  <LinkCard
+    title="EVS Console"
+    description="View the live console experience (requires AWS account)"
+    href="https://console.aws.amazon.com/evs"
+  />
+</CardGrid>

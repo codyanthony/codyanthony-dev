@@ -1,0 +1,33 @@
+---
+interface Props {
+  href: string;
+  variant?: "primary" | "default" | "ghost";
+  icon?: string;
+  download?: boolean | string;
+  external?: boolean;
+  class?: string;
+}
+
+const {
+  href,
+  variant = "default",
+  icon,
+  download,
+  external,
+  class: extraClass,
+} = Astro.props;
+
+const isExternal = external ?? /^https?:\/\//.test(href);
+const classes = ["btn", `btn--${variant}`, extraClass].filter(Boolean).join(" ");
+---
+
+<a
+  class={classes}
+  href={href}
+  target={isExternal ? "_blank" : undefined}
+  rel={isExternal ? "noopener noreferrer" : undefined}
+  download={download === true ? "" : download || undefined}
+>
+  {icon && <span class="btn__icon" aria-hidden="true">{icon}</span>}
+  <span><slot /></span>
+</a>

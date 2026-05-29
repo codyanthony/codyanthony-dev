@@ -1,0 +1,30 @@
+---
+type Asideish = "tip" | "note" | "caution" | "danger";
+
+interface Props {
+  type?: Asideish;
+  title?: string;
+}
+
+const { type = "note", title } = Astro.props;
+const isAuthorNote = title?.toLowerCase().includes("author's note");
+const resolvedTitle =
+  title ??
+  ({
+    tip: "Tip",
+    note: "Note",
+    caution: "Caution",
+    danger: "Danger",
+  }[type]);
+---
+
+<aside
+  class={`aside aside--${type}`}
+  data-author-note={isAuthorNote ? "" : undefined}
+  aria-label={resolvedTitle}
+>
+  {resolvedTitle && <div class="aside__title">{resolvedTitle}</div>}
+  <div class="aside__content">
+    <slot />
+  </div>
+</aside>

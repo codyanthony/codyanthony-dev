@@ -1,0 +1,13 @@
+# Legacy URL redirects — preserve inbound links from the Starlight era.
+# Format: <from>  <to>  <status>
+
+/colophon/                            /about-this-site/                            301
+/colophon                             /about-this-site/                            301
+/contact/                             /about/                                      301
+/contact                              /about/                                      301
+
+# Case study URLs were flattened under /case-studies/ in the rebrand.
+/api-documentation/*                  /case-studies/api-documentation/:splat       301
+/architecture-guides/*                /case-studies/architecture-guides/:splat     301
+/console-ux/*                         /case-studies/console-ux/:splat              301
+/systems-strategy/*                   /case-studies/systems-strategy/:splat        301

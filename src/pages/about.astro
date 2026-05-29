@@ -1,0 +1,165 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+import headshot from "../assets/cody-anthony.jpg";
+---
+
+<BaseLayout
+  title="About"
+  description="Cody Anthony is a technical content designer who shapes how complex software products are documented and understood."
+>
+  <section class="about-intro">
+    <div class="container">
+      <div class="about-intro__grid">
+        <div class="hero-text-col">
+          <p class="section__eyebrow">About Me</p>
+          <h1>Engineering documentation that scales with the software it describes.</h1>
+
+          <p>
+            I'm a technical content designer shaping how complex software
+            products are documented and understood. In enterprise environments,
+            I've owned the structure and delivery of developer guides, API
+            references, and solution frameworks. My focus is writing the
+            documentation and engineering the systems that scale it:
+            information architecture, content modeling, and process automation.
+          </p>
+
+          <p>
+            I design documentation systems for the teams who contribute to
+            them. Instructional design and UX principles inform the content
+            structure, self-service governance, and the contribution guidelines
+            that hold a documentation system together as it grows.
+          </p>
+
+          <div class="identity__cta">
+            <Button
+              href="/cody-anthony-resume.pdf"
+              variant="primary"
+              icon="↓"
+              download={true}
+              external={false}
+            >
+              Download Resume (PDF)
+            </Button>
+            <Button
+              href="https://linkedin.com/in/codyanthony"
+              variant="default"
+              external={true}
+            >
+              Connect on LinkedIn
+            </Button>
+          </div>
+        </div>
+        <div class="hero-image-col">
+          <div class="portrait portrait--sm">
+            <Image
+              src={headshot}
+              alt="Cody Anthony"
+              width={260}
+              height={260}
+              densities={[2]}
+              class="portrait__img"
+              loading="eager"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="prose-wide">
+      <p class="section__eyebrow">// Skills, Tools &amp; Technologies</p>
+      <h2>What I work with.</h2>
+
+      <div class="skill-groups">
+        <div class="skill-group">
+          <h3 class="skill-group__title">Documentation and content design</h3>
+          <ul class="skill-chips">
+            <li class="skill-chip">API documentation</li>
+            <li class="skill-chip">Developer guides</li>
+            <li class="skill-chip">Content strategy</li>
+            <li class="skill-chip">Content design</li>
+            <li class="skill-chip">UX writing</li>
+            <li class="skill-chip">Information architecture</li>
+            <li class="skill-chip">Content modeling</li>
+            <li class="skill-chip">Style guides</li>
+            <li class="skill-chip">Microcopy</li>
+            <li class="skill-chip">Release notes</li>
+            <li class="skill-chip">Tutorials</li>
+            <li class="skill-chip">CLI and SDK references</li>
+          </ul>
+        </div>
+
+        <div class="skill-group">
+          <h3 class="skill-group__title">Tools and platforms</h3>
+          <ul class="skill-chips">
+            <li class="skill-chip">Git</li>
+            <li class="skill-chip">GitHub</li>
+            <li class="skill-chip">GitLab</li>
+            <li class="skill-chip">Markdown</li>
+            <li class="skill-chip">AsciiDoc</li>
+            <li class="skill-chip">DocBook</li>
+            <li class="skill-chip">XML</li>
+            <li class="skill-chip">OpenAPI</li>
+            <li class="skill-chip">Confluence</li>
+            <li class="skill-chip">Jira</li>
+            <li class="skill-chip">Figma</li>
+            <li class="skill-chip">Cloudscape Design System</li>
+            <li class="skill-chip">Oxygen XML Editor</li>
+            <li class="skill-chip">VS Code</li>
+            <li class="skill-chip">Cursor</li>
+          </ul>
+        </div>
+
+        <div class="skill-group">
+          <h3 class="skill-group__title">AI and automation</h3>
+          <ul class="skill-chips">
+            <li class="skill-chip">Claude</li>
+            <li class="skill-chip">ChatGPT</li>
+            <li class="skill-chip">Gemini</li>
+            <li class="skill-chip">Cline</li>
+            <li class="skill-chip">Q Developer CLI</li>
+            <li class="skill-chip">Model Context Protocol (MCP)</li>
+            <li class="skill-chip">Prompt engineering</li>
+            <li class="skill-chip">Agentic workflows</li>
+            <li class="skill-chip">GenAI tool development</li>
+            <li class="skill-chip">Content automation</li>
+            <li class="skill-chip">Process automation</li>
+          </ul>
+        </div>
+
+        <div class="skill-group">
+          <h3 class="skill-group__title">Development</h3>
+          <ul class="skill-chips">
+            <li class="skill-chip">Python</li>
+            <li class="skill-chip">JavaScript</li>
+            <li class="skill-chip">Node.js</li>
+            <li class="skill-chip">HTML/CSS</li>
+            <li class="skill-chip">REST APIs</li>
+            <li class="skill-chip">JSON/YAML</li>
+            <li class="skill-chip">CI/CD pipelines</li>
+            <li class="skill-chip">Docs-as-code</li>
+            <li class="skill-chip">Static site generators</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="identity__cta">
+        <Button href="/case-studies/" variant="primary">
+          View Case Studies →
+        </Button>
+        <Button
+          href="https://linkedin.com/in/codyanthony"
+          variant="default"
+          external={true}
+        >
+          Connect on LinkedIn
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

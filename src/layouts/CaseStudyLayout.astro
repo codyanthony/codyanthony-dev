@@ -1,0 +1,54 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Button from "../components/Button.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  section: "content-design" | "technical-documentation" | "documentation-strategy";
+  pdf?: { href: string; label?: string };
+}
+
+const { title, description, section, pdf } = Astro.props;
+
+const sectionLabel: Record<Props["section"], string> = {
+  "content-design": "Content Design",
+  "technical-documentation": "Technical Documentation",
+  "documentation-strategy": "Documentation Strategy",
+};
+
+const breadcrumb = sectionLabel[section];
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="case-study-header">
+    <p class="case-study-header__eyebrow">
+      <a href="/case-studies/">Case Studies</a> &nbsp;/&nbsp; {breadcrumb}
+    </p>
+    <h1 class="case-study-header__title">{title}</h1>
+    <p class="case-study-header__description">{description}</p>
+    {
+      pdf && (
+        <div style="margin-top: var(--sp-6);">
+          <Button
+            href={pdf.href}
+            variant="default"
+            icon="↓"
+            download={true}
+            external={false}
+          >
+            {pdf.label ?? "Download PDF sample"}
+          </Button>
+        </div>
+      )
+    }
+  </header>
+
+  <article class="prose">
+    <slot />
+  </article>
+
+  <footer class="case-study-footer">
+    <a class="btn btn--ghost" href="/case-studies/">← Back to all case studies</a>
+  </footer>
+</BaseLayout>

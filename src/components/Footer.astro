@@ -1,28 +1,26 @@
 ---
-import type { Props } from "@astrojs/starlight/props";
-import Default from "@astrojs/starlight/components/Footer.astro";
-import VisitorCounter from "./VisitorCounter.jsx";
+const year = new Date().getFullYear();
 ---
 
-<Default {...Astro.props}>
-  <div class="site-footer">
-    <VisitorCounter client:load />
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__note">
+      // Built with Astro · <a href="/about-this-site/">About this site</a>
+    </p>
+    <div class="site-footer__social">
+      <a
+        href="https://linkedin.com/in/codyanthony"
+        target="_blank"
+        rel="noopener noreferrer">LinkedIn</a
+      >
+      <a
+        href="https://github.com/codyanthony"
+        target="_blank"
+        rel="noopener noreferrer">GitHub</a
+      >
+      <a href="mailto:codyjanthony@gmail.com">Email</a>
+      <span aria-hidden="true">·</span>
+      <span>&copy; {year}</span>
+    </div>
   </div>
-</Default>
-
-<style>
-  .site-footer {
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--sl-color-gray-5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  @media (max-width: 768px) {
-    .site-footer {
-      padding: 1rem 0.5rem;
-    }
-  }
-</style>
+</footer>

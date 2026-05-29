@@ -1,49 +1,53 @@
-# Starlight Starter Kit: Basics
+# codyanthony.dev
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+Source for [codyanthony.dev](https://codyanthony.dev) — the portfolio site of Cody Anthony, technical content designer and documentation strategist.
 
-```
-npm create astro@latest -- --template starlight
-```
+## Stack
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- **[Astro](https://astro.build) 5.x** — static site generator (`output: "static"`, no SSR routes)
+- **MDX** via `@astrojs/mdx` for case-study content
+- **Typed content collections** for case studies, with Zod-validated frontmatter
+- **Cloudflare Workers Static Assets** for edge delivery
+- Hand-rolled layouts, components, and CSS — no UI framework, no theme dependency
 
-## 🚀 Project Structure
+## Local development
 
-Inside of your Astro + Starlight project, you'll see the following folders and files:
+This project uses [pnpm](https://pnpm.io/installation) (pinned via `packageManager` in `package.json`).
 
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+```bash
+pnpm install      # install dependencies
+pnpm dev          # local dev server at http://localhost:4321
+pnpm build        # production build into ./dist/
+pnpm preview      # preview the built site locally
+pnpm astro check  # TypeScript / Astro diagnostics
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+## Project structure
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+```
+src/
+  pages/                    # routed Astro pages (Home, About, About-This-Site, case studies)
+  layouts/                  # BaseLayout, PageLayout, CaseStudyLayout
+  components/               # Header, Footer, Aside, Card, CardGrid, LinkCard, Button
+  content/
+    case-studies/           # typed case-study collection (md/mdx)
+  assets/                   # images processed by Astro's pipeline
+  styles/
+    global.css              # full theme; imported once via BaseLayout
+public/                     # static passthrough — favicon, OG image, PDFs, redirects
+wrangler.jsonc              # Cloudflare Workers Static Assets config
+```
 
-Static assets, like favicons, can be placed in the `public/` directory.
+## Deployment
 
-## 🧞 Commands
+The site deploys to Cloudflare Workers Static Assets. After `pnpm build`:
 
-All commands are run from the root of the project, from a terminal:
+```bash
+npx wrangler deploy
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Legacy URL redirects (preserving inbound links from a previous Starlight-based version of this site) are declared in `public/_redirects` and read natively by Cloudflare.
 
-## 👀 Want to learn more?
+## License
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+Source code is MIT licensed. Case-study content, copy, and the portrait photo are © Cody Anthony — all rights reserved.
