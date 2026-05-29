@@ -131,6 +131,19 @@ Banned beyond what `ai-antipatterns` covers:
 - **"Information ecosystems."** Specific buzzword I avoid. Replace with "documentation systems," "content infrastructure," or whatever specific noun the context calls for.
 - **"Complex software products" overuse.** This is a brand phrase but it loses force if it appears in every paragraph. Limit to opening framings and key positioning lines. Vary downstream with specifics ("cloud platforms," "developer tools," "enterprise APIs," etc.) where appropriate.
 
+## Audience layering
+
+Even when the primary audience of a piece is peers (other tech writers, docs practitioners, engineers), **recruiters and hiring managers are always reading too.** Treat them as a persistent secondary audience. The job search is the underlying context for everything I publish under this brand.
+
+The implication for every piece:
+
+- Substance must signal craft-depth for the senior IC reader. A recruiter skimming should be able to identify expertise from the specifics, not from credentialing language.
+- No need to address recruiters directly. They read over the shoulder of the primary audience and form their own conclusions from what they see.
+- Avoid writing that *only* lands for peers (insider jokes, jargon without context) without also being substantively legible to a senior reader from an adjacent field.
+- Avoid writing that *only* lands for recruiters (resume-style claims, credential-stacking) without also being substantively useful to the peer audience.
+
+When in doubt, write for the peer; the recruiter signal follows from the substance.
+
 ## Brand voice quick-reference
 
 When writing in my voice, the test:
@@ -140,6 +153,10 @@ When writing in my voice, the test:
 - Could someone share a sentence from this on LinkedIn without it sounding like marketing copy? (Authenticity signal)
 
 If yes to all three, the voice is right. If no to any, revise.
+
+## AI-tell patterns
+
+Universal AI-output style tells (aphoristic closings, parallel-construction patterns, throat-clearing openers, buzz-shape phrases) are covered in `ai-antipatterns`. That skill is the canonical source. Apply its rules without duplicating them here.
 
 ## Self-check
 
@@ -156,4 +173,5 @@ Before submitting any writing:
 - [ ] Three-pillar shorthand uses canonical order
 - [ ] AI credit explicit where AI did the work
 - [ ] Brand-phrase "complex software products" appears at most once per piece
-- [ ] `ai-antipatterns` self-check passed
+- [ ] Audience layering: piece serves peers primarily, with recruiter readability preserved through substance
+- [ ] `ai-antipatterns` self-check passed (covers all universal AI-tells)

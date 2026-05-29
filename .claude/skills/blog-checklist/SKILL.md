@@ -45,19 +45,36 @@ Run each item against the draft. Report pass/fail per item. Revise the draft bef
 - [ ] AI credit explicit where AI did the work
 - [ ] Brand phrase "complex software products" appears at most once
 
-### Anti-pattern scan (per `ai-antipatterns`)
+### Anti-pattern scan — deterministic gate (per `ai-antipatterns`)
 
-- [ ] Zero em dashes in prose (description lists + link lists exempt)
-- [ ] No words from `ai-antipatterns` banned-words list (leverage, robust, comprehensive, seamless, etc.)
-- [ ] No throat-clearing openers ("It's important to note...," "As you may know...")
-- [ ] No summary padding ("In conclusion...," "To summarize...")
-- [ ] No forced enthusiasm ("Excited to share...," "This is a game-changer...")
-- [ ] No filler transitions ("Let's dive into...," "Without further ado...")
+**Run the script first.** Several anti-patterns are deterministically detectable; the script is the source of truth for those rules, not LLM judgment:
+
+```bash
+node scripts/check-blog-prose.mjs src/content/blog/{slug}.mdx
+```
+
+The script flags (and the checklist marks pass/fail based on its exit code):
+
+- [ ] Zero em dashes in prose (description lists + link lists exempt) — *script: `em-dash-in-prose`*
+- [ ] No words from `ai-antipatterns` banned-words list — *script: `banned-word`*
+- [ ] No throat-clearing openers, summary padding, forced enthusiasm, filler transitions, "A common framing in…" patterns — *script: `throat-clearing`*
+- [ ] No "Without X, Y. Without Y, X." inversions — *script: `without-inversion`*
+- [ ] No triple-repetition (3+ consecutive sentences opening with the same word) — *script: `triple-repetition` (warning)*
+
+**Exit code:** 0 = pass on critical rules; 1 = critical findings. Do not advance past this check until the script exits 0.
+
+### Anti-pattern scan — LLM judgment (per `ai-antipatterns`)
+
+The script does not cover these patterns; they require structural judgment:
+
+- [ ] No aphoristic closing slogans (especially as bookends)
+- [ ] Parallel sections render with structural variety (not identical bullet templates across cases/examples)
 - [ ] No paired synonyms ("detect and identify," "manage and control")
 - [ ] No tripled lists for emphasis ("fast, reliable, and efficient")
 - [ ] No fake precision (statistics without sources)
 - [ ] No emoji, no exclamation points, no scare quotes
-- [ ] First sentence of every section leads with the point, not the windup
+- [ ] First sentence of every section leads with the point
+- [ ] No buzz-shape phrases reaching for weight through abstraction, not the windup
 
 ### Length and pacing
 
@@ -78,6 +95,18 @@ Run each item against the draft. Report pass/fail per item. Revise the draft bef
 - [ ] OG image regenerated: run `node scripts/generate-blog-og.mjs` from project root
 - [ ] OG image exists at `public/og/blog/{slug}.png`
 - [ ] `pnpm astro check` passes 0 errors
+- [ ] `node scripts/check-blog-prose.mjs src/content/blog/{slug}.mdx` exits 0
+
+### Series-specific checks (only if `series` frontmatter field is set)
+
+Per `series-blocks` skill:
+
+- [ ] All `CONFIRM PRE-LAUNCH` placeholders filled in with real values
+- [ ] Series intro block present at top of body (after frontmatter, before prose)
+- [ ] Series navigation block present at bottom of body (after a `---` horizontal rule)
+- [ ] Disclaimer block (where required by the series) present unchanged
+- [ ] All URLs in the series blocks resolve (no 404)
+- [ ] Author names and post titles match coordinator confirmation
 
 ### Pre-merge
 

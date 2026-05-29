@@ -106,6 +106,9 @@ These phrases delay the point. Cut them.
 - "Interestingly..."
 - "The thing is..."
 - "The reality is..."
+- "A common framing in [community] right now..."
+- "There's been a lot of discussion about X lately."
+- "Many [people] face the same problem..."
 
 ### Summary padding
 
@@ -273,6 +276,45 @@ Fix: "This speeds up delivery."
 Bad: "...including scrapers, credential stuffers, and inventory hoarders."
 Fix: Use only when the list adds distinct information the reader needs.
 
+### Parallel-construction tells
+
+AI defaults toward balanced, parallel syntactic structures. Real writing varies its rhythms. Watch for these specific patterns:
+
+**Aphoristic slogan closings.** Short, parallel-construction sentences at the end of a section or post, designed to be quotable. Common shapes:
+
+- "The X is the Y."
+- "X is what does the work. Y is what holds the quality."
+- "The unit of [concept] is the [thing]."
+
+These read as deliberate craft on first pass; they read as LLM tics on second. Even one is borderline. Two in the same piece (especially as bookends) is a clear tell. Replace with sentences that finish a thought rather than summarize it.
+
+**"Without X, Y. Without Y, X." inversions.** A parallel two-sentence inversion structure:
+
+- "Without the conventions, the pipeline produces a thousand inconsistent translations. Without the pipeline, the conventions never apply at scale."
+
+Real writers might use this construction once in a career. LLMs reach for it constantly. Detect and rewrite.
+
+**Triple parallel construction across consecutive sentences.** Three consecutive sentences with identical syntactic structure carrying three different verbs:
+
+- "The deterministic layer scales repetition. The agentic layer scales judgment at volume. The human layer handles judgment that doesn't scale."
+
+The fact that the same structure carries three different verbs is the tell. Variation is the point of prose. Rewrite at least one sentence to break the rhythm.
+
+**Schematic identical templates across parallel sections.** When a piece has multiple sections that each describe a parallel set of items (cases, examples, layers), AI tends to render every section with the *same* template (same bold-label structure, same bullet count, same closing-sentence shape).
+
+Real writing varies the rendering even when the underlying structure is parallel. One section might be a narrative paragraph. Another a bulleted list. A third a short scene. Same beats, different shapes.
+
+### Buzz-shape phrases
+
+Phrases that sound profound but resolve to little:
+
+- "judgment that doesn't scale"
+- "strategic handoffs live here"
+- "load-bearing the work"
+- "the unit of craft is the X"
+
+These reach for weight through abstraction. The fix: name the concrete thing instead. "Judgment that doesn't scale" → "the conventions I set by hand for each ambiguous source file." Replace abstract weight with specific weight.
+
 ### Fake precision
 
 Do not cite statistics without a source. Do not approximate with false confidence.
@@ -350,3 +392,8 @@ Before finishing any writing output, verify:
 - [ ] No absolute certainty terms (definitely, certainly, guarantees, eliminates, impossible) added by agent
 - [ ] Context-dependent terms (always, never, every, all) only used when matching source docs or UI element names
 - [ ] Qualification terms (mostly, likely, ensures, prevents) only used when matching source docs or SME language, not chosen by the agent
+- [ ] No aphoristic closing slogans (especially as bookends)
+- [ ] No "Without X, Y. Without Y, X." inversions
+- [ ] No triple parallel construction across consecutive sentences
+- [ ] Parallel sections render with structural variety, not identical templates
+- [ ] No buzz-shape phrases reaching for weight through abstraction

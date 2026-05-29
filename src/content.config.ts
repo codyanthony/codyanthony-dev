@@ -32,6 +32,8 @@ const blog = defineCollection({
     date: z.coerce.date(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    /** Optional collaborative series participation. Signals the blog-draft command to insert intro/navigation blocks from the matching series-blocks template. Extend the enum when adding a new series. */
+    series: z.enum(["per-the-docs"]).optional(),
   }),
 });
 
