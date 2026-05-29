@@ -23,4 +23,7 @@ pnpm-debug.log*
 # Local development tooling and agent guidance — not for public consumption
 CLAUDE.md
 .claude/
-scripts/ 
+scripts/
+
+# Photo source set (189MB) — used to generate site headshot and LinkedIn assets
+Cody Pro Photos 2026/
