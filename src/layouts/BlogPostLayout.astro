@@ -52,6 +52,7 @@ const articleSchema = {
 
 <BaseLayout title={title} description={description} ogImage={ogImage}>
   <script
+    is:inline
     slot="head"
     type="application/ld+json"
     set:html={JSON.stringify(articleSchema)}
