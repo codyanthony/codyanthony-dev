@@ -1,0 +1,78 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  readingTime: number;
+  ogImage?: string;
+  slug: string;
+}
+
+const { title, description, date, readingTime, ogImage, slug } = Astro.props;
+
+const formattedDate = date.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const isoDate = date.toISOString();
+
+const canonicalURL = new URL(`/blog/${slug}/`, Astro.site).toString();
+const resolvedOgImage = ogImage
+  ? new URL(ogImage, Astro.site).toString()
+  : new URL("/og.png", Astro.site).toString();
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  datePublished: isoDate,
+  dateModified: isoDate,
+  author: {
+    "@type": "Person",
+    name: "Cody Anthony",
+    url: "https://codyanthony.dev/about/",
+  },
+  publisher: {
+    "@type": "Person",
+    name: "Cody Anthony",
+    url: "https://codyanthony.dev/",
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": canonicalURL,
+  },
+  image: resolvedOgImage,
+};
+---
+
+<BaseLayout title={title} description={description} ogImage={ogImage}>
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(articleSchema)}
+  />
+
+  <header class="blog-post-header">
+    <p class="case-study-header__eyebrow">
+      <a href="/blog/">Blog</a>
+    </p>
+    <h1 class="case-study-header__title">{title}</h1>
+    <p class="case-study-header__description">{description}</p>
+    <p class="blog-post-meta">
+      By Cody Anthony · <time datetime={isoDate}>{formattedDate}</time> · {readingTime} min read
+    </p>
+  </header>
+
+  <article class="prose">
+    <slot />
+  </article>
+
+  <footer class="case-study-footer">
+    <a class="btn btn--ghost" href="/blog/">← Back to all posts</a>
+  </footer>
+</BaseLayout>

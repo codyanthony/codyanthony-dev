@@ -918,6 +918,14 @@ th {
   line-height: var(--lh-snug);
 }
 
+.cs-list__meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--c-text-dim);
+  letter-spacing: 0.04em;
+  margin-top: var(--sp-1);
+}
+
 /* ============================================================
    Case-study page
    ============================================================ */
@@ -964,6 +972,28 @@ th {
   max-width: var(--content-width);
   margin-left: auto;
   margin-right: auto;
+}
+
+/* ============================================================
+   Blog post page
+   ============================================================ */
+
+.blog-post-header {
+  padding: var(--sp-16) 0 var(--sp-8);
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+.blog-post-meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--c-text-dim);
+  letter-spacing: 0.04em;
+  margin-top: var(--sp-6);
+}
+
+.blog-post-meta time {
+  color: var(--c-text-dim);
 }
 
 /* Images inside case studies get rounded + bordered */
