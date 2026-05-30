@@ -10,8 +10,10 @@ Skills and slash commands for writing blog posts (and eventually other content) 
 ├── skills/
 │   ├── ai-antipatterns/SKILL.md                 # Universal negative style guide
 │   ├── personal-tone/SKILL.md                   # Voice + brand alignment
+│   ├── writer-context/SKILL.md                  # Verified work history, NDA/proprietary guidance, common overclaims to refuse
 │   ├── blog-post-framework/SKILL.md             # Three-beat structure for blog posts
-│   └── blog-checklist/SKILL.md                  # Pre-publish gates
+│   ├── blog-checklist/SKILL.md                  # Pre-publish gates
+│   └── series-blocks/SKILL.md                   # Series intro/navigation block templates (Per the Docs)
 └── commands/
     ├── blog-draft.md                            # Orchestrates a full draft flow
     └── blog-review.md                           # Adversarial review of an existing draft

@@ -1,6 +1,7 @@
+
 ---
 title: "Where the Script Stops and the Judgment Starts"
-description: "The writer's craft in a mostly-automated migration is engineering the pipeline that produces the docs, and knowing which of its three layers owns each decision."
+description: "Where the script stops and the judgment starts, in three documentation pipelines I built."
 date: 2026-06-08
 tags: ["documentation-systems", "ai-workflows", "docs-as-code", "technical-writing", "content-pipelines"]
 draft: false
@@ -9,7 +10,7 @@ series: per-the-docs
 
 This post is part of the [Per the Docs]([CONFIRM PRE-LAUNCH: PER-THE-DOCS-URL]) article series. Links to the rest of the series are at the end of this piece.
 
-A few years ago I inherited a backlog of AWS service documentation locked in a legacy XML format, with a mandate to move it to AsciiDoc. The work began on ROSA, where we wrote alongside Red Hat's technical writers, and the XML toolchain was the wall between those writers and the docs they wanted to edit. The pile was thousands of files deep. My first instinct was the one I'd been trained into: open the queue and start converting.
+A few years ago at AWS, I took on a backlog of service documentation locked in a legacy XML format, with a mandate to move it to AsciiDoc. The work began on ROSA, where Red Hat's technical writers wanted to contribute and the XML toolchain was the wall between them and the docs they wanted to edit. The pile was thousands of files deep. My first instinct was the one I'd been trained into: open the queue and start converting.
 
 If you've shipped documentation at any real size, you know that instinct, and you know where it ends. Convert by hand and you finish sometime next year, with a thousand small inconsistencies you introduced along the way. The job was bigger than hands. So I stopped converting and started building the thing that would convert. That shift, from writing the docs to engineering the system that produces them, is the part of the craft I want to talk about.
 
@@ -27,13 +28,13 @@ The agents had a stopping point too, and it sat one level up, at the conventions
 
 I'm building the same shape again now, larger, on a set of cross-product solution guides at Cloudflare. The transform there is a different one: turning scattered single-product docs into guides that walk a reader across several products to finish one job. The deterministic and agentic layers carry more here. OpenCode orchestrates multi-step Claude agents that draft, cross-check against the source docs, and assemble.
 
-What's different is where my judgment lives. On the AWS migration I applied it case by case, ruling on exceptions as they surfaced. On the Cloudflare guides I encoded it into the pipeline as validation gates, the checks a draft has to pass before it's allowed to move downstream. The judgment moved out of the artifact and into the machine. The seam between human work and automated work isn't fixed in one place. You get to choose where it falls, and that choice is itself part of the design.
+What's different is where my judgment lives. On the AWS migration I applied it case by case, ruling on exceptions as they surfaced. On the Cloudflare guides I encoded it into the pipeline as validation gates, the checks a draft has to pass before it's allowed to move downstream. One of those gates says every product capability the draft mentions has to cite a source page, or the gate hands the draft back to the previous step. Another flags any cross-product workflow that doesn't trace to an actual customer journey. The judgment moved out of the artifact and into the machine. The seam between human work and automated work isn't fixed in one place. You get to choose where it falls, and that choice is itself part of the design.
 
 ## What I take from both
 
-The skill now is assigning each decision to the layer that should own it, a script, an agent, or me, and designing the handoffs so each one does the part it's genuinely good at. Draw the seams wrong and you either hand a machine a judgment call it will get confidently wrong, or you spend your afternoon doing by hand what a script should have finished before lunch. Draw them right and the documentation keeps pace with the engineering instead of falling behind it. If you've drawn the seams in your own pipeline differently, I'd genuinely like to read how.
+The skill now is assigning each decision to the layer that should own it, a script, an agent, or me, and designing the handoffs so each one does the part it's good at. Draw the seams wrong and you hand a machine a judgment call it will get confidently wrong. Or you spend your afternoon doing by hand what a script should have finished before lunch. Draw them right and the documentation keeps pace with the engineering instead of falling behind it. If you've drawn the seams in your own pipeline differently, I'd genuinely like to read how.
 
-This post is a small version of the same thing. I didn't write it cold. The conventions live in a few writing skills I maintain: a negative style guide, a set of voice rules, a structural framework. A Claude agent took those and ran the drafting flow, proposing a title, an outline, and a first draft that already followed the rules. I made the calls on what the post argues, which three projects anchor it, and which sentences survived the edit. The agent handled the production. The standards it worked against were mine, and so were the calls it couldn't make.
+This post is a small version of the same thing. I didn't write it cold. The conventions live in a few writing skills I maintain in my portfolio repo: an anti-patterns negative style guide, a personal-voice file, and a structural framework for blog posts. A Claude agent took those and ran the drafting flow, proposing a title, an outline, and a first draft that already followed the rules. I made the calls on what the post argues, which three projects anchor it, and which sentences survived the edit. The agent handled the production. The standards it worked against were mine, and so were the calls it couldn't make.
 
 The craft didn't disappear when the typing got automated. It moved to the seams.
 

@@ -20,9 +20,11 @@ Run each item against the draft. Report pass/fail per item. Revise the draft bef
 
 - [ ] `title` is present, descriptive, not clickbait
 - [ ] `description` is present, one sentence, mirrors what's promised in the post
+- [ ] `description` reads as concrete as (or more concrete than) the strongest line in the post — not a softer abstraction of the thesis. If the description sounds more abstract than the post, revise.
 - [ ] `date` is set to the intended publish date (ISO 8601 format, e.g. `2026-06-08`)
 - [ ] `tags` array contains at least 2 topical tags (data-only — UI is deferred)
 - [ ] `draft: false` (or absent — default is false)
+- [ ] For series posts, `series_theme` and `series_theme_url` set if the navigation block uses them
 - [ ] No stray frontmatter fields not defined in `src/content.config.ts`
 
 ### Beat presence (per `blog-post-framework`)
@@ -44,6 +46,23 @@ Run each item against the draft. Report pass/fail per item. Revise the draft bef
 - [ ] Three-pillar shorthand (Content Strategy / Documentation Systems / AI Workflows) in canonical order if listed inline
 - [ ] AI credit explicit where AI did the work
 - [ ] Brand phrase "complex software products" appears at most once
+
+### Fact-accuracy scan (per `writer-context`)
+
+Critical check. Drafting agents often generate plausible-sounding claims about the writer's history that don't match reality. Verify every claim about Cody's work history against the `writer-context` skill:
+
+- [ ] All employer + title + date claims match `writer-context`
+- [ ] No "founding writer" claim for ROSA (he joined post-GA — see `writer-context` § AWS role specifics)
+- [ ] "Founding lead writer" claim used only for EVS, not ROSA
+- [ ] No "preview through GA" claim for ROSA (only applies to EVS)
+- [ ] No "inherited a backlog" or "took ownership transferred" framing for the AWS XML migration
+- [ ] No "wrote alongside Red Hat's technical writers" or similar overstatements of the cross-vendor collab state
+- [ ] AWS-side ROSA docs format claim: AsciiDoc (which Cody led the adoption of), not Markdown
+- [ ] AWS pre-migration format claim: DocBook XML, not DITA
+- [ ] Years-of-experience claims are accurate to the kind of work claimed (e.g., "8 years technical writing" not "8 years content infrastructure")
+- [ ] No "non-deterministic logic to systematize complex research" or similar opaque Cloudflare phrasing
+- [ ] No banned words (especially `ecosystem` for the Cloudflare solution-guide work — use `collection`, `set`, or `line`)
+- [ ] `writer-context` self-check passed
 
 ### Anti-pattern scan — deterministic gate (per `ai-antipatterns`)
 
@@ -69,6 +88,8 @@ The script does not cover these patterns; they require structural judgment:
 
 - [ ] No aphoristic closing slogans (especially as bookends)
 - [ ] Parallel sections render with structural variety (not identical bullet templates across cases/examples)
+- [ ] Parallel examples developed to comparable depth (per `blog-post-framework`)
+- [ ] Artifacts named where legitimately nameable (own work or public); abstracted only for NDA/proprietary/reputational concerns. Vague references to artifacts that *could* be named are a substance gap.
 - [ ] No paired synonyms ("detect and identify," "manage and control")
 - [ ] No tripled lists for emphasis ("fast, reliable, and efficient")
 - [ ] No fake precision (statistics without sources)
