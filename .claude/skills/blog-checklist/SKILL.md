@@ -113,8 +113,7 @@ The script does not cover these patterns; they require structural judgment:
 
 - [ ] Slug matches filename in `src/content/blog/` (kebab-case, no spaces, no special chars)
 - [ ] File extension is `.mdx` (not `.md` — required for any post that uses MDX components like `<Aside>`)
-- [ ] OG image regenerated: run `node scripts/generate-blog-og.mjs` from project root
-- [ ] OG image exists at `public/og/blog/{slug}.png`
+- [ ] OG card reads well at the post `title` (rendered dynamically by `/og/[slug].png` and cached to R2 — no static file to generate or commit)
 - [ ] `pnpm astro check` passes 0 errors
 - [ ] `node scripts/check-blog-prose.mjs src/content/blog/{slug}.mdx` exits 0
 

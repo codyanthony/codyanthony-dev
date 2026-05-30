@@ -30,7 +30,10 @@ Print the banner above verbatim before doing anything else. Then print:
 **Required scripts:**
 
 - `scripts/check-blog-prose.mjs` — deterministic prose validation
-- `scripts/generate-blog-og.mjs` — per-post OG image generation
+
+OG images are no longer generated as a build step: the social card is rendered
+on demand by the `/og/[slug].png` endpoint and cached to R2 on first scrape (see
+Phase 6). No `generate-blog-og.mjs` / static PNG.
 
 **Required tools:** Read, Write, Bash, Edit. Bash for git operations, script invocation, file existence checks, and `pnpm astro check`.
 
@@ -468,21 +471,14 @@ For series posts, recommend `review` strongly (cross-author chain raises stakes)
 
 All steps deterministic. Defer to scripts and tools. Each gate must pass before declaring success.
 
-### 6a. Regenerate OG image
+### 6a. OG image — generated dynamically (no action)
 
-```bash
-node scripts/generate-blog-og.mjs
-```
+The social card is rendered on demand by `/og/[slug].png` and cached to R2 on
+first scrape; `src/pages/blog/[...slug].astro` passes the post title to it
+automatically. There is no static OG file to generate, verify, or commit — just
+make sure the post `title` reads well as a card.
 
-### 6b. Verify OG image exists
-
-```bash
-test -f "public/og/blog/{slug}.png" && echo "OG_OK" || echo "OG_MISSING"
-```
-
-If `OG_MISSING`: STOP. Report the failure.
-
-### 6c. Run astro check
+### 6b. Run astro check
 
 ```bash
 pnpm astro check
@@ -490,7 +486,7 @@ pnpm astro check
 
 If exit code is non-zero: STOP. Report errors.
 
-### 6d. Re-run prose-check against saved file
+### 6c. Re-run prose-check against saved file
 
 ```bash
 node scripts/check-blog-prose.mjs src/content/blog/{slug}.mdx
@@ -498,7 +494,7 @@ node scripts/check-blog-prose.mjs src/content/blog/{slug}.mdx
 
 If exit code is non-zero: STOP. This catches anything that got reintroduced between Phase 4 and now.
 
-### 6e. Word count + reading time
+### 6d. Word count + reading time
 
 ```bash
 # Strip frontmatter, count words
@@ -513,7 +509,7 @@ Print summary:
 
 ```
 Save gates passed:
-  OG image regenerated: public/og/blog/{slug}.png
+  OG image: dynamic (/og/{slug}.png, rendered + cached on first scrape)
   pnpm astro check: 0 errors
   check-blog-prose.mjs: 0 critical
   Reading time: {N} min
@@ -526,15 +522,20 @@ Save gates passed:
 ### 7a. Commit
 
 ```
-Commit this draft and OG image to {current-branch}? (commit / skip)
+Commit this draft to {current-branch}? (commit / skip)
 ```
 
 If `commit`:
 
 ```bash
-git -C . add "src/content/blog/{slug}.mdx" "public/og/blog/{slug}.png"
+git -C . add "src/content/blog/{slug}.mdx"
 git -C . commit -m "{commit message generated from post title + intent}"
 ```
+
+If the post references media artifacts (diagrams, screenshots the build/agent
+produced), those belong in R2, not git: `npx wrangler r2 object put
+codyanthony-dev-bucket/blog/{slug}/{file} --file=… --remote` and reference them
+as `/assets/blog/{slug}/{file}` (served by `src/pages/assets/[...path].ts`).
 
 The commit message follows the repo convention (imperative, descriptive, ≤72 chars). Co-author line per the project's git convention if present.
 
@@ -550,8 +551,13 @@ If `deploy`:
 
 ```bash
 git -C . push -u origin "{current-branch}"
-npx wrangler versions upload
+pnpm build
+npx wrangler versions upload --config dist/server/wrangler.json
 ```
+
+The `--config dist/server/wrangler.json` is required: the site now builds
+through the `@astrojs/cloudflare` adapter, and the deploy config is the
+generated one (the root `wrangler.jsonc` has no Worker `main`).
 
 Capture and report the preview URL from wrangler's output.
 
@@ -563,7 +569,7 @@ If `skip`: continue to 7c.
 {post title}
 
 File: src/content/blog/{slug}.mdx
-OG image: public/og/blog/{slug}.png ({W}x{H}, {KB}KB)
+OG image: dynamic — /og/{slug}.png (rendered + cached on first scrape)
 Branch: {current-branch}
 {if committed} Commit: {short-sha}
 {if deployed} Preview: {preview-url}
