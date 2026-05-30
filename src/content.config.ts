@@ -34,6 +34,10 @@ const blog = defineCollection({
     draft: z.boolean().default(false),
     /** Optional collaborative series participation. Signals the blog-draft command to insert intro/navigation blocks from the matching series-blocks template. Extend the enum when adding a new series. */
     series: z.enum(["per-the-docs"]).optional(),
+    /** Optional monthly theme name for series posts (e.g., "Content Alchemy", "Mind the Gap"). Surfaced in the series navigation block when the series convention includes a per-month theme label. */
+    series_theme: z.string().optional(),
+    /** Optional URL to the theme-specific landing page on the series host's site. Surfaced in the navigation block alongside the theme name. */
+    series_theme_url: z.string().optional(),
   }),
 });
 

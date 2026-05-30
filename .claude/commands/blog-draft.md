@@ -21,6 +21,7 @@ Print the banner above verbatim before doing anything else. Then print:
 - `.claude/skills/personal-tone/SKILL.md` — voice, brand alignment, audience layering
 - `.claude/skills/blog-post-framework/SKILL.md` — three-beat structure, opener shapes
 - `.claude/skills/blog-checklist/SKILL.md` — pre-publish gates
+- `.claude/skills/writer-context/SKILL.md` — verified work history, role specifics, NDA/proprietary reference guidance, common overclaims to refuse
 
 **Loaded conditionally (in Phase 1 Q4 if post is series-participating):**
 
@@ -49,9 +50,10 @@ Skills loaded:
   [x] personal-tone — "Audience layering: peers primary, recruiters always reading too"
   [x] blog-post-framework — "Three beats: Why this / What's true / What's portable"
   [x] blog-checklist — "Deterministic gate runs check-blog-prose.mjs before LLM judgment"
+  [x] writer-context — "Refuse 'founding writer for ROSA' (he joined post-GA); refuse 'inherited' framing for AWS XML migration"
 ```
 
-**Do not proceed past this gate until all four skills are confirmed in context.** If any failed to load, report which one and stop.
+**Do not proceed past this gate until all five skills are confirmed in context.** If any failed to load, report which one and stop.
 
 ### 0b. Branch management
 
@@ -154,6 +156,24 @@ If `yes`: ask which series. Currently supported (the `series` enum in `src/conte
 If the writer names a series not in the enum, STOP: "The `series` enum in `src/content.config.ts` does not include `{name}`. Extend the enum and add a section to `series-blocks/SKILL.md` before drafting."
 
 Load `series-blocks/SKILL.md` and confirm the chosen series template is documented.
+
+### Q4a: Series theme (only if Q4 = yes)
+
+> What's the monthly theme name (e.g., "Content Alchemy", "Mind the Gap")? Type the theme name, or `skip` if not yet known.
+
+If the writer provides a theme name, capture it for the `series_theme` frontmatter field and the navigation block placeholder. If `skip`, leave the placeholder for pre-launch fill-in.
+
+> Do you have the theme-landing-page URL (the host's index page for this month's participants)? Type the URL, or `skip`.
+
+Capture as `series_theme_url` if provided.
+
+### Q4b: Theme tie-back consideration (only if Q4 = yes)
+
+> Per `series-blocks`, the strongest tie-back to a monthly theme is through substance, not explicit labeling. Does the core idea (Q1) connect to the theme through its substance, or does the post need a bridging sentence somewhere to make the connection clear?
+>
+> (substance / bridge / skip — `substance` means the connection is implicit and works; `bridge` means we'll add a light reference somewhere; `skip` means defer this decision until after the draft is written)
+
+Default to `substance` unless the writer explicitly asks for a bridge. Heavy theme-labeling weakens the post.
 
 ### Q5: Publish date
 
@@ -324,8 +344,12 @@ date: {publish date from Q5}
 tags: [{confirmed tags from 2f}]
 draft: false
 {if series} series: {series-slug from Q4}
+{if series and Q4a theme name provided} series_theme: "{theme name}"
+{if series and Q4a theme URL provided} series_theme_url: "{theme url}"
 ---
 ```
+
+**Description specificity check.** The frontmatter `description` is load-bearing (RSS feed, social-card previews, meta tags, search snippets). It should be a sharper version of the strongest concrete line in the post, not a softer abstraction of the thesis. If the description sounds more abstract than the post itself, revise. A good test: paste the description in isolation and ask whether it would compel a reader to open the post. If the answer is "barely," it's too abstract.
 
 ### Body order
 

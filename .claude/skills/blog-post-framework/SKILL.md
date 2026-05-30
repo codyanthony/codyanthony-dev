@@ -81,6 +81,8 @@ The substantive middle. The actual idea, fully unfolded, with at least one concr
 
 - **At least one specific example.** Abstract argument without example is generic. The example should be detailed enough that a reader can map it to their own work.
 - **The example earns its place.** Either it illustrates the idea, OR it deepens it (shows a complication the abstract version missed). Examples that just restate the abstract claim in narrative form add length without adding insight.
+- **Parallel examples should be developed to comparable depth.** If the post uses N parallel examples (cases, projects, situations), each should be developed to comparable depth unless the imbalance is intentional and the writer can name why. A thin parallel example signals that the writer didn't have enough material; consider cutting it or strengthening it. Imbalanced parallel examples often surface during the validate phase, when the deterministic script passes but the LLM reviewer flags depth inconsistency.
+- **Name your specifics, with NDA and proprietary exceptions.** When referencing artifacts, tools, files, or systems, name them when the artifact is **your own work product** (your portfolio, your skills, your scripts) or **already publicly known** (open-source projects, public documentation, published case studies, public talks). "A negative style guide and a structural framework" is weaker than "the `ai-antipatterns` skill and the `blog-post-framework` skill." Vague references to artifacts you can legitimately name undercut the substance and signal paraphrasing instead of concrete material. **Abstract instead when** the artifact is a current or former employer's proprietary tool, information is under NDA, naming would create reputational risk, or you're referencing internal codenames or unpublished features. If in doubt about whether something is safe to name, abstract.
 - **The reader can disagree.** A post that no one could reasonably push back on is probably restating consensus. The strongest posts make claims a thoughtful peer could argue with.
 - **The reader's existing knowledge is respected.** Don't explain things experienced readers already know. If a beat depends on shared context (Docs-as-Code, JTBD, AI-assisted writing), assume the reader has it.
 
@@ -173,11 +175,14 @@ Before submitting any blog post:
 - [ ] All three beats present: Why this, What's true, What's portable
 - [ ] Opener shape varies from the writer's last 2–3 posts
 - [ ] At least one concrete example with detail
+- [ ] Parallel examples developed to comparable depth (or imbalance is intentional and explainable)
+- [ ] Artifacts named where the writer can legitimately name them (own work or public); abstracted only where NDA, proprietary, or reputational concerns apply
 - [ ] Portable insight extractable as a single shareable sentence
 - [ ] Reading time 3–8 min (or justified if longer)
 - [ ] No "What's next" beat unless natural
 - [ ] `personal-tone` self-check passed
 - [ ] `ai-antipatterns` self-check passed
+- [ ] `writer-context` self-check passed (no overclaims about the writer's history)
 
 ## Scope boundary
 

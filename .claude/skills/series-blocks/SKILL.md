@@ -63,7 +63,7 @@ Links to the rest of the series are at the end of this piece.
 ```markdown
 ---
 
-This post is part of the [Per the Docs]([CONFIRM PRE-LAUNCH: PER-THE-DOCS-URL]) article series, a monthly collaborative series where technical writers explore different aspects of our craft. Each month features a new topic with perspectives from writers across the community.
+This post is part of the [Per the Docs]([CONFIRM PRE-LAUNCH: PER-THE-DOCS-URL]) article series, a monthly collaborative series where technical writers explore different aspects of our craft. This month's topic is [[CONFIRM PRE-LAUNCH: THEME-NAME]]([CONFIRM PRE-LAUNCH: THEME-LANDING-URL]). Each month features a new theme with perspectives from writers across the community.
 
 Previous article: [CONFIRM PRE-LAUNCH: PREV-AUTHOR] - [[CONFIRM PRE-LAUNCH: PREV-POST-TITLE]]([CONFIRM PRE-LAUNCH: PREV-POST-URL])
 Next article: [CONFIRM PRE-LAUNCH: NEXT-AUTHOR] - [[CONFIRM PRE-LAUNCH: NEXT-POST-TITLE]]([CONFIRM PRE-LAUNCH: NEXT-POST-URL])
@@ -73,11 +73,17 @@ Next article: [CONFIRM PRE-LAUNCH: NEXT-AUTHOR] - [[CONFIRM PRE-LAUNCH: NEXT-POS
 *Disclaimer: Each article in this series is written and owned by its respective author. The views, opinions, and experiences shared belong solely to the individual writer and do not represent the perspectives of other participants or their employers (past or present).*
 ```
 
+**Theme-name pattern.** Observed in published Per the Docs posts: the navigation block sometimes names the specific monthly theme and links to a theme-specific landing page (e.g., "the April 2026 topic Mind the Gap" linking to a Jill Shaheen blog post indexing that month's participants). When the writer has the theme name and landing URL at draft time, populate the `THEME-NAME` and `THEME-LANDING-URL` placeholders directly. When unknown, leave the placeholders for pre-launch fill-in.
+
+The theme name and theme URL can also live in frontmatter as `series_theme` and `series_theme_url` fields (defined in `src/content.config.ts`) for structured access.
+
 **Placeholders used:**
 
 | Placeholder | What to fill in pre-launch |
 |---|---|
 | `PER-THE-DOCS-URL` | The series landing-page URL provided by the coordinator (unique per month until perthedocs.com goes live) |
+| `THEME-NAME` | The monthly theme name (e.g., "Content Alchemy", "Mind the Gap"). May also be set in frontmatter as `series_theme`. |
+| `THEME-LANDING-URL` | URL to the theme-specific landing page on the series host's site. May also be set in frontmatter as `series_theme_url`. |
 | `PREV-AUTHOR` | Author name of the previous post in the chain |
 | `PREV-POST-TITLE` | Title of the previous post (becomes linked text) |
 | `PREV-POST-URL` | URL of the previous post (becomes the link target) |
@@ -105,12 +111,21 @@ Run before publishing any post with a `series` frontmatter value:
 
 - [ ] All `CONFIRM PRE-LAUNCH` placeholders filled in with real values
 - [ ] Series landing-page URL resolves (no 404)
+- [ ] Theme-name and theme-landing URL resolve (when the navigation block includes them)
 - [ ] Previous post URL resolves
 - [ ] Next post URL resolves
 - [ ] Author names match what the coordinator confirmed
 - [ ] Disclaimer block present unchanged (legal/social-contract requirement)
 - [ ] Intro block present at the very top of the body (before all prose)
 - [ ] Navigation block present at the very bottom of the body (after a `---` horizontal rule)
+
+## Theme tie-back convention
+
+Observed in the Per the Docs series: posts tie back to the monthly theme through **substance, not explicit labeling.** A post on the "Mind the Gap" theme might be about taxonomy as a gap-finding mechanism; a post on a "Content Alchemy" theme might be about transformation between input and output formats. The connection is woven through the post's argument, not stated as "this month's theme is X, here's my take."
+
+Heavy theme-labeling reads as forced and undercuts the post's substance. Light theme references in the navigation block (via the THEME-NAME placeholder) are sufficient.
+
+If the writer can't articulate how the post connects to the theme, the post probably isn't a fit for the series this month. Surface that during the `blog-draft` flow, not at pre-publish.
 
 ## Scope boundary
 
