@@ -22,8 +22,8 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# Local development tooling and agent guidance — not for public consumption
-CLAUDE.md
+# Local tooling — not for public consumption
+# (CLAUDE.md is tracked: it's shared project guidance, version-controlled with the code)
 .claude/
 scripts/
 
