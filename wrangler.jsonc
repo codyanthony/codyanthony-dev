@@ -2,12 +2,20 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "codyanthony-dev",
   "compatibility_date": "2025-12-14",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
   },
   "observability": {
     "enabled": true
-  }
+  },
+  "r2_buckets": [
+    {
+      "binding": "PORTFOLIO_ASSETS",
+      "bucket_name": "codyanthony-dev-bucket"
+    }
+  ]
 }
