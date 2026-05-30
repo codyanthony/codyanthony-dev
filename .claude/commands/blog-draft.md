@@ -561,6 +561,23 @@ generated one (the root `wrangler.jsonc` has no Worker `main`).
 
 Capture and report the preview URL from wrangler's output.
 
+Then warm the post's OG card so the first social scraper gets an instant R2
+hit instead of paying the cold Satori render (which a scraper with a tight
+timeout could occasionally drop, caching "no image"):
+
+```bash
+curl -s -o /dev/null -w "OG warm: HTTP %{http_code}\n" \
+  "https://codyanthony.dev/og/{slug}.png?title={url-encoded-title}"
+```
+
+This step is intentionally inside the `deploy` branch only — there's nothing
+to warm (and no audience scraping the post) until it's deployed. The `/og`
+endpoint renders from the `title` query param, so this pre-generates and
+caches the production card even before the post page itself goes live; once it
+is live and shared, the card is already warm. `{url-encoded-title}` must match
+the title in the deployed `og:image` meta exactly, or it warms a different
+cache key.
+
 If `skip`: continue to 7c.
 
 ### 7c. Final report
