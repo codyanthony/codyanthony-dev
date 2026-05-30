@@ -20,7 +20,11 @@ const slug = entry.id.replace(/\.(md|mdx)$/, "");
 const wordCount = entry.body?.trim().split(/\s+/).length ?? 0;
 const readingTime = Math.max(1, Math.round(wordCount / 200));
 
-const ogImage = `/og/blog/${slug}.png`;
+// OG card is generated on demand by /og/[slug].png (rendered + cached to R2 on
+// first scrape), not a committed static file. Pass the post title so the card
+// renders with it; BlogPostLayout uses this for both the og:image meta and the
+// JSON-LD image.
+const ogImage = `/og/${slug}.png?title=${encodeURIComponent(entry.data.title)}`;
 ---
 
 <BlogPostLayout

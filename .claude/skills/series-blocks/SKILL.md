@@ -139,5 +139,5 @@ This skill does **not** cover:
 - The main blog post structure → `blog-post-framework`
 - Voice and brand alignment → `personal-tone`
 - Universal style banishments → `ai-antipatterns`
-- Per-post OG image generation → `scripts/generate-blog-og.mjs`
+- Per-post OG cards → generated dynamically by the `/og/[slug].png` endpoint
 - General pre-publish gates → `blog-checklist`

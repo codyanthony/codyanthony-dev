@@ -59,7 +59,7 @@ Pre-publish gates. Aggregates checks from the three skills above plus operationa
 
 ### `/blog-draft`
 
-Drives a blog post from idea to ready-to-merge draft. Asks the writer four input questions, sketches the three beats, generates the full draft, runs the pre-publish checklist, and saves to `src/content/blog/{slug}.mdx`. Regenerates the per-post OG image via `scripts/generate-blog-og.mjs`.
+Drives a blog post from idea to ready-to-merge draft. Asks the writer four input questions, sketches the three beats, generates the full draft, runs the pre-publish checklist, and saves to `src/content/blog/{slug}.mdx`. The per-post OG card is generated dynamically by the `/og/[slug].png` endpoint (cached to R2) — no static image step.
 
 Use this to write a new post from scratch.
 
@@ -75,7 +75,6 @@ Commands defer to scripts for anything that should produce the same output given
 
 | Script | Purpose | Called from |
 |---|---|---|
-| `scripts/generate-blog-og.mjs` | Renders per-post 1200×630 OG images from blog frontmatter | `/blog-draft` Step 6; `blog-checklist` operational checks |
 | `scripts/generate-og.mjs` | Renders site-level OG image | Not part of blog flow; run manually when brand changes |
 | `scripts/generate-linkedin-assets.mjs` | Renders LinkedIn banner + headshot | Not part of blog flow; run when brand or photo changes |
 | `pnpm astro check` (via Bash) | Validates Astro/MDX syntax + types | `blog-checklist` operational checks |
