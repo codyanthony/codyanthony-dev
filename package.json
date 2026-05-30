@@ -7,19 +7,23 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro build && wrangler dev --config dist/server/wrangler.json",
+    "deploy": "astro build && wrangler deploy --config dist/server/wrangler.json",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.0.0",
-    "astro": "^5.6.1",
-    "sharp": "^0.34.2"
+    "@astrojs/cloudflare": "13.6.0",
+    "@astrojs/mdx": "^6.0.1",
+    "astro": "^6.4.2",
+    "sharp": "^0.34.2",
+    "workers-og": "^0.0.27"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@eslint/js": "^9.39.2",
     "eslint": "^9.39.2",
     "puppeteer": "^25.1.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.95.0"
   }
 }

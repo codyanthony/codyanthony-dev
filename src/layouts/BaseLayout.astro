@@ -20,9 +20,20 @@ const {
 const siteName = "Cody Anthony";
 const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+
+// og:image defaults to a dynamically generated, per-page social card
+// (src/pages/og/[slug].png.ts — rendered then cached to R2 on first scrape).
+// The slug is the page's path, so each URL gets its own cacheable card titled
+// with the page title. Pages can override with an explicit `ogImage` (a
+// hand-made card or a static asset like /og.png).
+const ogSlug =
+  Astro.url.pathname.replace(/^\/+|\/+$/g, "").replace(/\//g, "-") || "home";
 const resolvedOgImage = ogImage
   ? new URL(ogImage, Astro.site).toString()
-  : new URL("/og.png", Astro.site).toString();
+  : new URL(
+      `/og/${ogSlug}.png?title=${encodeURIComponent(title)}`,
+      Astro.site,
+    ).toString();
 ---
 
 <!doctype html>
