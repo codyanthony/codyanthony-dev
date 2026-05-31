@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 <BaseLayout
   title="About This Site"
-  description="The technical decisions behind codyanthony.dev: Astro, MDX, content collections, Cloudflare Workers Static Assets, and the philosophy that drove the stack choice."
+  description="The technical decisions behind codyanthony.dev: Astro, MDX, content collections, a Cloudflare Worker serving a static-first site, and the philosophy that drove the stack choice."
 >
   <section class="section">
     <div class="prose">
@@ -19,8 +19,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <h2>Stack at a glance</h2>
       <ul>
         <li>
-          <strong>Framework:</strong> Astro 5 with the official MDX integration.
-          Output is <code>static</code>; every route is prerendered at build time.
+          <strong>Framework:</strong> Astro 6 with the official MDX integration.
+          Output is <code>static</code>: pages are prerendered at build time. Two
+          routes opt out and run on demand as Worker code, the per-page OG image
+          endpoint and the R2 asset proxy.
         </li>
         <li>
           <strong>Content:</strong> Typed collections under <code>src/content/case-studies/</code>.
@@ -37,12 +39,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           needs one.
         </li>
         <li>
-          <strong>Hosting:</strong> Cloudflare Workers Static Assets. All deployment
-          configuration lives in <code>wrangler.jsonc</code>.
+          <strong>Hosting:</strong> Cloudflare Workers, via the official
+          <code>@astrojs/cloudflare</code> adapter. A static-asset binding serves
+          the prerendered pages; the on-demand routes run as Worker code. Bindings
+          and deployment config start in <code>wrangler.jsonc</code>.
         </li>
         <li>
           <strong>Image pipeline:</strong> Sharp via Astro's image pipeline.
           Hash-stamped WebP variants generated per-density at build time.
+        </li>
+        <li>
+          <strong>Social cards:</strong> Generated on demand per page by a Worker
+          endpoint. Satori renders the page title into SVG, resvg rasterizes it to
+          a 1200×630 PNG, and the result is cached in R2 so later requests skip the
+          render.
         </li>
         <li>
           <strong>AI tooling:</strong> Claude with project context (via Model
@@ -87,11 +97,11 @@ const caseStudies = defineCollection({
 
       <h2>Deployment as code</h2>
       <p>
-        Deployment configuration lives entirely in <code>wrangler.jsonc</code>.
-        No web-console clicks, no <code>.env</code> files, no CI pipeline
-        definitions outside the repo.
+        Deployment starts in <code>wrangler.jsonc</code>: the app name,
+        compatibility flags, and binding declarations, including the R2 bucket the
+        asset endpoints read from. No web-console clicks, no <code>.env</code> files.
       </p>
-      <pre><code>{`// wrangler.jsonc
+      <pre><code>{`// wrangler.jsonc (source config)
 {
   "name": "codyanthony-dev",
   "compatibility_date": "2025-12-14",
@@ -100,25 +110,30 @@ const caseStudies = defineCollection({
     "directory": "./dist",
     "not_found_handling": "404-page"
   },
+  "r2_buckets": [
+    { "binding": "PORTFOLIO_ASSETS", "bucket_name": "codyanthony-dev-bucket" }
+  ],
   "observability": { "enabled": true }
 }`}</code></pre>
       <p>
-        The <code>assets.directory: "./dist"</code> line is the entire serving
-        model. Every route is prerendered at build; Cloudflare's edge serves
-        prebuilt HTML directly. No Worker entry compiles into the bundle today,
-        so the deployment surface stays purely static.
+        The build emits two trees: <code>dist/client/</code> (prerendered HTML and
+        hashed assets) and <code>dist/server/</code> (the Worker entry). The adapter
+        also writes <code>dist/server/wrangler.json</code>, a generated deploy
+        config that wires the two together, and that generated file is what{" "}
+        <code>wrangler deploy</code> ships. Most requests are served as static
+        files from the edge; the OG-image and R2 endpoints run as Worker code.
       </p>
 
       <h2>Trade-offs made</h2>
 
-      <h3>Workers Static Assets over Cloudflare Pages</h3>
+      <h3>Workers over Cloudflare Pages</h3>
       <p>
-        Pages would have worked. Workers Static Assets is the same edge network
-        with a single configuration surface (<code>wrangler.jsonc</code>) and a
-        clear extension path (Workers) if SSR or KV becomes useful later. Pages
-        would have meant two configuration surfaces (<code>wrangler.jsonc</code>{" "}
-        plus the Pages dashboard) and a more involved migration when compute is
-        eventually added.
+        Pages would have worked for the static portfolio. I chose Workers because
+        the extension path mattered, and I have since taken it: the site renders OG
+        images and serves R2-backed artifacts from Worker code on the same domain,
+        with one configuration surface (<code>wrangler.jsonc</code>). On Pages,
+        adding that compute would have meant a second configuration surface and a
+        migration.
       </p>
 
       <h3>Astro over Next.js</h3>
@@ -169,10 +184,6 @@ const caseStudies = defineCollection({
           Generated from a single source JPEG via Astro's image pipeline.
         </li>
         <li>
-          <strong>Social-share card:</strong> 43 KB at 1200×630, composed from
-          an inline SVG and rendered to PNG via sharp at build time.
-        </li>
-        <li>
           <strong>Total <code>./dist</code> size:</strong> 2.2 MB. Most of that
           weight is case-study screenshots.
         </li>
@@ -180,10 +191,10 @@ const caseStudies = defineCollection({
 
       <h2>Local workflow</h2>
       <pre><code>{`pnpm dev             # Local dev server at http://localhost:4321
-pnpm build           # Compile production build into ./dist/
-pnpm preview         # Preview the build locally
+pnpm build           # Build into ./dist/ (client + server trees)
+pnpm preview         # Build, then serve the Worker locally via wrangler dev
 pnpm astro check     # TypeScript + Astro diagnostics
-npx wrangler deploy  # Deploy to Cloudflare Workers`}</code></pre>
+pnpm deploy          # Build, then deploy the Worker to Cloudflare`}</code></pre>
 
       <h2>AI-assisted development</h2>
       <p>
