@@ -1,5 +1,14 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+// Derive the "By the numbers" page count so it can't drift. Case studies come
+// from the collection; the standalone pages (home, about, about-this-site,
+// case-studies index) are a fixed set. The /og and /assets routes render on
+// demand, so they aren't prerendered pages.
+const caseStudies = await getCollection("case-studies", (entry) => !entry.data.draft);
+const standalonePages = 4;
+const prerenderedPages = standalonePages + caseStudies.length;
 ---
 
 <BaseLayout
@@ -171,8 +180,9 @@ const caseStudies = defineCollection({
       <h2>By the numbers</h2>
       <ul>
         <li>
-          <strong>Build time:</strong> ~1.2 seconds for 16 prerendered pages,
-          full image pipeline included.
+          <strong>Prerendered pages:</strong> {prerenderedPages}. {caseStudies.length}{" "}
+          case studies plus {standalonePages} standalone pages, all built to
+          static HTML. The OG-image and asset endpoints render on demand instead.
         </li>
         <li>
           <strong>JavaScript files shipped to the browser:</strong> 0. No
@@ -182,10 +192,6 @@ const caseStudies = defineCollection({
         <li>
           <strong>Headshot:</strong> 7.2 KB at 1× WebP, 11 KB at 2× retina WebP.
           Generated from a single source JPEG via Astro's image pipeline.
-        </li>
-        <li>
-          <strong>Total <code>./dist</code> size:</strong> 2.2 MB. Most of that
-          weight is case-study screenshots.
         </li>
       </ul>
 
