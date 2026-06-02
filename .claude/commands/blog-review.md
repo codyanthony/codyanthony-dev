@@ -87,7 +87,7 @@ After the mechanical checks above, do one additional pass with explicit skeptici
 
 1. **Is the portable insight actually portable?** Read the sentence the writer is treating as the takeaway. Could it be shared on LinkedIn? Does it state something specific and defensible, or restate consensus? Flag if weak.
 
-2. **Is the example load-bearing?** The substance beat requires at least one concrete example. Check: does the example actually illustrate the idea, or does it just narrate the idea in story form? Flag if the example doesn't earn its place.
+2. **Does each example earn its place? (deletion test)** For *every* example, ask: if it were removed, would the argument lose something essential — a decision, consequence, tradeoff, ambiguity, constraint, or competing interpretation? An example that only illustrates a point already made does not pass, even when it is concrete, accurate, and relevant. Flag each one that fails. Run this per example, not once per beat. (Criteria live in `blog-post-framework` → Structural integrity → Examples apply pressure.)
 
 3. **Could a thoughtful peer disagree?** If no thoughtful peer would push back on the post's claims, the post is restating consensus. Flag if the post lacks a defensible claim.
 
@@ -96,6 +96,8 @@ After the mechanical checks above, do one additional pass with explicit skeptici
 5. **Does the writer's voice come through?** Could this post be written by anyone, or does it sound like the writer? Flag if the voice reads generic. (Subjective; offer specific phrasings that would sharpen voice if so.)
 
 6. **Are there cross-link opportunities missed?** The site has case studies that may relate. If the post discusses a topic also covered in a case study, flag the missed cross-link.
+
+7. **Architecture consistency (only if a blueprint exists).** If `.claude/plans/{slug}.md` exists, load it. Does the final draft still deliver the claim through the blueprint's architecture and evidence map? Check for drift: a part the blueprint required that the draft dropped, a section the evidence map does not support, the anchor changing, a thread abandoned mid-draft. This is **flag-and-decide, not plan enforcement.** Drift is not automatically wrong. If the drift improved the essay, note it and update the blueprint; if it is a genuine architecture change, route back to `/blog-plan` so the fit gate runs again; if it is accidental loss (a dropped part, an evidence gap), flag it for repair. Skip entirely if no blueprint exists (an externally-authored draft).
 
 ## Step 5: Structured findings report
 

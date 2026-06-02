@@ -63,7 +63,7 @@ Pre-publish gates. Aggregates checks from the three skills above plus operationa
 Loaded only when relevant, not on every task:
 
 - **`series-blocks`** — intro/navigation block templates and the frontmatter contract for posts in a collaborative series (e.g., Per the Docs). Loaded when a post participates in a series.
-- **`systems-writing`** — generative scaffolding for essays whose subject is a system (pipeline, migration, automation, workflow, documentation/knowledge system). Architecture palette, boundary-event evidence, and the anchor-selection method. Loaded by `/blog-plan` when the topic is a system.
+- **`systems-writing`** — generative scaffolding for essays whose subject is a system (pipeline, migration, automation, workflow, documentation/knowledge system). Lens selection (find the insight), an architecture palette (communicate it), boundary-event evidence, and the anchor-selection method. Loaded by `/blog-plan` when the topic is a system.
 
 `writer-context` is the writer's verified work history and project inventory. It is **local-only (gitignored)** because it holds private employment data. `/blog-plan` queries it to shortlist anchor stories; `/blog-draft` loads it to fact-check claims about the writer. Reading time is deliberately absent from all of these: it is too imprecise to drive a decision (word count is the internal measure). It survives only as a reader-facing marker in the rendered post byline.
 

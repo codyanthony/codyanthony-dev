@@ -20,9 +20,26 @@ This skill front-loads the knowledge so a seed idea reaches a fitting architectu
 
 The subject is how a system *behaves, is built, or breaks at its seams*, not a how-to for using it. A systems essay argues something about the structure: where one kind of work stops being sufficient, how responsibility moves, what a constraint forced. If the draft would read as a tutorial or a feature tour, it is not a systems essay, and this skill does not apply.
 
+## Analyze the system: pick a lens
+
+Before structuring the essay, work out *what is interesting about the system*. A lens is the analytical angle that surfaces the insight; the architecture (next section) is how you communicate it. **Lens finds the insight; architecture carries it.** They are separate choices, and this is the order: lens first.
+
+Pick the lens that best explains *this* system. Most systems essays have one dominant lens, sometimes two. Do not force a system through a lens that does not fit it; an information-architecture, knowledge-decay, or usability essay is usually not a responsibility-transition story, and forcing it into one is the overfitting trap.
+
+| Lens | Surfaces | Questions to interrogate the system |
+|---|---|---|
+| **Responsibility transitions** | where work hands off | Where does responsibility change hands? What can each layer decide? What stays unresolved? What triggers escalation? When does one layer stop being sufficient? |
+| **Information flow** | where meaning moves and degrades | How does information move? Where is context lost? Where is fidelity gained? Where do transformations happen? |
+| **Constraints and tradeoffs** | what an optimization cost | What was optimized for? What cost did that introduce? What got easier, and what got harder? |
+| **Feedback loops** | self-reinforcing behavior | How do outputs shape future inputs? What behavior compounds? What stabilizes the system? |
+| **Failure and recovery** | how it breaks and heals | How does it fail? How is failure detected? How is recovery achieved? What stops cascades? |
+| **Incentives and ownership** | why behavior persists | Who maintains it? Why does the behavior persist? What incentives shape outcomes? |
+
+A lens usually suggests an architecture: a responsibility-transitions lens points toward a responsibility-map or seam structure; an information-flow lens toward a before/after or transformation structure. The job of this skill is to help find the lens that fits the system, not to route every system through the same one.
+
 ## Architecture palette
 
-Pick the shape the *actual system* has. This is a palette, not a template. Do not impose a shape the anchor story does not contain.
+Once a lens has surfaced the insight, choose an architecture to communicate it. Pick the shape the *actual system* has. This is a palette, not a template. Do not impose a shape the anchor story does not contain.
 
 | Architecture | When it fits | The parts it requires |
 |---|---|---|
@@ -77,7 +94,8 @@ The AWS migration fails the gate: the agentic-layer cell is empty, so a three-la
 
 This skill covers:
 - Recognizing a systems essay
-- The architecture palette and how to choose
+- Lens selection (the analytical step that finds the insight)
+- The architecture palette and how to choose (how the insight is communicated)
 - What counts as strong systems evidence
 - Finding and validating an anchor against the required parts
 

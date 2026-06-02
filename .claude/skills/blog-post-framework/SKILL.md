@@ -80,7 +80,7 @@ The substantive middle. The actual idea, fully unfolded, with at least one concr
 #### Substance requirements
 
 - **At least one specific example.** Abstract argument without example is generic. The example should be detailed enough that a reader can map it to their own work.
-- **The example earns its place.** Either it illustrates the idea, OR it deepens it (shows a complication the abstract version missed). Examples that just restate the abstract claim in narrative form add length without adding insight.
+- **The example earns its place.** It must do more than illustrate a claim already made; illustration alone is decoration. Apply the deletion test from Structural integrity → Examples apply pressure: if the example were removed, would the argument lose something essential?
 - **Parallel examples should be developed to comparable depth.** If the post uses N parallel examples (cases, projects, situations), each should be developed to comparable depth unless the imbalance is intentional and the writer can name why. A thin parallel example signals that the writer didn't have enough material; consider cutting it or strengthening it. Imbalanced parallel examples often surface during the validate phase, when the deterministic script passes but the LLM reviewer flags depth inconsistency.
 - **Name your specifics, with NDA and proprietary exceptions.** When referencing artifacts, tools, files, or systems, name them when the artifact is **your own work product** (your portfolio, your skills, your scripts) or **already publicly known** (open-source projects, public documentation, published case studies, public talks). "A negative style guide and a structural framework" is weaker than "the `ai-antipatterns` skill and the `blog-post-framework` skill." Vague references to artifacts you can legitimately name undercut the substance and signal paraphrasing instead of concrete material. **Abstract instead when** the artifact is a current or former employer's proprietary tool, information is under NDA, naming would create reputational risk, or you're referencing internal codenames or unpublished features. If in doubt about whether something is safe to name, abstract.
 - **The reader can disagree.** A post that no one could reasonably push back on is probably restating consensus. The strongest posts make claims a thoughtful peer could argue with.
@@ -141,11 +141,21 @@ Two passages that carry the same insight in different words are one passage. Thi
 
 ### Earn the abstraction
 
-Default to concrete before claim: observation → example → insight, so the evidence brings the reader to the point rather than the point being asserted and then decorated. This is the structural face of `ai-antipatterns` "the windup pitch." The two reconcile as one rule: lead with the concrete point, do not bury it under windup, and do not open with an abstraction you then illustrate.
+Default to concrete before claim: observation → example → insight, so the evidence brings the reader to the point rather than the point being asserted and then decorated. This is the structural face of `ai-antipatterns` "the windup pitch": lead with the concrete point, and do not bury it under windup.
+
+An abstraction-first opener is legitimate when the abstraction is itself the hook or thesis (see the opener-shapes table, "surprising claim / reframe"). The requirement is not that an abstraction can never come first; it is that the abstraction gets paid off with concrete evidence before the piece ends. What to avoid is an abstraction asserted and then merely decorated, with nothing that earns it.
 
 ### Anchor-story fit
 
 The anchor story must already contain the structure the post claims. If the post decomposes a system into parts (stages, layers, seams), the anchor must visibly contain those parts; do not manufacture missing structure through abstraction. When story and structure disagree, change the story, not the prose. Prefer one anchor that contains the whole structure over several that each contain a fragment: multiple partial anchors dilute the argument and force abstraction to cover the gaps. This is validated upstream, before drafting, in `commands/blog-plan.md`.
+
+### Examples apply pressure
+
+This is the single source for example strength; the drafting and review steps apply this test rather than restating the criteria.
+
+An example earns its place when it introduces a decision, ambiguity, a tradeoff, a consequence, a constraint, or competing interpretations. An example that only illustrates a claim already made, or restates it, is decoration, **even when it is concrete, accurate, and relevant.** That last case is the one that slips through, so the criteria alone are not enough; apply an active test.
+
+**The deletion test:** if the example were removed, would the argument lose something essential? If nothing essential is lost, the example is decoration. Cut it, or replace it with one that forces a choice. Run this per example, not once per beat: a passage of three illustrative sentences gets three deletions, not one.
 
 ## Length
 
@@ -200,6 +210,7 @@ Before submitting any blog post:
 - [ ] All three beats present: Why this, What's true, What's portable
 - [ ] Opener shape varies from the writer's last 2–3 posts
 - [ ] At least one concrete example with detail
+- [ ] Every example passes the deletion test (remove it; if the argument loses nothing essential, it is decoration)
 - [ ] Parallel examples developed to comparable depth (or imbalance is intentional and explainable)
 - [ ] Each section advances narrative state (no timeline resets, no context re-establishment)
 - [ ] No semantic duplication (the same insight stated twice across the post)

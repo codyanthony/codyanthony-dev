@@ -347,12 +347,14 @@ After all findings resolved, re-run the script. If still failing, loop until exi
 Run the LLM-judgment items from `blog-checklist` (the items the script does not cover):
 
 - Beat presence (Why this, What's true, What's portable, optional What's next)
+- Example strength: every example passes the deletion test (remove it; if the argument loses nothing essential, it is decoration). Run per example, not once per beat.
 - Aphoristic closing slogans (especially as bookends)
 - Schematic-identical templates across parallel sections
 - Paired synonyms, tripled lists for emphasis, fake precision
 - Voice scan (audience layering, AI credit explicit, no verbatim praise, no effort signaling)
 - Word count in a comfortable range (~600–1,200); shorter or longer is fine if every section earns its place
 - Internal links to relevant case studies where natural
+- Architecture consistency: the draft still delivers the claim through the blueprint's architecture and evidence map. Flag drift, do not silently absorb it; an improvement updates the blueprint, a genuine architecture change routes back to `/blog-plan`, an accidental dropped part gets repaired.
 - Series checks (if applicable): placeholders flagged, intro/nav blocks present
 
 Report each item pass/fail per `blog-checklist`'s format. For each failure, propose the fix with the same `yes / edit / skip` interaction.
