@@ -8,18 +8,21 @@ Skills and slash commands for writing blog posts (and eventually other content) 
 .claude/
 ├── README.md                                    # This file
 ├── skills/
-│   ├── ai-antipatterns/SKILL.md                 # Universal negative style guide
-│   ├── personal-tone/SKILL.md                   # Voice + brand alignment
-│   ├── writer-context/SKILL.md                  # Verified work history, NDA/proprietary guidance, common overclaims to refuse
-│   ├── blog-post-framework/SKILL.md             # Three-beat structure for blog posts
-│   ├── blog-checklist/SKILL.md                  # Pre-publish gates
-│   └── series-blocks/SKILL.md                   # Series intro/navigation block templates (Per the Docs)
-└── commands/
-    ├── blog-draft.md                            # Orchestrates a full draft flow
-    └── blog-review.md                           # Adversarial review of an existing draft
+│   ├── ai-antipatterns/SKILL.md                 # Universal negative style guide (always on)
+│   ├── personal-tone/SKILL.md                   # Voice + brand alignment (always on)
+│   ├── blog-post-framework/SKILL.md             # Three beats + structural integrity (always on)
+│   ├── blog-checklist/SKILL.md                  # Pre-publish gates (always on)
+│   ├── series-blocks/SKILL.md                   # Series intro/navigation templates (conditional)
+│   ├── systems-writing/SKILL.md                 # Systems-essay scaffolding (conditional)
+│   └── writer-context/SKILL.md                  # Verified work history + project inventory (LOCAL-ONLY, gitignored)
+├── commands/
+│   ├── blog-plan.md                             # Plan: seed → architecture → anchor → blueprint
+│   ├── blog-draft.md                            # Execute the blueprint into a draft
+│   └── blog-review.md                           # Adversarial review of an existing draft
+└── plans/                                        # Blueprints emitted by /blog-plan (gitignored scratch)
 ```
 
-`settings.local.json` and any session-state files in `.claude/` are gitignored. Only `skills/`, `commands/`, and `README.md` are tracked.
+`settings.local.json`, `plans/`, and `skills/writer-context/` are gitignored (the last holds private employment data and is local-only). Everything else under `skills/`, `commands/`, and this `README.md` is tracked.
 
 ## Architecture
 
@@ -49,25 +52,40 @@ Three-beat structure for blog posts on `codyanthony.dev/blog/`:
 - **What's true** — substance with at least one concrete example
 - **What's portable** — the insight readers carry away
 
-Beats are content checks, not render templates. No fixed section headings; no fixed order. Includes opener-shape variety table.
+Beats are content checks, not render templates. No fixed section headings; no fixed order. Includes the opener-shape variety table. Also owns **structural integrity** (forward motion, no semantic duplication, earn-the-abstraction, anchor-story fit) and the length sensibility, which is word count, not reading time.
 
 ### `blog-checklist`
 
-Pre-publish gates. Aggregates checks from the three skills above plus operational checks (frontmatter validation, OG image regeneration, astro check). Runs as the final gate before merging to `main`.
+Pre-publish gates. Aggregates checks from the three skills above plus operational checks (frontmatter validation, astro check, word count). Runs as the final gate before merging to `main`.
+
+### Conditional skills
+
+Loaded only when relevant, not on every task:
+
+- **`series-blocks`** — intro/navigation block templates and the frontmatter contract for posts in a collaborative series (e.g., Per the Docs). Loaded when a post participates in a series.
+- **`systems-writing`** — generative scaffolding for essays whose subject is a system (pipeline, migration, automation, workflow, documentation/knowledge system). Architecture palette, boundary-event evidence, and the anchor-selection method. Loaded by `/blog-plan` when the topic is a system.
+
+`writer-context` is the writer's verified work history and project inventory. It is **local-only (gitignored)** because it holds private employment data. `/blog-plan` queries it to shortlist anchor stories; `/blog-draft` loads it to fact-check claims about the writer. Reading time is deliberately absent from all of these: it is too imprecise to drive a decision (word count is the internal measure). It survives only as a reader-facing marker in the rendered post byline.
 
 ## Commands
 
+The flow is a two-stage pipeline plus a review pass:
+
+`/blog-plan` → blueprint (`.claude/plans/{slug}.md`) → `/blog-draft` → `/blog-review`
+
+Planning and drafting are separate jobs. `/blog-plan` decides the architecture and validates that the anchor story can carry it; `/blog-draft` executes the approved blueprint. The split is the cheap checkpoint that prevents throwaway drafts, and it mirrors the solution-guide `sg-audit` → `sg-draft` pattern.
+
+### `/blog-plan`
+
+Turns a seed idea into a central claim, an architecture, and an anchor story validated against an evidence map, then writes a blueprint to `.claude/plans/{slug}.md`. Queries `writer-context` as the project inventory to shortlist anchors, and loads `systems-writing` when the subject is a system. The evidence-map fit gate is the key step: if a part the architecture requires has no concrete evidence in the anchor story, it stops before any prose is written.
+
 ### `/blog-draft`
 
-Drives a blog post from idea to ready-to-merge draft. Asks the writer four input questions, sketches the three beats, generates the full draft, runs the pre-publish checklist, and saves to `src/content/blog/{slug}.mdx`. The per-post OG card is generated dynamically by the `/og/[slug].png` endpoint (cached to R2) — no static image step.
-
-Use this to write a new post from scratch.
+Executes an approved blueprint into a ready-to-merge draft: composes to the blueprint's outline, applies the voice / style / structural-integrity skills, validates (deterministic script + LLM checks), saves, and optionally commits or deploys. It does not re-plan; a structural change routes back to `/blog-plan`. The per-post OG card is generated dynamically by the `/og/[slug].png` endpoint (cached to R2), with no static image step.
 
 ### `/blog-review`
 
-Adversarial review of an existing draft. Read-only — does not modify the file. Returns a structured findings report (critical / recommended / optional) the writer applies manually.
-
-Use this after `/blog-draft` for a fresh-eyes second pass, or on any externally-authored draft before publish.
+Adversarial review of an existing draft. Read-only, does not modify the file. Returns a structured findings report (critical / recommended / optional) the writer applies manually. Use after `/blog-draft` for a fresh-eyes pass, or on any externally-authored draft before publish.
 
 ## Deterministic-script pattern
 
@@ -75,6 +93,7 @@ Commands defer to scripts for anything that should produce the same output given
 
 | Script | Purpose | Called from |
 |---|---|---|
+| `scripts/check-blog-prose.mjs` | Deterministic prose validation (banned words, em dashes, leading spaces) | `/blog-draft` Phase 4; `blog-checklist` |
 | `scripts/generate-og.mjs` | Renders site-level OG image | Not part of blog flow; run manually when brand changes |
 | `scripts/generate-linkedin-assets.mjs` | Renders LinkedIn banner + headshot | Not part of blog flow; run when brand or photo changes |
 | `pnpm astro check` (via Bash) | Validates Astro/MDX syntax + types | `blog-checklist` operational checks |

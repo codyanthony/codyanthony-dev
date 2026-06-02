@@ -326,6 +326,8 @@ Fix: Either link to a source or remove the claim.
 
 Do not spend a paragraph building up to the point. Lead with the point.
 
+This is the sentence-level face of `blog-post-framework` "Earn the abstraction." One rule, two scales: lead with the concrete point, do not bury it under windup, and do not open with an abstract claim you then illustrate. Concrete first; abstraction earned.
+
 Bad: "Bots and malicious actors do not always target your server directly. Third-party scripts loaded by your pages can be hijacked or replaced to exfiltrate form data. These supply chain attacks happen entirely in the browser. Client-side security monitors these scripts."
 Fix: "Client-side security monitors third-party scripts on your pages for hijacking and data exfiltration."
 

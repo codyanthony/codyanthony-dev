@@ -99,7 +99,7 @@ The script does not cover these patterns; they require structural judgment:
 
 ### Length and pacing
 
-- [ ] Reading time 3–8 min (600–1,600 words) — or longer is justified
+- [ ] Word count in a comfortable range (~600–1,200); shorter or longer is fine if every section earns its place (no reading-time targets — word count is the measure)
 - [ ] No section runs more than 4–5 paragraphs without a structural break (subheading, list, code block, blockquote)
 - [ ] Closing line delivers the portable insight, not a CTA
 

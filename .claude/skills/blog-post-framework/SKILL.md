@@ -12,7 +12,7 @@ Load when drafting, reviewing, or editing a blog post for `codyanthony.dev/blog/
 
 ## Scope
 
-This skill covers the **content shape** of blog posts on this brand: what beats must be present, how openers should vary, what length to target. It is structural framework — voice and brand alignment live in `personal-tone`; universal style banishments live in `ai-antipatterns`.
+This skill covers the **content shape** of blog posts on this brand: what beats must be present, how openers should vary, what length range fits. It is structural framework — voice and brand alignment live in `personal-tone`; universal style banishments live in `ai-antipatterns`.
 
 The shape encoded here is for **technical opinion / craft posts** — the work of Mandy Brown, Simon Willison, Julia Evans, Hillel Wayne. Substantive enough for peers (tech comm community), personally-voiced enough for recruiters to see craft, hooky enough for LinkedIn sharing. Not academic essay; not marketing asset.
 
@@ -124,14 +124,39 @@ Unacceptable shapes:
 
 If "What's next" feels forced, leave it out. The closing line of "What's portable" is a complete ending.
 
-## Length guidance
+## Structural integrity
 
-Target reading time: **3–8 minutes** for most posts. That's roughly 600–1,600 words.
+The three beats check *what* the post contains. These checks govern *how it moves*. Treat the post as a system of ideas advancing through time, not a set of paragraphs that each read well in isolation. Apply during drafting and review.
 
-- **Under 3 min (under 600 words):** rare and usually too thin to earn the post URL. Better as a LinkedIn post or a social thread.
-- **3–5 min (600–1,000 words):** the sweet spot. Most posts should land here.
-- **5–8 min (1,000–1,600 words):** for posts with multiple examples or a complex argument. Each section should earn its place.
-- **Over 8 min:** justify it. Long posts have to be load-bearing — either the topic genuinely needs the length, or the post is doing the work of two or three smaller posts and should be split.
+### Forward motion
+
+Every section changes the reader's state: it adds information, evidence, a consequence, or an interpretation the reader did not have a paragraph ago. A section that re-states an established point in fresh words is an echo, not a section. Two specific tells:
+
+- **Timeline resets.** "Early on…", "At first…", "Going back…" placed after the timeline is already established. Build forward from where the reader is; do not restart the clock.
+- **Context re-establishment.** Re-explaining something already covered. This is distinct from respecting reader knowledge (Beat 2): here the post repeats *itself*. Once context is set, later sections build on it.
+
+### Semantic duplication
+
+Two passages that carry the same insight in different words are one passage. This is broader than the sentence-level "remove what restates" in the drafting process, and broader than `ai-antipatterns` word-level repetition: it catches the same *idea* surfacing twice across the post. Common shapes: an abstraction and its example making the same point; a section opener and its body making the same point; two examples making the same point. Keep the strongest instance; cut the rest. Leave deliberate setup-and-payoff callbacks alone; those advance state.
+
+### Earn the abstraction
+
+Default to concrete before claim: observation → example → insight, so the evidence brings the reader to the point rather than the point being asserted and then decorated. This is the structural face of `ai-antipatterns` "the windup pitch." The two reconcile as one rule: lead with the concrete point, do not bury it under windup, and do not open with an abstraction you then illustrate.
+
+### Anchor-story fit
+
+The anchor story must already contain the structure the post claims. If the post decomposes a system into parts (stages, layers, seams), the anchor must visibly contain those parts; do not manufacture missing structure through abstraction. When story and structure disagree, change the story, not the prose. Prefer one anchor that contains the whole structure over several that each contain a fragment: multiple partial anchors dilute the argument and force abstraction to cover the gaps. This is validated upstream, before drafting, in `commands/blog-plan.md`.
+
+## Length
+
+There is no enforced word count. In practice, **~600–1,200 words** is a comfortable range: long enough to say something substantive, short enough to actually be read. If a post naturally runs longer or shorter, that is fine.
+
+Length is a signal, not a target. The real governor is **structural integrity**: every section earns its place (forward motion, no semantic duplication). A post that passes that test is exactly as long as it should be. Two diagnostics worth a second look, never a cap:
+
+- **Very short (under ~600 words):** often too thin to earn the post URL; might work better as a LinkedIn post or a social thread.
+- **Well past ~1,200 words:** check for padding or for a hidden second post. A systems essay that genuinely needs the room is fine; an essay padded to look substantive is not.
+
+Do not measure reading time. It assumes a reading speed that varies too much between readers to mean anything. Word count is the objective measure; treat it as a sensibility, not a gate.
 
 ## The drafting process
 
@@ -176,9 +201,12 @@ Before submitting any blog post:
 - [ ] Opener shape varies from the writer's last 2–3 posts
 - [ ] At least one concrete example with detail
 - [ ] Parallel examples developed to comparable depth (or imbalance is intentional and explainable)
+- [ ] Each section advances narrative state (no timeline resets, no context re-establishment)
+- [ ] No semantic duplication (the same insight stated twice across the post)
+- [ ] Anchor story contains the structure the post claims (set in `blog-plan`)
 - [ ] Artifacts named where the writer can legitimately name them (own work or public); abstracted only where NDA, proprietary, or reputational concerns apply
 - [ ] Portable insight extractable as a single shareable sentence
-- [ ] Reading time 3–8 min (or justified if longer)
+- [ ] Word count in a comfortable range (~600–1,200); longer or shorter is fine if every section earns its place
 - [ ] No "What's next" beat unless natural
 - [ ] `personal-tone` self-check passed
 - [ ] `ai-antipatterns` self-check passed
@@ -189,11 +217,14 @@ Before submitting any blog post:
 This skill covers:
 - Three-beat structure
 - Opener shapes
-- Length guidance
+- Length (word-count sensibility)
 - Drafting process
+- Structural integrity (forward motion, semantic duplication, earn-the-abstraction, anchor-story fit)
 
 This skill does **not** cover:
 - **Personal voice** (first-person, contractions, brand alignment) → `personal-tone`
 - **Universal style banishments** (banned words, em dashes, throat-clearing) → `ai-antipatterns`
 - **Pre-publish operational checks** (OG image regen, frontmatter validation, save path) → `blog-checklist`
-- **Orchestration of a full draft flow** → `commands/blog-draft.md`
+- **Planning, architecture selection, and the anchor-fit gate** → `commands/blog-plan.md`
+- **Domain scaffolding for systems essays** (architecture palette, seam analysis, anchor selection) → `systems-writing`
+- **Orchestration of the draft-execution flow** → `commands/blog-draft.md`

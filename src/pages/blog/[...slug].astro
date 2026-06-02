@@ -17,8 +17,10 @@ const { Content } = await render(entry);
 
 const slug = entry.id.replace(/\.(md|mdx)$/, "");
 
-const wordCount = entry.body?.trim().split(/\s+/).length ?? 0;
-const readingTime = Math.max(1, Math.round(wordCount / 200));
+// Reader-facing expectation marker only (the conventional "N min read"). The
+// authoring system never uses reading time in its logic; word count is the
+// internal measure there.
+const readingTime = Math.max(1, Math.round((entry.body?.trim().split(/\s+/).length ?? 0) / 200));
 
 // OG card is generated on demand by /og/[slug].png (rendered + cached to R2 on
 // first scrape), not a committed static file. Pass the post title so the card

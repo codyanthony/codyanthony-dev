@@ -5,9 +5,11 @@ version: 1.0
 
 # /blog-draft
 
-Drives a blog post from idea to ready-to-merge draft. Eight phases: Setup → Inputs → Proposals → Compose → Validate → Review → Save → Ship. Each phase gates on user confirmation; the deterministic script runs before LLM judgment during validation.
+Executes an approved blueprint from `/blog-plan` into a ready-to-merge draft. The architecture, anchor story, and outline are already decided and validated in the plan; this command does not re-plan. Eight phases: Setup → Blueprint → Proposals → Compose → Validate → Review → Save → Ship. Each phase gates on user confirmation; the deterministic script runs before LLM judgment during validation.
 
-> **Running blog-draft v1.0** — Skill load + verification gate → branch management → interactive inputs (six questions, one at a time) → system proposals (title, slug, outline, tags) → compose direct to file → deterministic + LLM validation → user review → deterministic save gates → optional commit/deploy.
+> **Running blog-draft v1.0** — Skill load + verification gate → branch management → load the blueprint (`.claude/plans/{slug}.md`) + confirm remaining metadata → confirm proposals (title, slug, outline from blueprint, tags) → compose direct to file → deterministic + LLM validation → user review → deterministic save gates → optional commit/deploy.
+
+> Run `/blog-plan` first. It produces the blueprint this command consumes. Starting here without one is only for a simple post with one obvious example; anything with real architecture should be planned first.
 
 Print the banner above verbatim before doing anything else. Then print:
 
@@ -23,7 +25,7 @@ Print the banner above verbatim before doing anything else. Then print:
 - `.claude/skills/blog-checklist/SKILL.md` — pre-publish gates
 - `.claude/skills/writer-context/SKILL.md` — verified work history, role specifics, NDA/proprietary reference guidance, common overclaims to refuse
 
-**Loaded conditionally (in Phase 1 Q4 if post is series-participating):**
+**Loaded conditionally (in Phase 1b if the blueprint marks the post series-participating):**
 
 - `.claude/skills/series-blocks/SKILL.md` — intro/navigation block templates
 
@@ -119,86 +121,31 @@ Print the resolved branch and proceed.
 
 ---
 
-## Phase 1: Inputs
+## Phase 1: Load the blueprint
 
-Six questions. **Ask each, wait for the user's answer, then ask the next.** Do not batch.
+Drafting consumes a blueprint produced by `/blog-plan`. The central claim, architecture and its parts, anchor story, evidence map, beat outline, opener shape, working title, slug, and links are already decided and validated there. **Do not re-open them here.** This command executes the plan; it does not re-plan.
 
-### Q1: Core idea
+### 1a. Read the blueprint
 
-> What's the core idea of this post — in one sentence? This is the portable insight readers should leave with.
+Ask the writer for the slug, or locate the blueprint:
 
-If the answer is vague ("documentation strategy," "AI tools"), push for specificity. The portable-insight beat is the test: can a reader extract a single shareable sentence from the post? If the writer can't articulate the insight in one sentence, the post isn't ready to draft.
+```bash
+ls .claude/plans/*.md 2>/dev/null
+```
 
-Wait for confirmation before asking Q2.
+Read `.claude/plans/{slug}.md` and extract: central claim, architecture and required parts, anchor story, evidence map, beat outline, opener shape, working title, slug, links/cross-references, and open questions.
 
-### Q2: Concrete examples
+**If no blueprint exists:**
+- **Substantial or systems post:** stop and recommend running `/blog-plan` first. The anchor-fit gate is the cheap checkpoint; skipping it is what produces throwaway drafts.
+- **Simple post, one obvious example:** run a quick inline plan now (central claim in one sentence, the single anchor, a three-beat outline, opener shape) and continue. Keep it to a few minutes.
 
-> What 1–3 specific situations from your work will you anchor the idea in? Real examples with detail.
+### 1b. Confirm remaining metadata
 
-If the writer offers abstract examples, ask for the concrete version. Per `blog-post-framework`, abstract argument without concrete example is generic.
+The blueprint settles structure. Confirm the few draft-time items it does not carry, one at a time:
 
-Wait for the writer to confirm the examples list.
-
-### Q3: Primary audience
-
-> Who's the primary reader? Examples: junior tech writers, senior peers, AI-curious docs practitioners, hiring managers.
-
-Per `personal-tone` audience layering: the post serves a primary audience while remaining legible to recruiters (always-reading secondary). The primary answer shapes substance choices.
-
-Wait for the answer.
-
-### Q4: Series participation
-
-> Is this post part of a collaborative series or roundup? (yes / no)
-
-If `no`: continue without loading `series-blocks`.
-
-If `yes`: ask which series. Currently supported (the `series` enum in `src/content.config.ts`):
-- `per-the-docs`
-
-If the writer names a series not in the enum, STOP: "The `series` enum in `src/content.config.ts` does not include `{name}`. Extend the enum and add a section to `series-blocks/SKILL.md` before drafting."
-
-Load `series-blocks/SKILL.md` and confirm the chosen series template is documented.
-
-### Q4a: Series theme (only if Q4 = yes)
-
-> What's the monthly theme name (e.g., "Content Alchemy", "Mind the Gap")? Type the theme name, or `skip` if not yet known.
-
-If the writer provides a theme name, capture it for the `series_theme` frontmatter field and the navigation block placeholder. If `skip`, leave the placeholder for pre-launch fill-in.
-
-> Do you have the theme-landing-page URL (the host's index page for this month's participants)? Type the URL, or `skip`.
-
-Capture as `series_theme_url` if provided.
-
-### Q4b: Theme tie-back consideration (only if Q4 = yes)
-
-> Per `series-blocks`, the strongest tie-back to a monthly theme is through substance, not explicit labeling. Does the core idea (Q1) connect to the theme through its substance, or does the post need a bridging sentence somewhere to make the connection clear?
->
-> (substance / bridge / skip — `substance` means the connection is implicit and works; `bridge` means we'll add a light reference somewhere; `skip` means defer this decision until after the draft is written)
-
-Default to `substance` unless the writer explicitly asks for a bridge. Heavy theme-labeling weakens the post.
-
-### Q5: Publish date
-
-> What date should the post be dated? Default is today ({YYYY-MM-DD}).
-
-Accept today's date or a future date. Use ISO 8601 (YYYY-MM-DD). For series posts, the date should match the coordinator's confirmed publish window.
-
-### Q6: Opener shape preference
-
-> Any preference for opener shape? Options from `blog-post-framework`:
-> - Vivid concrete scenario
-> - Surprising claim / reframe
-> - Personal anecdote with universal resonance
-> - Genuine question
-> - Metric-led / defamiliarizing data
-> - Connect-to-prior-work
-> - Counterintuitive observation
-> - Quote-led
->
-> Or "your call" — I'll pick the shape that fits the post's substance.
-
-If "your call": before generating the outline in Phase 2e, check `src/content/blog/` for recent posts and avoid shapes used in the last 2-3 posts (per `blog-post-framework`'s opener-variety rule).
+- **Publish date.** Default today ({YYYY-MM-DD}); ISO 8601. For series posts, match the coordinator's confirmed window.
+- **Tags.** Propose 3–5 topical tags from the claim, audience, and title; writer confirms or edits.
+- **Series specifics** (only if the blueprint marks this a series post): load `series-blocks`; confirm `series_theme` name and `series_theme_url`, or leave `[CONFIRM PRE-LAUNCH: ...]` placeholders; confirm the theme tie-back is by substance, not labeling.
 
 ---
 
@@ -208,7 +155,7 @@ System generates each artifact; writer confirms or proposes alternative.
 
 ### 2a. Title
 
-Generate **3–5 distinct title candidates** based on Phase 1 inputs. Constraints:
+The blueprint carries a working title; start from it. If the writer wants options, generate **3–5 distinct title candidates** from the blueprint's working title and central claim. Constraints:
 
 - No buzzwords from `ai-antipatterns` banned-words list
 - No "X, not Y" contrast framing (per `personal-tone`)
@@ -287,28 +234,11 @@ git -C . branch -m "blog/{slug}"
 
 If on any other branch, leave alone.
 
-### 2e. Outline
+### 2e. Outline (from the blueprint)
 
-Generate a three-beat outline (plus optional fourth beat for series or invitation-to-engage):
+The beat outline, opener shape, and the anchor walked through the architecture's parts are already in the blueprint. **Do not regenerate them.** Restate the outline back to the writer for a final confirmation before composing.
 
-```
-Beat 1 (Why this — stakes + opener): {one-paragraph sketch}
-  Opener shape: {chosen per Q6, or system-picked if "your call"}
-
-Beat 2 (What's true — substance): {one-paragraph sketch}
-  Examples integrated:
-    - {Example 1 from Q2 — how it appears in the post}
-    - {Example 2 from Q2 — how it appears}
-    - {Example 3 from Q2 — how it appears}
-
-Beat 3 (What's portable): {the one-sentence insight from Q1, plus any sharpening notes}
-
-Beat 4 (What's next — optional): {if series, "series navigation block per series-blocks template"; otherwise "skip" or a brief invitation-to-engage line}
-```
-
-Present and ask: "Outline correct? Adjust any beat, or proceed?"
-
-Wait for writer confirmation. If revisions, regenerate the affected beat and re-present.
+If the writer wants a structural change (different architecture, different anchor, a beat that does not fit), that is a planning change, not a drafting change. Stop and route it back to `/blog-plan` so the anchor-fit gate runs again. Do not absorb structural rework into the draft flow; that is the loop this split exists to prevent.
 
 ### 2f. Tags
 
@@ -330,9 +260,9 @@ Write the draft directly to `src/content/blog/{slug}.mdx`. **Do not show the dra
 
 ### Composition rules
 
-Apply all loaded skills during composition:
+Compose to the approved blueprint: its beat outline, anchor story, and architecture parts are the spine. Apply all loaded skills during composition:
 
-- **`blog-post-framework`** — three beats present, opener shape per Q6, length 3–8 min reading time target, section rendering varies (no schematic-identical templates across parallel sections)
+- **`blog-post-framework`** — three beats present; opener shape per the blueprint. Length is not a compose-time target; write to the blueprint and let structural integrity govern. Apply **structural integrity**: forward motion (each section changes the reader's state, no timeline resets, no re-established context), no semantic duplication (no insight restated in fresh words across the post), earn the abstraction (concrete before claim), and section rendering varies (no schematic-identical templates across parallel sections).
 - **`personal-tone`** — first-person, present tense, contractions natural, no contrast framing, no effort signaling, audience layering, brand alignment
 - **`ai-antipatterns`** — universal style banishments, zero em dashes in prose, no banned words, no aphoristic closings, no "Without X, Y. Without Y, X." inversions, no triple parallel construction
 - **`series-blocks`** (if applicable) — insert intro block at top of body, navigation block at bottom
@@ -343,10 +273,10 @@ Apply all loaded skills during composition:
 ---
 title: "{post title}"
 description: "{one-sentence description}"
-date: {publish date from Q5}
+date: {publish date from Phase 1b}
 tags: [{confirmed tags from 2f}]
 draft: false
-{if series} series: {series-slug from Q4}
+{if series} series: {series-slug from the blueprint}
 {if series and Q4a theme name provided} series_theme: "{theme name}"
 {if series and Q4a theme URL provided} series_theme_url: "{theme url}"
 ---
@@ -374,7 +304,6 @@ After write, print:
 ```
 Composed: src/content/blog/{slug}.mdx
   Word count: {N}
-  Reading time: ~{N} min
   Beats present: Why this / What's true / What's portable / What's next ({yes|skip})
   Series: {series-slug or "standalone"}
   CONFIRM PRE-LAUNCH placeholders: {N}
@@ -422,7 +351,7 @@ Run the LLM-judgment items from `blog-checklist` (the items the script does not 
 - Schematic-identical templates across parallel sections
 - Paired synonyms, tripled lists for emphasis, fake precision
 - Voice scan (audience layering, AI credit explicit, no verbatim praise, no effort signaling)
-- Length is 3–8 min or justified
+- Word count in a comfortable range (~600–1,200); shorter or longer is fine if every section earns its place
 - Internal links to relevant case studies where natural
 - Series checks (if applicable): placeholders flagged, intro/nav blocks present
 
@@ -494,16 +423,15 @@ node scripts/check-blog-prose.mjs src/content/blog/{slug}.mdx
 
 If exit code is non-zero: STOP. This catches anything that got reintroduced between Phase 4 and now.
 
-### 6d. Word count + reading time
+### 6d. Word count
 
 ```bash
 # Strip frontmatter, count words
 WORDS=$(awk 'BEGIN{f=0} /^---$/{f++; next} f==2{print}' src/content/blog/{slug}.mdx | wc -w | tr -d ' ')
-READING_TIME=$(( (WORDS + 199) / 200 ))
-echo "WORDS=$WORDS READING_TIME=${READING_TIME}min"
+echo "WORDS=$WORDS"
 ```
 
-If reading time is outside 3–8 min and the writer didn't justify longer, flag as a warning (don't block).
+Word count is a sensibility, not a gate. If it is well under ~600 or well past ~1,200 words, flag as a warning (do not block); the real test is that every section earns its place.
 
 Print summary:
 
@@ -512,7 +440,7 @@ Save gates passed:
   OG image: dynamic (/og/{slug}.png, rendered + cached on first scrape)
   pnpm astro check: 0 errors
   check-blog-prose.mjs: 0 critical
-  Reading time: {N} min
+  Word count: {N}
 ```
 
 ---
@@ -600,7 +528,7 @@ Frontmatter:
 Validation:
   check-blog-prose.mjs: 0 critical, {N} warnings
   pnpm astro check: 0 errors
-  Reading time: {N} min
+  Word count: {N}
 
 {if series}
 Pre-launch placeholders remaining: {N}

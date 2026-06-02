@@ -52,7 +52,6 @@ If the file is in `src/content/blog/`, also gather context: the most recent 2–
 
 Read the full file. Separate frontmatter from body. Note:
 - Word count of body
-- Estimated reading time (body words ÷ 200, rounded up)
 - Slug from filename
 - Date from frontmatter
 - Tags from frontmatter
@@ -76,7 +75,7 @@ Check voice (first-person, contractions). Check tone (invitational, AI credit, n
 
 ### 3c: blog-post-framework scan
 
-Check beat presence (Why this, What's true, What's portable). Check opener shape variation against recent posts. Check substance requirements (concrete example, disagreeable claim, respects reader's knowledge). Check length is 3–8 min or justified.
+Check beat presence (Why this, What's true, What's portable). Check opener shape variation against recent posts. Check substance requirements (concrete example, disagreeable claim, respects reader's knowledge). Check word count is in a comfortable range (~600–1,200); shorter or longer is fine if every section earns its place. Check structural integrity (forward motion, no semantic duplication, anchor-story fit).
 
 ### 3d: blog-checklist scan
 
@@ -107,7 +106,7 @@ Output the findings in this exact format:
 
 **File:** {path}
 **Date:** {date}
-**Words:** {N}  |  **Reading time:** ~{N} min
+**Words:** {N}
 **Tags:** {comma-separated}
 
 ## Summary
