@@ -39,7 +39,7 @@ export default [
       ],
       "no-console": "off",
     },
-  },
+  }, // <-- FIXED: Added missing closing brace and comma here to close out Section 3 cleanly
 
   // 4. Cloudflare Worker Edge Route Files Context
   {
@@ -88,6 +88,19 @@ export default [
       "no-undef": "error",
       // Silences unused component imports because they are handled via the global components mapper
       "no-unused-vars": "off",
+    },
+  },
+
+  // 7. Puppeteer Visual Verification Hook Context (Merged from blog-launch branch)
+  {
+    // screenshot.mjs runs browser-context code inside puppeteer page.evaluate(),
+    // so it needs browser globals (document, window, getComputedStyle) on top of node.
+    files: ["scripts/screenshot.mjs"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.browser,
+      },
     },
   },
 ];
