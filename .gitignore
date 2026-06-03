@@ -25,14 +25,11 @@ pnpm-debug.log*
 # Local tooling — not for public consumption.
 # CLAUDE.md is tracked (shared project guidance, versioned with the code).
 # .claude/ local settings are ignored, but the reusable blog authoring
-# commands/skills are tracked. writer-context is the exception: it holds
-# personal employment data (work history, performance reviews) and stays
-# local-only, never committed.
+# commands/skills are tracked.
 .claude/*
 !.claude/skills/
 !.claude/commands/
 !.claude/README.md
-.claude/skills/writer-context/
 
 # scripts/: track the workflow tooling (prose gate, screenshot harness, docs);
 # keep the asset generators local (they depend on the 189MB photo set below).

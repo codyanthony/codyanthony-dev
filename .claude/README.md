@@ -13,8 +13,7 @@ Skills and slash commands for writing blog posts (and eventually other content) 
 │   ├── blog-post-framework/SKILL.md             # Three beats + structural integrity (always on)
 │   ├── blog-checklist/SKILL.md                  # Pre-publish gates (always on)
 │   ├── series-blocks/SKILL.md                   # Series intro/navigation templates (conditional)
-│   ├── systems-writing/SKILL.md                 # Systems-essay scaffolding (conditional)
-│   └── writer-context/SKILL.md                  # Verified work history + project inventory (LOCAL-ONLY, gitignored)
+│   └── systems-writing/SKILL.md                 # Systems-essay scaffolding (conditional)
 ├── commands/
 │   ├── blog-plan.md                             # Plan: seed → architecture → anchor → blueprint
 │   ├── blog-draft.md                            # Execute the blueprint into a draft
@@ -22,7 +21,9 @@ Skills and slash commands for writing blog posts (and eventually other content) 
 └── plans/                                        # Blueprints emitted by /blog-plan (gitignored scratch)
 ```
 
-`settings.local.json`, `plans/`, and `skills/writer-context/` are gitignored (the last holds private employment data and is local-only). Everything else under `skills/`, `commands/`, and this `README.md` is tracked.
+`settings.local.json` and `plans/` are gitignored. Everything else under `skills/`, `commands/`, and this `README.md` is tracked.
+
+`writer-context` is **not in this repo** — it is personal to the writer, so it lives as a global skill at `~/.claude/skills/writer-context/`; `/blog-plan` and `/blog-draft` load it by name via the Skill tool.
 
 ## Architecture
 
@@ -65,7 +66,7 @@ Loaded only when relevant, not on every task:
 - **`series-blocks`** — intro/navigation block templates and the frontmatter contract for posts in a collaborative series (e.g., Per the Docs). Loaded when a post participates in a series.
 - **`systems-writing`** — generative scaffolding for essays whose subject is a system (pipeline, migration, automation, workflow, documentation/knowledge system). Lens selection (find the insight), an architecture palette (communicate it), boundary-event evidence, and the anchor-selection method. Loaded by `/blog-plan` when the topic is a system.
 
-`writer-context` is the writer's verified work history and project inventory. It is **local-only (gitignored)** because it holds private employment data. `/blog-plan` queries it to shortlist anchor stories; `/blog-draft` loads it to fact-check claims about the writer. Reading time is deliberately absent from all of these: it is too imprecise to drive a decision (word count is the internal measure). It survives only as a reader-facing marker in the rendered post byline.
+`writer-context` is the writer's verified work history and project inventory. It is a **global skill** (`~/.claude/skills/writer-context/`, outside this repo, since it is personal to the writer); commands load it by name via the Skill tool. `/blog-plan` queries it to shortlist anchor stories; `/blog-draft` loads it to fact-check claims about the writer. Reading time is deliberately absent from all of these: it is too imprecise to drive a decision (word count is the internal measure). It survives only as a reader-facing marker in the rendered post byline.
 
 ## Commands
 

@@ -23,7 +23,7 @@ Print the banner above verbatim before doing anything else. Then print:
 - `.claude/skills/personal-tone/SKILL.md` — voice, brand alignment, audience layering
 - `.claude/skills/blog-post-framework/SKILL.md` — three-beat structure, opener shapes
 - `.claude/skills/blog-checklist/SKILL.md` — pre-publish gates
-- `.claude/skills/writer-context/SKILL.md` — verified work history, role specifics, NDA/proprietary reference guidance, common overclaims to refuse
+- `writer-context` (**global skill, not in this repo**) — verified work history, role specifics, NDA/proprietary reference guidance, common overclaims to refuse. Personal to the writer, so it lives at `~/.claude/skills/writer-context/` rather than in the repo; load it by name via the Skill tool.
 
 **Loaded conditionally (in Phase 1b if the blueprint marks the post series-participating):**
 
@@ -45,7 +45,7 @@ Phase 6). No `generate-blog-og.mjs` / static PNG.
 
 ### 0a. Skill loading and verification gate
 
-Load all required skills via Read (skill auto-discovery via the Skill tool may not surface project-local skills depending on Claude Code session configuration; Read is the reliable path).
+Load the project-local skills (`ai-antipatterns`, `personal-tone`, `blog-post-framework`, `blog-checklist`, and conditionally `series-blocks`) via Read at their `.claude/skills/<name>/SKILL.md` paths — project-local auto-discovery via the Skill tool can be session-dependent, so Read is the reliable path for these. Load `writer-context` via the Skill tool **by name**: it is a global, writer-personal skill (`~/.claude/skills/writer-context/`) that lives outside the repo, and global skills surface reliably by name. If `writer-context` fails to load, stop and report — do not draft claims about the writer without it.
 
 Confirm each skill is loaded by listing one key rule from each in this format:
 
