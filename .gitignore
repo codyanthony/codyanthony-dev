@@ -33,7 +33,13 @@ pnpm-debug.log*
 !.claude/commands/
 !.claude/README.md
 .claude/skills/writer-context/
-scripts/
+
+# scripts/: track the workflow tooling (prose gate, screenshot harness, docs);
+# keep the asset generators local (they depend on the 189MB photo set below).
+scripts/*
+!scripts/check-blog-prose.mjs
+!scripts/screenshot.mjs
+!scripts/README.md
 .markdownlint-cli2.jsonc
 
 # Photo source set (189MB) — used to generate site headshot and LinkedIn assets
