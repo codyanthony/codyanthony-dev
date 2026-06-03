@@ -1,13 +1,13 @@
 ---
 description: Draft a blog post for codyanthony.dev/blog/ using the three-beat framework, personal-tone voice, and ai-antipatterns universal style guide. Interactive flow with branch management, system-generated proposals, series support, deterministic-script validation, and optional commit/deploy.
-version: 1.0
+version: 1.1
 ---
 
 # /blog-draft
 
 Executes an approved blueprint from `/blog-plan` into a ready-to-merge draft. The architecture, anchor story, and outline are already decided and validated in the plan; this command does not re-plan. Eight phases: Setup → Blueprint → Proposals → Compose → Validate → Review → Save → Ship. Each phase gates on user confirmation; the deterministic script runs before LLM judgment during validation.
 
-> **Running blog-draft v1.0** — Skill load + verification gate → branch management → load the blueprint (`.claude/plans/{slug}.md`) + confirm remaining metadata → confirm proposals (title, slug, outline from blueprint, tags) → compose direct to file → deterministic + LLM validation → user review → deterministic save gates → optional commit/deploy.
+> **Running blog-draft v1.1** — Skill load + verification gate → branch management → load the blueprint (`.claude/plans/{slug}.md`) + confirm remaining metadata → confirm proposals (title, slug, outline from blueprint, tags) → compose direct to file → deterministic + LLM validation → user review → deterministic save gates → optional commit/deploy.
 
 > Run `/blog-plan` first. It produces the blueprint this command consumes. Starting here without one is only for a simple post with one obvious example; anything with real architecture should be planned first.
 
@@ -133,7 +133,7 @@ Ask the writer for the slug, or locate the blueprint:
 ls .claude/plans/*.md 2>/dev/null
 ```
 
-Read `.claude/plans/{slug}.md` and extract: central claim, architecture and required parts, anchor story, evidence map, beat outline, opener shape, working title, slug, links/cross-references, and open questions.
+Read `.claude/plans/{slug}.md` and extract: central claim, architecture and required parts, anchor story, evidence map, beat outline, opener shape, working title, slug, links/cross-references, contentious decisions (employer name/abstract, sensitive examples screened, opener register, second-instance/on-ramp budget), and open questions. The employer name/abstract decision feeds the employer-abstraction check at Phase 4b.
 
 **If no blueprint exists:**
 
@@ -299,6 +299,12 @@ draft: false
 
 Use the Write tool to save to `src/content/blog/{slug}.mdx`.
 
+### Pre-presentation self-review (fix-in-place)
+
+Before printing the structured summary or inviting review, re-read the draft once as a skeptical senior reader and **correct in place** against the Phase 4b checklist below. Then run the deterministic script (Phase 4a) and fix any critical findings in place. Only after both passes, present.
+
+The principle: *the writer must not be the first to catch a failure on this list.* This is a **re-sequence of the existing validate phase, not a new mechanism** — it moves the first cleanup ahead of presentation so the writer reviews an already-screened draft instead of a raw one. Note in the structured summary how many issues this pass corrected.
+
 ### Structured summary
 
 After write, print:
@@ -306,6 +312,7 @@ After write, print:
 ```
 Composed: src/content/blog/{slug}.mdx
   Word count: {N}
+  Self-review (fix-in-place): {N} issues corrected; deterministic script 0 critical
   Beats present: Why this / What's true / What's portable / What's next ({yes|skip})
   Series: {series-slug or "standalone"}
   CONFIRM PRE-LAUNCH placeholders: {N}
@@ -317,6 +324,8 @@ Open the file in VS Code for inspection before validation.
 ---
 
 ## Phase 4: Validate
+
+The compose-tail self-review (Phase 3) already ran this checklist once as a fix-in-place pass and cleared the deterministic script. Phase 4 is the **writer-in-the-loop** verification: re-run the checks, surface anything that remains, and decide each item with the writer. It is a confirmation pass, not the first catch.
 
 ### 4a. Deterministic gate (script)
 
@@ -346,16 +355,10 @@ After all findings resolved, re-run the script. If still failing, loop until exi
 
 ### 4b. LLM-judgment checks
 
-Run the LLM-judgment items from `blog-checklist` (the items the script does not cover):
+Run the LLM-judgment checklist from `blog-checklist` — the items the deterministic script does not cover (beat presence, structural integrity, voice scan, anti-pattern LLM-judgment, length/pacing, cross-references). **`blog-checklist` is the canonical list and cites each item's source skill; run it there rather than re-enumerating it here**, so the draft-time pass and the pre-publish gate cannot drift apart.
 
-- Beat presence (Why this, What's true, What's portable, optional What's next)
-- Example strength: every example passes the deletion test (remove it; if the argument loses nothing essential, it is decoration). Run per example, not once per beat.
-- Aphoristic closing slogans (especially as bookends)
-- Schematic-identical templates across parallel sections
-- Paired synonyms, tripled lists for emphasis, fake precision
-- Voice scan (audience layering, AI credit explicit, no verbatim praise, no effort signaling)
-- Word count in a comfortable range (~600–1,200); shorter or longer is fine if every section earns its place
-- Internal links to relevant case studies where natural
+In addition, run the draft-flow-specific checks `blog-checklist` does not carry:
+
 - Architecture consistency: the draft still delivers the claim through the blueprint's architecture and evidence map. Flag drift, do not silently absorb it; an improvement updates the blueprint, a genuine architecture change routes back to `/blog-plan`, an accidental dropped part gets repaired.
 - Series checks (if applicable): placeholders flagged, intro/nav blocks present
 
@@ -554,6 +557,7 @@ Next steps:
 - **One question at a time in Phase 1.** Do not batch Q1–Q6. Each answer shapes the next question.
 - **System proposes, writer confirms.** Phases 2a–2f are generation steps. The writer picks or proposes alternatives; the agent does not pre-decide.
 - **Deterministic before LLM.** Phase 4a (script) runs before Phase 4b (LLM judgment). Critical script findings block advancement.
+- **Writer is not first to catch.** Compose ends with a fix-in-place self-review (Phase 3) that runs the Phase 4b checklist and the deterministic script before the draft is presented; Phase 4 is then writer-in-the-loop verification, not the first catch. This is a re-sequence of the existing validate phase, not a new mechanism.
 - **No invention.** Do not introduce examples, metrics, or quotes the writer did not provide. If a beat needs an example and the writer didn't offer one, pause and ask.
 - **AI credit honesty.** Per `personal-tone`, name AI involvement when AI did the work. If the writer prompts a draft with minimal input, the post is AI-drafted — flag in the draft itself where contextually appropriate, not just hidden disclosure.
 - **No save without all gates passing.** Phase 6 deterministic gates (OG, astro check, prose re-check, word count) all must pass. If any fail, surface the error and do not declare success.

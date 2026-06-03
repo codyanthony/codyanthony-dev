@@ -1,13 +1,13 @@
 ---
 description: Plan a blog post for codyanthony.dev/blog/ before drafting. Turns a seed idea into a central claim, an architecture, and an anchor story validated against an evidence map, then emits a blueprint that blog-draft consumes. The cheap checkpoint that prevents throwaway drafts.
-version: 1.1
+version: 1.2
 ---
 
 # /blog-plan
 
 Turns a seed idea into a validated plan **before** any prose is written. Output is a blueprint at `.claude/plans/<slug>.md` that `/blog-draft` consumes. This is the cheap place to catch the expensive failure: an architecture the anchor story cannot actually carry.
 
-> **Running blog-plan v1.1** — Seed intake (light, one question at a time) → central claim → architecture proposal → anchor selection from `writer-context` → evidence-map fit gate → outline + metadata → emit blueprint. Drafting does not start here; this hands off to `/blog-draft`.
+> **Running blog-plan v1.2** — Seed intake (light, one question at a time) → central claim → architecture proposal → anchor selection from `writer-context` → evidence-map fit gate → outline + metadata → emit blueprint. Drafting does not start here; this hands off to `/blog-draft`.
 
 Print the banner above verbatim before doing anything else.
 
@@ -70,8 +70,9 @@ This is the step that prevents throwaway drafts. Do not skip it for systems essa
 
 1. From `writer-context` (the project inventory), nominate candidate anchor stories that might carry the claim.
 2. For the chosen architecture, build the **evidence map**: for each required part, name the concrete moment in a candidate project that demonstrates it. A part with no concrete evidence is an empty cell.
-3. Recommend the single anchor that fills every cell. Prefer recency and strategic value (a project that seeds a planned case study, so the post can link to it).
-4. Apply the dilution rule: prefer one anchor that contains the whole structure over several that each contain a fragment. Do not stitch partial anchors together.
+3. **Screen the evidence for reputational cost.** For each load-bearing example, ask whether its reputational cost exceeds its narrative value — compliance failures, security incidents, near-misses, anything that could read as airing a former employer's problems or as self-incrimination. An active job search raises the cost. Prefer a non-sensitive example of equal structural value; if the only example that fills a cell is reputationally costly, surface it for the writer's explicit decision before locking the anchor. (Canonical statement: `systems-writing` → Reputational cost vs narrative value; the screen applies to any post with a sensitive example, not only systems essays.)
+4. Recommend the single anchor that fills every cell. Prefer recency and strategic value (a project that seeds a planned case study, so the post can link to it).
+5. Apply the dilution rule: prefer one anchor that contains the whole structure over several that each contain a fragment. Do not stitch partial anchors together.
 
 ---
 
@@ -96,6 +97,7 @@ With a fitting anchor, sketch the plan. Do not write prose.
 - **Opener shape.** Pick a shape from the `blog-post-framework` table that fits *this* story, varied from recent posts.
 - **Working title and slug.** Propose both (slug kebab-case, no spaces).
 - **Links / cross-references.** Note any case study or prior post to link.
+- **Contentious decisions (resolve before the blueprint).** These otherwise detonate at draft time; settle them now and record the answers in the blueprint. (a) Name or abstract the employer? (`personal-tone` → Employer identity; default abstract for blog/craft.) (b) Any reputationally sensitive examples to screen (cost vs value, per Phase 3 and `systems-writing`)? (c) Opener register — builder-experience, scene, or claim? (d) Is a brief second instance / on-ramp wanted, and at what length budget?
 - **Open questions / placeholders.** Anything unresolved at plan time (series URLs, a metric to confirm), using the `[CONFIRM PRE-LAUNCH: ...]` convention.
 
 ---
@@ -140,6 +142,12 @@ Write the blueprint to `.claude/plans/<slug>.md` (this path is gitignored scratc
 - **What's true:** {the anchor walked through the parts / seams}
 - **What's portable:** {single carry-away}
 - **What's next (optional):** {only if natural}
+
+## Contentious decisions (resolved)
+- **Employer:** {name | abstract — and why}
+- **Sensitive examples:** {none | screened: which, and the call}
+- **Opener register:** {builder-experience | scene | claim}
+- **Second instance / on-ramp:** {none | yes — length budget}
 
 ## Links / cross-references
 - {case study or prior post}

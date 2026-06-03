@@ -288,6 +288,10 @@ AI defaults toward balanced, parallel syntactic structures. Real writing varies 
 
 These read as deliberate craft on first pass; they read as LLM tics on second. Even one is borderline. Two in the same piece (especially as bookends) is a clear tell. Replace with sentences that finish a thought rather than summarize it.
 
+Real failure examples (from drafts): "Build the most capable pipeline you can, and this layer doesn't shrink away." / "It gets freed up for the work only it can do." Final-line test: does the ending land on an observation or on a maxim? Is the last line earned by the examples, or does it reach past them? This is a judgment check — do not pattern-match.
+
+*Provisional (n=1): failure examples extracted from one essay; validate against the next 1–2 posts before treating them as canonical.*
+
 **"Without X, Y. Without Y, X." inversions.** A parallel two-sentence inversion structure:
 
 - "Without the conventions, the pipeline produces a thousand inconsistent translations. Without the pipeline, the conventions never apply at scale."

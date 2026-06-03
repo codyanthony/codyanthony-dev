@@ -28,6 +28,14 @@ For retrospective or factual claims (past employment, past projects), past tense
 
 Lead with the thing. No throat-clearing. No filler transitions. No corporate hedging. See `ai-antipatterns` for the full banned-phrases list.
 
+### Builder voice: recount, don't pontificate
+
+Write as someone reporting what they built and what surprised them, not as an essayist explaining how the field works. When the two compete, choose the observed failure, the design decision, the constraint, or the surprise over the general principle. State the concrete first and let the claim follow.
+
+This is the single stance behind three rules you already follow: frame claims as personal experience (Tone → "Invitational, framed as personal experience"), lead with the point not the windup (`ai-antipatterns` → "The windup pitch"), and earn the abstraction (`blog-post-framework` → "Earn the abstraction"). If a sentence could open a thinkpiece by anyone, it's in the wrong voice.
+
+**It governs where abstraction sits, not whether abstraction is allowed.** The brand is documentation *strategy*; synthesis is on-brand. Put the abstraction after the evidence, not before it. Do not flatten the writing into pure anecdote.
+
 ## Tone
 
 ### Invitational, framed as personal experience
@@ -48,6 +56,10 @@ If someone praised the work, paraphrase the praise — don't quote it. Verbatim 
 
 If the work is good, the metric or outcome does the talking. No need to add "which I'm really proud of" or "which was a huge effort." The reader infers effort from the result.
 
+### Employer identity
+
+In blog and craft posts, abstract the employer by default ("a platform," "a product") unless naming it is essential to the argument. Case studies usually lean the other way, because their value is attribution — but only when the work product is public and naming is safe. That holds for this portfolio's current case studies (public docs, guides, migrations); it is not a universal rule about case studies, and plenty of portfolios anonymize employers under NDA. The determinant is the same NDA/public gate the rest of the system already uses (see `blog-post-framework` → "Name your specifics, with NDA and proprietary exceptions" and `writer-context` → NDA): name your own or public work, abstract under NDA, proprietary, or reputational risk. Test: does naming serve the reader or the argument, or just drop a logo?
+
 ## Flow
 
 ### Zero em dashes in prose
@@ -67,6 +79,10 @@ Or skip the comparison entirely:
 
 - Bad: "Documentation strategy, not just technical writing."
 - Good: "Documentation strategy."
+
+Catch the variants, not just the literal form: "doesn't X but Y," "not in A but in B," "instead of X, Y," and the negative cleft "what X couldn't do was Y." All are the same tell.
+
+*Provisional (n=1): variant list extracted from one essay; refine as more posts surface tells.*
 
 ### No triple-repetition for emphasis
 
@@ -129,10 +145,12 @@ Banned beyond what `ai-antipatterns` covers:
 
 - **"X, not Y" contrast framing.** See Flow section above.
 - **Verbatim praise quotes.** Paraphrase.
-- **Effort signaling.** "Which was a huge effort," "which I'm really proud of," "after months of work." Cut.
+- **Effort and scale signaling.** Cut "which was a huge effort," "which I'm really proud of," "after months of work," and the difficulty-flex variants ("at least we had X," "with more riding on it," "the harder version"). Mention scale only when it *explains the system's behavior* ("at thousands of files, hand-conversion stops being possible"), never to advertise the amount of work done ("I converted thousands of files"). Test: does the number explain the problem, or flex the workload?
 - **Buzzword pairing with concrete work.** "Robust documentation infrastructure" — drop "robust." "Comprehensive content audit" — drop "comprehensive." See `ai-antipatterns` banned words list.
 - **"Information ecosystems."** Specific buzzword I avoid. Replace with "documentation systems," "content infrastructure," or whatever specific noun the context calls for.
 - **"Complex software products" overuse.** This is a brand phrase but it loses force if it appears in every paragraph. Limit to opening framings and key positioning lines. Vary downstream with specifics ("cloud platforms," "developer tools," "enterprise APIs," etc.) where appropriate.
+- **Quotation marks.** Avoid quotation marks in prose; name markers, labels, and terms without quoting them. Personal preference, not a universal blog rule, and broader than the `ai-antipatterns` scare-quote rule (which bans only emphasis-quotes on technical terms). *Provisional (n=1): validate against the next 1–2 posts before hardening.*
+- **Colons (soft lean).** Prefer a period or a restructure over a colon that introduces an elaboration or a clause; idiomatic short list-colons are fine. A lean, not a ban — do not over-apply, and do not script it. *Provisional (n=1): validate against the next 1–2 posts before hardening.*
 
 ## Audience layering
 
@@ -167,6 +185,7 @@ Before submitting any writing:
 
 - [ ] First person, present tense (unless retrospective)
 - [ ] Contractions natural unless single-sentence weight required
+- [ ] Builder voice: recounts what was built or observed; abstraction sits after the evidence, not before it
 - [ ] Zero em dashes in prose (per `ai-antipatterns`)
 - [ ] Zero "X, not Y" contrast framings
 - [ ] No verbatim praise quotes

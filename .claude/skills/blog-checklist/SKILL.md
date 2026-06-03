@@ -33,19 +33,29 @@ Run each item against the draft. Report pass/fail per item. Revise the draft bef
 - [ ] **What's true** beat includes at least one concrete example with detail
 - [ ] **What's portable** insight is extractable as a single shareable sentence
 - [ ] Opener shape varies from the writer's last 2–3 posts (consult `src/content/blog/` history; skip if fewer than 2 posts exist)
+- [ ] Opener earns its abstraction (`blog-post-framework` → Earn the abstraction): an abstraction-first opener is paid off with concrete evidence, not merely decorated
+
+### Structural integrity (per `blog-post-framework`)
+
+- [ ] Every example passes the deletion test (remove it; if the argument loses nothing essential, it is decoration) — run per example, not once per beat
+- [ ] One dominant idea per section; no two competing decompositions overloaded into one section
+- [ ] Conclusion thesis discipline: the final-emphasis positions (last sentence, and the sentence closing the penultimate paragraph) land the thesis, not a supporting idea
+- [ ] **Systems essays only:** the served party stays visible — a reader can answer "who cares?" from the essay (`systems-writing` → Keep the served party visible; skip for non-systems posts)
 
 ### Voice scan (per `personal-tone`)
 
 - [ ] First-person, present tense (unless retrospective)
 - [ ] Contractions natural unless single-sentence weight required
-- [ ] Zero "X, not Y" contrast framings
+- [ ] Builder voice: recounts what was built or observed, not essayist/philosophy drift; abstraction sits after the evidence (`personal-tone` → Builder voice)
+- [ ] Zero "X, not Y" contrast framings, including the variants ("doesn't X but Y," "not in A but in B," "instead of X, Y," the negative cleft "what X couldn't do was Y")
 - [ ] No verbatim praise quotes
-- [ ] No effort signaling ("huge effort," "really proud of," "after months of work")
+- [ ] No effort or scale flexing ("huge effort," "really proud of," "after months of work," difficulty-flex variants); scale mentioned only when it explains the system's behavior
 - [ ] No sales-pitch closing
 - [ ] Canonical title "Documentation Strategist" used where applicable
 - [ ] Three-pillar shorthand (Content Strategy / Documentation Systems / AI Workflows) in canonical order if listed inline
 - [ ] AI credit explicit where AI did the work
 - [ ] Brand phrase "complex software products" appears at most once
+- [ ] Employer abstracted by default in blog/craft posts unless naming is essential to the argument (`personal-tone` → Employer identity)
 
 ### Fact-accuracy scan (per `writer-context`)
 
@@ -86,7 +96,7 @@ The script flags (and the checklist marks pass/fail based on its exit code):
 
 The script does not cover these patterns; they require structural judgment:
 
-- [ ] No aphoristic closing slogans (especially as bookends)
+- [ ] No aphoristic closing slogans (especially as bookends); apply the final-line test — does the ending land on an observation or on a maxim? (`ai-antipatterns` → Aphoristic slogan closings)
 - [ ] Parallel sections render with structural variety (not identical bullet templates across cases/examples)
 - [ ] Parallel examples developed to comparable depth (per `blog-post-framework`)
 - [ ] Artifacts named where legitimately nameable (own work or public); abstracted only for NDA/proprietary/reputational concerns. Vague references to artifacts that _could_ be named are a substance gap.

@@ -111,6 +111,12 @@ Examples of weak portable insights (avoid):
 
 If the post is missing this beat — if the reader can't extract a usable insight — the post is probably restating consensus. Revise toward a specific, defensible claim before publishing.
 
+#### Thesis discipline in the close
+
+Name the one thesis, then check the final-emphasis positions — the last sentence and the sentence closing the penultimate paragraph. A supporting idea that lands there (especially an optimistic one) will be remembered as the thesis. If the emphatic slot holds a supporting idea, or one that contradicts the thesis, move it. The examples already made the case; the close places them, it doesn't re-argue them.
+
+This is distinct from the quality test above (whether the portable insight is strong): it governs *which* idea occupies the emphatic slot, not whether the idea is good.
+
 ### Optional beat: What's next
 
 A closing invitation. Include only when natural. Skip when forced.
@@ -144,9 +150,15 @@ Every section changes the reader's state: it adds information, evidence, a conse
 
 Two passages that carry the same insight in different words are one passage. This is broader than the sentence-level "remove what restates" in the drafting process, and broader than `ai-antipatterns` word-level repetition: it catches the same _idea_ surfacing twice across the post. Common shapes: an abstraction and its example making the same point; a section opener and its body making the same point; two examples making the same point. Keep the strongest instance; cut the rest. Leave deliberate setup-and-payoff callbacks alone; those advance state.
 
+### One dominant idea per section; one decomposition at a time
+
+Each section carries a single load-bearing idea; supporting detail serves it or moves to where it's load-bearing. In particular, avoid running two different decompositions of the same system in one section (for example, describing it by *phases* and by *layers* at once). Pick the decomposition that section needs and defer the other to where it does work.
+
+This is distinct from semantic duplication above: that rule catches the same *idea* repeated across the post; this one catches a single section *overloaded* with two organizing schemes at once.
+
 ### Earn the abstraction
 
-Default to concrete before claim: observation → example → insight, so the evidence brings the reader to the point rather than the point being asserted and then decorated. This is the structural face of `ai-antipatterns` "the windup pitch": lead with the concrete point, and do not bury it under windup.
+Default to concrete before claim: observation → example → insight, so the evidence brings the reader to the point rather than the point being asserted and then decorated. This is the structural face of `ai-antipatterns` "the windup pitch" and of the stance `personal-tone` names as Builder voice (recount, don't pontificate): lead with the concrete point, and do not bury it under windup.
 
 An abstraction-first opener is legitimate when the abstraction is itself the hook or thesis (see the opener-shapes table, "surprising claim / reframe"). The requirement is not that an abstraction can never come first; it is that the abstraction gets paid off with concrete evidence before the piece ends. What to avoid is an abstraction asserted and then merely decorated, with nothing that earns it.
 
@@ -220,6 +232,8 @@ Before submitting any blog post:
 - [ ] Parallel examples developed to comparable depth (or imbalance is intentional and explainable)
 - [ ] Each section advances narrative state (no timeline resets, no context re-establishment)
 - [ ] No semantic duplication (the same insight stated twice across the post)
+- [ ] One dominant idea per section; no two competing decompositions overloaded into one section
+- [ ] Close lands the thesis: the final-emphasis positions hold the thesis, not a supporting idea (per Beat 3 → Thesis discipline)
 - [ ] Anchor story contains the structure the post claims (set in `blog-plan`)
 - [ ] Artifacts named where the writer can legitimately name them (own work or public); abstracted only where NDA, proprietary, or reputational concerns apply
 - [ ] Portable insight extractable as a single shareable sentence

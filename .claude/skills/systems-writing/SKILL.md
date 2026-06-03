@@ -53,7 +53,7 @@ The layer/seam shapes are the most common for this brand, but **the three-layer 
 
 ## Strong systems evidence
 
-The strongest evidence in a systems essay is a **boundary event**: a concrete moment where the structure showed itself.
+The strongest evidence in a systems essay is usually a **boundary event**: a concrete moment where the structure showed itself. This holds most cleanly for the seam, responsibility-transition, and failure lenses; for an information-flow, feedback-loop, or incentive lens the strongest evidence may instead be a degradation trace, a compounding loop, or a persistent incentive. Whatever the shape, prefer a concrete moment where the structure became visible to an abstract claim about it.
 
 - One kind of work stopped being sufficient and another had to take over.
 - Responsibility or ownership changed hands.
@@ -61,6 +61,16 @@ The strongest evidence in a systems essay is a **boundary event**: a concrete mo
 - Interpretation became necessary where a rule used to be enough.
 
 Weak evidence: a feature list, a tidy success story with no seam, an example that illustrates a claim without a decision or a cost. Prefer the moment of strain over the moment of success.
+
+**Reputational cost vs narrative value.** Screen the strongest evidence before committing to it, whatever shape it takes for your lens (a boundary event, a degradation trace, a compounding loop). Avoid any example whose reputational cost exceeds its narrative value: compliance failures, security incidents, near-misses, anything that could read as airing a former employer's problems or as self-incrimination. Prefer a non-sensitive example of equal structural value. An active job search raises the reputational cost.
+
+## Keep the served party visible
+
+A systems essay describes a system, and the people it exists for can vanish behind the architecture. Keep them present: who is served, and what breaks for them when the output is wrong. A reader should be able to answer "who cares?" from the essay itself. (This is the subject system's users — distinct from `blog-post-framework`'s audience-layering, which is the blog's readers.)
+
+## The builder stance (apply `personal-tone` → Builder voice)
+
+This is an application note, not a restatement; the rule lives in `personal-tone` → Builder voice. In a systems essay: lead each move with the observed failure or design decision, not the principle it illustrates; earn the thesis from the catches rather than asserting it up front; end on what the work revealed, not a maxim about systems or AI.
 
 ## Finding the anchor (the part that prevents throwaway drafts)
 
@@ -96,7 +106,8 @@ This skill covers:
 - Recognizing a systems essay
 - Lens selection (the analytical step that finds the insight)
 - The architecture palette and how to choose (how the insight is communicated)
-- What counts as strong systems evidence
+- What counts as strong systems evidence, and screening it for reputational cost
+- Keeping the subject system's served party visible
 - Finding and validating an anchor against the required parts
 
 This skill does **not** cover:

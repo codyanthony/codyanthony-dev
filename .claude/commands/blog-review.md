@@ -1,13 +1,13 @@
 ---
 description: Adversarial review of an existing blog post draft against ai-antipatterns, personal-tone, blog-post-framework, and blog-checklist. Returns structured findings without auto-fixing.
-version: 1.0
+version: 1.1
 ---
 
 # /blog-review
 
 Adversarial reviewer for blog posts. Reads a draft, runs every check from the four skills, and returns a structured findings report. Does not auto-fix — the writer decides which findings to act on.
 
-> **Running blog-review v1.0** — Adversarial pass against `ai-antipatterns`, `personal-tone`, `blog-post-framework`, `blog-checklist`. Findings only; no auto-fix. Use after `/blog-draft` and before publish, or on any handed-off draft.
+> **Running blog-review v1.1** — Adversarial pass against `ai-antipatterns`, `personal-tone`, `blog-post-framework`, `blog-checklist`. Findings only; no auto-fix. Use after `/blog-draft` and before publish, or on any handed-off draft.
 
 Print the banner above verbatim before doing anything else.
 
@@ -74,11 +74,11 @@ Check every banned word from the table. Check every banned phrase category. Chec
 
 ### 3b: personal-tone scan
 
-Check voice (first-person, contractions). Check tone (invitational, AI credit, no verbatim praise, no effort signaling). Check flow (no em dashes, no contrast framing, no sales closing). Check brand alignment (canonical title, three pillars, three principles).
+Check voice (first-person, contractions, builder voice — recounts what was built, no essayist drift, abstraction after the evidence). Check tone (invitational, AI credit, no verbatim praise, no effort/scale flexing, employer abstracted by default in blog/craft posts). Check flow (no em dashes, no "X, not Y" contrast framing or its variants, no sales closing). Check brand alignment (canonical title, three pillars, three principles).
 
 ### 3c: blog-post-framework scan
 
-Check beat presence (Why this, What's true, What's portable). Check opener shape variation against recent posts. Check substance requirements (concrete example, disagreeable claim, respects reader's knowledge). Check word count is in a comfortable range (~600–1,200); shorter or longer is fine if every section earns its place. Check structural integrity (forward motion, no semantic duplication, anchor-story fit).
+Check beat presence (Why this, What's true, What's portable). Check opener shape variation against recent posts. Check substance requirements (concrete example, disagreeable claim, respects reader's knowledge). Check word count is in a comfortable range (~600–1,200); shorter or longer is fine if every section earns its place. Check structural integrity (forward motion, no semantic duplication, one dominant idea per section / no two competing decompositions, conclusion thesis discipline, anchor-story fit).
 
 ### 3d: blog-checklist scan
 
@@ -96,11 +96,15 @@ After the mechanical checks above, do one additional pass with explicit skeptici
 
 4. **Is the opener doing work?** Read just the first paragraph. Would a busy reader keep reading past sentence two? Flag if the opener is generic or windup-shaped.
 
-5. **Does the writer's voice come through?** Could this post be written by anyone, or does it sound like the writer? Flag if the voice reads generic. (Subjective; offer specific phrasings that would sharpen voice if so.)
+5. **Does the writer's voice come through, in builder voice?** Could this post be written by anyone, or does it sound like the writer? In particular, is it in builder voice (recounting what was built and observed) or has it drifted into essayist mode (explaining how the field works)? A sentence that could open anyone's thinkpiece is the tell. Flag if the voice reads generic or essayist. (`personal-tone` → Builder voice. Subjective; offer specific phrasings that would sharpen voice if so.)
 
 6. **Are there cross-link opportunities missed?** The site has case studies that may relate. If the post discusses a topic also covered in a case study, flag the missed cross-link.
 
 7. **Architecture consistency (only if a blueprint exists).** If `.claude/plans/{slug}.md` exists, load it. Does the final draft still deliver the claim through the blueprint's architecture and evidence map? Check for drift: a part the blueprint required that the draft dropped, a section the evidence map does not support, the anchor changing, a thread abandoned mid-draft. This is **flag-and-decide, not plan enforcement.** Drift is not automatically wrong. If the drift improved the essay, note it and update the blueprint; if it is a genuine architecture change, route back to `/blog-plan` so the fit gate runs again; if it is accidental loss (a dropped part, an evidence gap), flag it for repair. Skip entirely if no blueprint exists (an externally-authored draft).
+
+8. **Does the close land the thesis?** Read the last sentence and the sentence closing the penultimate paragraph. Do they land the post's one thesis, or a supporting idea (often an optimistic one that gets misremembered as the point)? Then apply the final-line test: does the ending land on an observation, or reach for a maxim/slogan? Flag if the emphatic slot holds the wrong idea, or the ending is an aphoristic closing. (`blog-post-framework` → Thesis discipline in the close; `ai-antipatterns` → Aphoristic slogan closings.)
+
+9. **(Systems essays only) Is the served party visible?** Can a reader answer "who cares?" from the essay — who the system serves, and what breaks for them when its output is wrong? Flag if the people the system exists for have vanished behind the architecture. Skip for non-systems posts. (`systems-writing` → Keep the served party visible.)
 
 ## Step 5: Structured findings report
 
