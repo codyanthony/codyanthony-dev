@@ -1,46 +1,56 @@
-
 ---
 title: "Where the Script Stops and the Judgment Starts"
-description: "Where the script stops and the judgment starts, in three documentation pipelines I built."
+description: "Building an agentic documentation workflow taught me where the automation stops, and why human judgment is the layer that never does."
 date: 2026-06-08
-tags: ["documentation-systems", "ai-workflows", "docs-as-code", "technical-writing", "content-pipelines"]
+tags: ["documentation-systems", "ai-workflows", "agentic-ai", "technical-writing"]
 draft: false
 series: per-the-docs
+series_theme: "Content Alchemy"
 ---
 
 This post is part of the [Per the Docs]([CONFIRM PRE-LAUNCH: PER-THE-DOCS-URL]) article series. Links to the rest of the series are at the end of this piece.
 
-A few years ago at AWS, I took on a backlog of service documentation locked in a legacy XML format, with a mandate to move it to AsciiDoc. The work began on ROSA, where Red Hat's technical writers wanted to contribute and the XML toolchain was the wall between them and the docs they wanted to edit. The pile was thousands of files deep. My first instinct was the one I'd been trained into: open the queue and start converting.
+I once ran documentation migrations from XML to AsciiDoc. Most of it was mechanical, the kind of structural conversion a script does the same way every time. The rest needed someone to read intent. A table might really be a definition list, for example. Or a section might make sense only if you knew why it had been built that way. Those calls were left to me.
 
-If you've shipped documentation at any real size, you know that instinct, and you know where it ends. Convert by hand and you finish sometime next year, with a thousand small inconsistencies you introduced along the way. The job was bigger than hands. So I stopped converting and started building the thing that would convert. That shift, from writing the docs to engineering the system that produces them, is the part of the craft I want to talk about.
+That gap is where documentation systems tend to fail, not in the obvious breakages like broken builds or missing files, but in the quiet places where one kind of work stops being enough and another has to take over.
 
-## The pipeline does three kinds of work
+## The same problem, harder
 
-The first layer is deterministic. I wrote a Python toolkit that handled the mechanical part of the transform: parse the XML tree, map elements to their AsciiDoc equivalents, rewrite cross-references, move assets, preserve the structure that already had a clean one-to-one translation. This is the work a regex is good at and a person is bad at. It runs the same way on file one and file three thousand, and it doesn't get bored on file two thousand and start cutting corners.
+The pipeline I built next produces documentation. It reads the platform's existing docs and drafts a guide that walks a reader across several products to finish one task. The migration had an original to check against. A guide has no single original. It assembles a path from sources that were never written as a single path, and the connective material has nothing to check it against. A reader acts on all of it.
 
-Then the script stops. It stops at the files where the source encodes something the schema never named: a table that's really a definition list, an admonition an old author signaled with bold text and a shared convention instead of a tag, a sectioning choice that only makes sense if you know what the page is for. A deterministic rule can't rule on those, because the rule is the thing in question. That's where I pointed Claude agents. I handed them the conventions I'd settled on and let them make the per-file calls at a volume I couldn't reach by hand: read this messy source, work out what it was trying to be, render it in AsciiDoc the way the house style wants it.
+## How far the scripts and agents get
 
-The agents had a stopping point too, and it sat one level up, at the conventions themselves. What should the house style want when two valid renderings disagree? Which one is correct for this doc set, this audience, this product? Those questions don't have a deterministic answer or an agentic one. The agents flagged the cases they couldn't resolve, and the calls came back to me. I set the rules by hand and worked through the exceptions one at a time. The pipeline did the volume. I owned what the volume should look like.
+The first layer is deterministic Python, the same role the XML mapping played in the migration. It finds candidate pages, scores each one for relevance on a fixed scale, reads git history to sort fresh content from stale, and checks every link. It returns the same output on run one and run fifty, and when it reports a broken link, that count is ground truth. This is the work a script is good at and a person is bad at. It's exhaustive, identical every time, no boredom on page two hundred. It also stops at a clean line. Ask it whether a page is *worth* reusing, or whether a paragraph frames a feature around the customer's goal or the product's name, and it has nothing to offer.
 
-(I wrote up the migration at the program level as a [case study](/case-studies/systems-strategy/adoc-modernization/) if you want the longer version of how the rollout actually went.)
+The second layer picks up there. I gave a set of Claude agents fixed rubrics, each a short menu of allowed answers. The page-health rubric has four options, good, needs-update, stale, or deprecated. The agent picks one and cites the line that justifies it, and it can't invent a fifth or write a sentence of its own. Other rubrics weigh how much can be reused and whether a page frames a feature around the customer's goal or the product. A second agent challenges the high-stakes calls before they're trusted.
 
-## The seam can move
+I learned where that edge was by getting it wrong first. Early versions let the agents write into a free-form notes field, and most of what came back was confident, fluent, and too vague to act on. The accuracy jumped the moment I took the open field away.
 
-I'm building the same shape again now, larger, on a set of cross-product solution guides at Cloudflare. The transform there is a different one: turning scattered single-product docs into guides that walk a reader across several products to finish one job. The deterministic and agentic layers carry more here. OpenCode orchestrates multi-step Claude agents that draft, cross-check against the source docs, and assemble.
+## Clean, cited, and still wrong
 
-What's different is where my judgment lives. On the AWS migration I applied it case by case, ruling on exceptions as they surfaced. On the Cloudflare guides I encoded it into the pipeline as validation gates, the checks a draft has to pass before it's allowed to move downstream. One of those gates says every product capability the draft mentions has to cite a source page, or the gate hands the draft back to the previous step. Another flags any cross-product workflow that doesn't trace to an actual customer journey. The judgment moved out of the artifact and into the machine. The seam between human work and automated work isn't fixed in one place. You get to choose where it falls, and that choice is itself part of the design.
+The first time it caught me off guard, a draft was walking a reader through an interface the agent had never seen. It read perfectly. Every step cited a source page, the procedure flowed, nothing tripped a check. So I tried to follow it myself, and that's where it came apart. A checkbox in the source doc had become a toggle. An on-page label had become a tab. With no access to the live product, the agent had reconstructed the screens from the words on the page, the way you'd sketch a room from a description, and the sketch was confidently wrong. The rubric never stood a chance. It was checking the draft against the docs, and against the docs the draft was right.
 
-## What I take from both
+The fix was to teach the system its own blind spot. Source docs became the ground truth, and anything the agent can't confirm against one now gets flagged for a human to check before it goes any further. That rule is obvious once you've been burned by it. But the system couldn't have proposed it on its own. The gap was invisible from inside the docs it was built to trust.
 
-The skill now is assigning each decision to the layer that should own it, a script, an agent, or me, and designing the handoffs so each one does the part it's good at. Draw the seams wrong and you hand a machine a judgment call it will get confidently wrong. Or you spend your afternoon doing by hand what a script should have finished before lunch. Draw them right and the documentation keeps pace with the engineering instead of falling behind it. If you've drawn the seams in your own pipeline differently, I'd genuinely like to read how.
+The second catch had nothing to do with accuracy and everything to do with who the guide was for. These guides solve problems that hit most of the platform's customers, and most of those customers are on the free plan. Left to its own devices, the pipeline kept reaching for the most capable way to solve a problem, and the core workflow quietly filled with features only paid tiers could touch. I didn't see it until I read one of the guides the way a free-plan user would, top to bottom, and hit a wall three steps in. The system had no concept that the solution should reach the same people who have the problem. So I went through the product tier by tier, found where the free plan runs out, and rebuilt the spine of every guide so a free-plan reader can finish it, with the paid features offered along the way as options. That call isn't in any rubric. It's a stance about who the work serves.
 
-This post is a small version of the same thing. I didn't write it cold. The conventions live in a few writing skills I maintain in my portfolio repo: an anti-patterns negative style guide, a personal-voice file, and a structural framework for blog posts. A Claude agent took those and ran the drafting flow, proposing a title, an outline, and a first draft that already followed the rules. I made the calls on what the post argues, which three projects anchor it, and which sentences survived the edit. The agent handled the production. The standards it worked against were mine, and so were the calls it couldn't make.
+## When the architecture is the bug
 
-The craft didn't disappear when the typing got automated. It moved to the seams.
+Both of those are catches inside a system that ran exactly as built and handed me something I had to override. The harder case is when the machinery itself is built wrong, because then there's nothing to override. There's only a result that feels off, and no gate that can tell you why.
+
+I ran into this with the draft pass. The pipeline runs on OpenCode, with Claude doing the reading and the writing and me steering. The audit, the pass that reads and assesses the docs, fans out a separate agent on each page at once. That's fast and loses nothing, because reading is independent work. I'd built the draft, the pass that writes the guide, the same way, a separate agent on each section at once. The result was wrong in a way I couldn't put my finger on at first. Sections contradicted each other. The same point showed up twice in different words. The voice drifted between paragraphs. It took several rounds of digging, with the best model I had at the time, before the cause came clear. A subagent doesn't carry the main context, so each parallel writer had lost the style rules, the structure rules, and any sense of what its neighbors were saying. Drafting isn't independent the way reading is. A guide is a single argument, and I'd split it among writers who couldn't see each other.
+
+The fix was to stop parallelizing the draft and let one agent write the whole thing with the full context in scope. It runs slower. It's correct. No gate could have flagged this for me, because the flaw wasn't in any single output a gate could check. It was in the arrangement of the parts. The same pattern was right for the audit and wrong for the draft, and the only way to see that was to step back from the pipeline and look at its shape, which is not something a pipeline can do for you.
+
+## The judgment that never stops
+
+Every one of those catches went back into the system as a new check. Each one closed the gap it came from, and the next guide opened a new one the checks weren't built to see.
+
+Here's the part I keep coming back to. The catching never drops to zero. The script stops where mechanical certainty stops; the agents stop at the edge of the decision space I drew; judgment is the layer with no defined end. It isn't a fallback that kicks in when the automation fails. People call it human in the loop. What the phrase means, once you've built the loop and watched it run, is the part that stays where the system can't see, asking the one question no rubric can answer: is the output what the reader on the other end actually needed? When the answer is no, it reshapes the system.
 
 ---
 
-This post is part of the [Per the Docs]([CONFIRM PRE-LAUNCH: PER-THE-DOCS-URL]) article series, a monthly collaborative series where technical writers explore different aspects of our craft. Each month features a new topic with perspectives from writers across the community.
+This post is part of the [Per the Docs]([CONFIRM PRE-LAUNCH: PER-THE-DOCS-URL]) article series, a monthly collaborative series where technical writers explore different aspects of our craft. This month's topic is [Content Alchemy]([CONFIRM PRE-LAUNCH: THEME-LANDING-URL]). Each month features a new theme with perspectives from writers across the community.
 
 Previous article: [CONFIRM PRE-LAUNCH: PREV-AUTHOR] - [[CONFIRM PRE-LAUNCH: PREV-POST-TITLE]]([CONFIRM PRE-LAUNCH: PREV-POST-URL])
 Next article: [CONFIRM PRE-LAUNCH: NEXT-AUTHOR] - [[CONFIRM PRE-LAUNCH: NEXT-POST-TITLE]]([CONFIRM PRE-LAUNCH: NEXT-POST-URL])
