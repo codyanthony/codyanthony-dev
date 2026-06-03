@@ -23,7 +23,7 @@ export default [
   // 2. Base Rules for Javascript Files
   js.configs.recommended,
 
-  // 3. Local Node.js Execution Context (Applies strictly to your asset generator scripts)
+  // 3. Local Node.js Execution Context (Applies strictly to your scripts & asset tools)
   {
     files: ["scripts/**/*.mjs", "scripts/**/*.js", "*.mjs"],
     languageOptions: {
@@ -32,7 +32,7 @@ export default [
       },
     },
     rules: {
-      // UPDATED RULE: Explicitly tells the base engine to skip vars starting with an underscore
+      // Explicitly tells the base engine to skip vars starting with an underscore
       "no-unused-vars": [
         "warn",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },

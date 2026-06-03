@@ -276,7 +276,7 @@ function splitSentences(src) {
 }
 
 function firstWord(sentence) {
-  const m = sentence.match(/^[#*_\[\(]*([A-Za-z']+)/);
+  const m = sentence.match(/^[#*_[(]*([A-Za-z']+)/);
   return m ? m[1].toLowerCase() : null;
 }
 
