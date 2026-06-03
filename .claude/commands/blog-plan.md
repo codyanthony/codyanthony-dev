@@ -1,13 +1,13 @@
 ---
 description: Plan a blog post for codyanthony.dev/blog/ before drafting. Turns a seed idea into a central claim, an architecture, and an anchor story validated against an evidence map, then emits a blueprint that blog-draft consumes. The cheap checkpoint that prevents throwaway drafts.
-version: 1.0
+version: 1.1
 ---
 
 # /blog-plan
 
 Turns a seed idea into a validated plan **before** any prose is written. Output is a blueprint at `.claude/plans/<slug>.md` that `/blog-draft` consumes. This is the cheap place to catch the expensive failure: an architecture the anchor story cannot actually carry.
 
-> **Running blog-plan v1.0** — Seed intake (light, one question at a time) → central claim → architecture proposal → anchor selection from `writer-context` → evidence-map fit gate → outline + metadata → emit blueprint. Drafting does not start here; this hands off to `/blog-draft`.
+> **Running blog-plan v1.1** — Seed intake (light, one question at a time) → central claim → architecture proposal → anchor selection from `writer-context` → evidence-map fit gate → outline + metadata → emit blueprint. Drafting does not start here; this hands off to `/blog-draft`.
 
 Print the banner above verbatim before doing anything else.
 
@@ -37,6 +37,8 @@ Load `blog-post-framework` and `writer-context`. Verify both are loaded before c
 ---
 
 ## Phase 1: Seed intake
+
+**Do not gate on existing blog content.** An existing draft in `src/content/blog/`, a ship date, or a memory note about a post does **not** mean the post is already planned, and is **not** a reason to stop or to redirect the writer to `/blog-draft`. Re-anchoring or rewriting an existing post is a normal, expected use of this command; plan (or re-plan) regardless of what content already exists. The only "already planned" signal is an existing *blueprint* (`.claude/plans/{slug}.md`), and even that is not a stop, it is checked at blueprint time (Phase 6) because you cannot match a blueprint before you know what the writer intends to plan. Proceed straight into intake.
 
 The writer arrives with a seed, not a finished plan. Ask only what is needed to route, one question at a time. Do not ask for an outline or an anchor yet; this command produces those.
 
@@ -99,6 +101,8 @@ With a fitting anchor, sketch the plan. Do not write prose.
 ---
 
 ## Phase 6: Emit the blueprint
+
+**Blueprint-collision check first.** Look in `.claude/plans/` for a blueprint at `{slug}.md`, or one whose central claim closely matches this plan's. If none, write normally. If one exists, do not silently overwrite and do not stop: surface it and ask the writer — **overwrite** (this is a re-plan of the same post), **rename** (this is a different post; choose a new slug), or **cancel**. This is the *only* planned-work collision that warrants a pause; existing draft content in `src/content/blog/` never does.
 
 Write the blueprint to `.claude/plans/<slug>.md` (this path is gitignored scratch; it is the handoff artifact, not committed content, and must not go under `src/content/blog/`, which the content collection would try to load). Then print it.
 
