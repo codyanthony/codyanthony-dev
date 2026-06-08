@@ -34,7 +34,7 @@ Write as someone reporting what they built and what surprised them, not as an es
 
 This is the single stance behind three rules you already follow: frame claims as personal experience (Tone → "Invitational, framed as personal experience"), lead with the point not the windup (`ai-antipatterns` → "The windup pitch"), and earn the abstraction (`blog-post-framework` → "Earn the abstraction"). If a sentence could open a thinkpiece by anyone, it's in the wrong voice.
 
-**It governs where abstraction sits, not whether abstraction is allowed.** The brand is documentation *strategy*; synthesis is on-brand. Put the abstraction after the evidence, not before it. Do not flatten the writing into pure anecdote.
+**It governs where abstraction sits, not whether abstraction is allowed.** The brand is documentation _strategy_; synthesis is on-brand. Put the abstraction after the evidence, not before it. Do not flatten the writing into pure anecdote.
 
 ## Tone
 
@@ -82,7 +82,7 @@ Or skip the comparison entirely:
 
 Catch the variants, not just the literal form: "doesn't X but Y," "not in A but in B," "instead of X, Y," and the negative cleft "what X couldn't do was Y." All are the same tell.
 
-*Provisional (n=1): variant list extracted from one essay; refine as more posts surface tells.*
+_Provisional (n=1): variant list extracted from one essay; refine as more posts surface tells._
 
 ### No triple-repetition for emphasis
 
@@ -100,16 +100,15 @@ When possible, open with something the reader already knows or can immediately p
 
 ### Canonical title
 
-**Documentation Strategist.** Use this across all surfaces:
+**Documentation Strategist** is the lead public title (canonical brand: `writer-context` → Current public brand). Live surfaces:
 
-- Site header, about page, OG image, meta descriptions
-- LinkedIn headline + summary
-- Resume header (paired with "Senior Technical Writer" via pipe separator)
-- GitHub bio
-- X bio
-- Email signature (if added later)
+- **LinkedIn title:** "Documentation Strategist | Content Systems | AI Workflows"
+- **OG image tagline:** "Content systems that scale with the software."
+- **Resume header:** "Documentation Strategist | Senior Technical Writer"
+- **Portfolio site:** intentionally **no role title** — leads with the value/positioning, not a label.
+- Also: about page, meta descriptions, GitHub/X bios, email signature.
 
-Variants like "Documentation Architect," "Senior Technical Writer" (alone), or "Tech Writer" introduce drift. Use the canonical form first, then add qualifiers only where the surface convention requires.
+**Also-acceptable titles** (use as the role/JD warrants): Senior Technical Writer, Systems Strategist, Content Designer. Avoid off-brand variants (e.g., "Documentation Architect," "Tech Writer") that don't appear on the live brand. Lead with the canonical title; add qualifiers only where the surface convention requires.
 
 ### Three principles framework
 
@@ -121,15 +120,15 @@ Variants like "Documentation Architect," "Senior Technical Writer" (alone), or "
 
 These are referenced on the home page Core Philosophy section and should anchor blog posts that touch on documentation strategy or content systems.
 
-### Three capability pillars
+### Three capability pillars (public shorthand)
 
-Top-3 capability tags used on OG image, LinkedIn headline, and resume Core Competencies:
+The recurring public capability tag — on the OG image, LinkedIn title, and resume competencies — in this canonical order:
 
-- **Content Strategy** (or Documentation Strategy)
-- **Documentation Systems** (or Content Infrastructure)
-- **AI Workflows** (or Agentic Workflows)
+- **Documentation Strategy**
+- **Content Systems** (a.k.a. Content Infrastructure)
+- **AI Workflows** (a.k.a. Agentic Workflows)
 
-These three capability tags are the recurring brand shorthand. Use them in this canonical order when listing capabilities inline.
+Use them in this order when listing capabilities inline. (The fuller capability set behind this shorthand — Technical Authoring & DX · Content Infrastructure · AI Engineering & Automation · Information Scaffolding & Onboarding — is the canonical brand in `writer-context` → Current public brand, used for resume bullet selection.)
 
 ### Documentation Strategist framing
 
@@ -145,12 +144,12 @@ Banned beyond what `ai-antipatterns` covers:
 
 - **"X, not Y" contrast framing.** See Flow section above.
 - **Verbatim praise quotes.** Paraphrase.
-- **Effort and scale signaling.** Cut "which was a huge effort," "which I'm really proud of," "after months of work," and the difficulty-flex variants ("at least we had X," "with more riding on it," "the harder version"). Mention scale only when it *explains the system's behavior* ("at thousands of files, hand-conversion stops being possible"), never to advertise the amount of work done ("I converted thousands of files"). Test: does the number explain the problem, or flex the workload?
+- **Effort and scale signaling.** Cut "which was a huge effort," "which I'm really proud of," "after months of work," and the difficulty-flex variants ("at least we had X," "with more riding on it," "the harder version"). Mention scale only when it _explains the system's behavior_ ("at thousands of files, hand-conversion stops being possible"), never to advertise the amount of work done ("I converted thousands of files"). Test: does the number explain the problem, or flex the workload?
 - **Buzzword pairing with concrete work.** "Robust documentation infrastructure" — drop "robust." "Comprehensive content audit" — drop "comprehensive." See `ai-antipatterns` banned words list.
 - **"Information ecosystems."** Specific buzzword I avoid. Replace with "documentation systems," "content infrastructure," or whatever specific noun the context calls for.
 - **"Complex software products" overuse.** This is a brand phrase but it loses force if it appears in every paragraph. Limit to opening framings and key positioning lines. Vary downstream with specifics ("cloud platforms," "developer tools," "enterprise APIs," etc.) where appropriate.
-- **Quotation marks.** Avoid quotation marks in prose; name markers, labels, and terms without quoting them. Personal preference, not a universal blog rule, and broader than the `ai-antipatterns` scare-quote rule (which bans only emphasis-quotes on technical terms). *Provisional (n=1): validate against the next 1–2 posts before hardening.*
-- **Colons (soft lean).** Prefer a period or a restructure over a colon that introduces an elaboration or a clause; idiomatic short list-colons are fine. A lean, not a ban — do not over-apply, and do not script it. *Provisional (n=1): validate against the next 1–2 posts before hardening.*
+- **Quotation marks.** Avoid quotation marks in prose; name markers, labels, and terms without quoting them. Personal preference, not a universal blog rule, and broader than the `ai-antipatterns` scare-quote rule (which bans only emphasis-quotes on technical terms). _Provisional (n=1): validate against the next 1–2 posts before hardening._
+- **Colons (soft lean).** Prefer a period or a restructure over a colon that introduces an elaboration or a clause; idiomatic short list-colons are fine. A lean, not a ban — do not over-apply, and do not script it. _Provisional (n=1): validate against the next 1–2 posts before hardening._
 
 ## Audience layering
 
