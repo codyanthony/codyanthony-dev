@@ -1,60 +1,141 @@
 ---
 title: "Where the Script Stops and the Judgment Starts"
-description: "Building an agentic documentation workflow taught me where the automation stops, and why human judgment is the layer that never does."
+description: "I expected automation to push human judgment out of the process. Building AI-assisted documentation systems convinced me the opposite might be happening."
 date: 2026-06-08
-tags: ["documentation-systems", "ai-workflows", "agentic-ai", "technical-writing"]
+tags:
+  ["documentation-systems", "ai-workflows", "agentic-ai", "technical-writing"]
 draft: false
 series: per-the-docs
 series_theme: "Content Alchemy"
 ---
 
-This post is part of the [Per the Docs]([CONFIRM PRE-LAUNCH: PER-THE-DOCS-URL]) article series. Links to the rest of the series are at the end of this piece.
+This post is part of the [Per the Docs](https://perthedocs.com) article series. Links to the rest of the series are at the end of this piece.
 
-I once ran documentation migrations from XML to AsciiDoc. Most of it was mechanical, the kind of structural conversion a script does the same way every time. The rest needed someone to read intent. A table might really be a definition list, for example. Or a section might make sense only if you knew why it had been built that way. Those calls were left to me.
+I grew up on stories about automation.
 
-That gap is where documentation systems tend to fail, not in the obvious breakages like broken builds or missing files, but in the quiet places where one kind of work stops being enough and another has to take over.
+Whether it was Isaac Asimov's robots, Skynet, or the machines in _The Matrix_, the pattern was always the same. As machines became more capable, human involvement shrank. Judgment moved out of the system. Eventually, the machine took over.
 
-## The same problem, harder
+So when I started building AI-assisted documentation workflows, I expected to see some version of that pattern play out in miniature.
 
-The pipeline I built next produces documentation. It reads the platform's existing docs and drafts a guide that walks a reader across several products to finish one task. The migration had an original to check against. A guide has no single original. It assembles a path from sources that were never written as a single path, and the connective material has nothing to check it against. A reader acts on all of it.
+Instead, every time I thought I'd automated the hard part, another one appeared. Then another.
 
-## How far the scripts and agents get
+At first, I assumed that was just how new technology felt. The rough edges would get smoothed out. The systems would improve. My involvement would gradually shrink.
 
-The first layer is deterministic Python, the same role the XML mapping played in the migration. It finds candidate pages, scores each one for relevance on a fixed scale, reads git history to sort fresh content from stale, and checks every link. It returns the same output on run one and run fifty, and when it reports a broken link, that count is ground truth. This is the work a script is good at and a person is bad at. It's exhaustive, identical every time, no boredom on page two hundred. It also stops at a clean line. Ask it whether a page is *worth* reusing, or whether a paragraph frames a feature around the customer's goal or the product's name, and it has nothing to offer.
+But the pattern kept repeating. The work changed, but the system demanded more of me, not less.
 
-The second layer picks up there. I gave a set of Claude agents fixed rubrics, each a short menu of allowed answers. The page-health rubric has four options, good, needs-update, stale, or deprecated. The agent picks one and cites the line that justifies it, and it can't invent a fifth or write a sentence of its own. Other rubrics weigh how much can be reused and whether a page frames a feature around the customer's goal or the product. A second agent challenges the high-stakes calls before they're trusted.
+That wasn't what I expected. And it made me wonder whether I'd completely misjudged where judgment lives in a system like this.
 
-I learned where that edge was by getting it wrong first. Early versions let the agents write into a free-form notes field, and most of what came back was confident, fluent, and too vague to act on. The accuracy jumped the moment I took the open field away.
+## What Didn't Go Away
 
-## Clean, cited, and still wrong
+I first noticed the pattern during documentation migrations.
 
-The first time it caught me off guard, a draft was walking a reader through an interface the agent had never seen. It read perfectly. Every step cited a source page, the procedure flowed, nothing tripped a check. So I tried to follow it myself, and that's where it came apart. A checkbox in the source doc had become a toggle. An on-page label had become a tab. With no access to the live product, the agent had reconstructed the screens from the words on the page, the way you'd sketch a room from a description, and the sketch was confidently wrong. The rubric never stood a chance. It was checking the draft against the docs, and against the docs the draft was right.
+On paper, the problem looked straightforward. Structured content needed to move from one format into another while preserving hierarchy, links, and metadata. Most of that work could be described explicitly. Once the rules existed, a script could apply them consistently across thousands of files, and every new rule would reduce the amount of human judgment required.
 
-The fix was to teach the system its own blind spot. Source docs became the ground truth, and anything the agent can't confirm against one now gets flagged for a human to check before it goes any further. That rule is obvious once you've been burned by it. But the system couldn't have proposed it on its own. The gap was invisible from inside the docs it was built to trust.
+For a while, the pattern held. XML elements were mapped into AsciiDoc equivalents. Cross-references were rewritten. Files moved through the pipeline without intervention. The more mechanical transformations I could encode, the less time I spent thinking about them.
 
-The second catch had nothing to do with accuracy and everything to do with who the guide was for. These guides solve problems that hit most of the platform's customers, and most of those customers are on the free plan. Left to its own devices, the pipeline kept reaching for the most capable way to solve a problem, and the core workflow quietly filled with features only paid tiers could touch. I didn't see it until I read one of the guides the way a free-plan user would, top to bottom, and hit a wall three steps in. The system had no concept that the solution should reach the same people who have the problem. So I went through the product tier by tier, found where the free plan runs out, and rebuilt the spine of every guide so a free-plan reader can finish it, with the paid features offered along the way as options. That call isn't in any rubric. It's a stance about who the work serves.
+Then I would hit something that looked simple but wasn't.
 
-## When the architecture is the bug
+One table, for example, followed the same schema as dozens of others in the corpus. Structurally, it transformed without issue and the script did exactly what it was designed to do. But in one context, the table was being used as reference data. In another, authors were using the same structure to explain concepts and relationships that behaved more like a definition list. Nothing in the schema distinguished between those uses, so the transformation rules treated them identically.
 
-Both of those are catches inside a system that ran exactly as built and handed me something I had to override. The harder case is when the machinery itself is built wrong, because then there's nothing to override. There's only a result that feels off, and no gate that can tell you why.
+To the migration pipeline, they were the same thing. To a reader, they weren't.
 
-I ran into this with the draft pass. The pipeline runs on OpenCode, with Claude doing the reading and the writing and me steering. The audit, the pass that reads and assesses the docs, fans out a separate agent on each page at once. That's fast and loses nothing, because reading is independent work. I'd built the draft, the pass that writes the guide, the same way, a separate agent on each section at once. The result was wrong in a way I couldn't put my finger on at first. Sections contradicted each other. The same point showed up twice in different words. The voice drifted between paragraphs. It took several rounds of digging, with the best model I had at the time, before the cause came clear. A subagent doesn't carry the main context, so each parallel writer had lost the style rules, the structure rules, and any sense of what its neighbors were saying. Drafting isn't independent the way reading is. A guide is a single argument, and I'd split it among writers who couldn't see each other.
+Nothing had failed. The output was structurally correct, but the decision that remained wasn't about how to transform the content. It was about what the content was trying to do.
 
-The fix was to stop parallelizing the draft and let one agent write the whole thing with the full context in scope. It runs slower. It's correct. No gate could have flagged this for me, because the flaw wasn't in any single output a gate could check. It was in the arrangement of the parts. The same pattern was right for the audit and wrong for the draft, and the only way to see that was to step back from the pipeline and look at its shape, which is not something a pipeline can do for you.
+At the time, I assumed that boundary was specific to migration work. As I started building AI-assisted documentation workflows, I found myself running into similar questions in a very different context.
 
-## The judgment that never stops
+## A Different Kind of System
 
-Every one of those catches went back into the system as a new check. Each one closed the gap it came from, and the next guide opened a new one the checks weren't built to see.
+Migration work always had something to check against. There was a single source file, an expected structure, and usually some way to compare the output against what came before.
 
-Here's the part I keep coming back to. The catching never drops to zero. The script stops where mechanical certainty stops; the agents stop at the edge of the decision space I drew; judgment is the layer with no defined end. It isn't a fallback that kicks in when the automation fails. People call it human in the loop. What the phrase means, once you've built the loop and watched it run, is the part that stays where the system can't see, asking the one question no rubric can answer: is the output what the reader on the other end actually needed? When the answer is no, it reshapes the system.
+This time, I needed to build a system that could assemble and draft new cross-product user guides from existing single-product content. The sources were many, and they had never been structured as a single cross-product narrative.
 
----
+The mechanics were different, but I kept running into the same question: where do the rules stop being enough?
 
-This post is part of the [Per the Docs]([CONFIRM PRE-LAUNCH: PER-THE-DOCS-URL]) article series, a monthly collaborative series where technical writers explore different aspects of our craft. This month's topic is [Content Alchemy]([CONFIRM PRE-LAUNCH: THEME-LANDING-URL]). Each month features a new theme with perspectives from writers across the community.
+The first time this system caught me off guard, it produced a guide that looked excellent. The draft cited its sources. The procedure flowed from one step to the next. Nothing tripped a validation check.
 
-Previous article: [CONFIRM PRE-LAUNCH: PREV-AUTHOR] - [[CONFIRM PRE-LAUNCH: PREV-POST-TITLE]]([CONFIRM PRE-LAUNCH: PREV-POST-URL])
-Next article: [CONFIRM PRE-LAUNCH: NEXT-AUTHOR] - [[CONFIRM PRE-LAUNCH: NEXT-POST-TITLE]]([CONFIRM PRE-LAUNCH: NEXT-POST-URL])
+Then I tried to follow it myself.
 
-[See the full list of participants and articles →]([CONFIRM PRE-LAUNCH: PER-THE-DOCS-URL])
+A checkbox in the source documentation had become a toggle. An on-page label had become a tab. The guide described an interface the system had never seen, reconstructing it entirely from the documentation available to it.
 
-*Disclaimer: Each article in this series is written and owned by its respective author. The views, opinions, and experiences shared belong solely to the individual writer and do not represent the perspectives of other participants or their employers (past or present).*
+The strange part was that the draft wasn't unsupported by its sources. The documentation described the same concepts. The citations were real. The validation checks passed.
+
+The guide wasn't describing the product as it existed. It was describing the product as it could infer it from the documentation.
+
+The workflow had been designed to reduce exactly this kind of risk. Scripts audited candidate pages, checked links, and gathered freshness signals. Claude agents evaluated source quality, reuse potential, and content health using fixed rubrics. Every judgment had to be supported by evidence from the documentation.
+
+The system was doing what it had been designed to do. It could verify evidence. It couldn't verify reality.
+
+That wasn't the only place the system surprised me.
+
+Another guide made it much further through the process before anything felt wrong. The draft was coherent. The recommendations were reasonable. Nothing about it stood out during review.
+
+I only noticed the issue when I read the guide from beginning to end as the person it was supposed to help.
+
+A few steps in, the workflow started directing readers toward features that weren't available on their service plan.
+
+A few steps later, it happened again.
+
+And then again.
+
+Individually, none of the recommendations were unreasonable. The system kept selecting the most capable solution available for each problem. If the goal was to maximize capability, the guide was doing exactly what it should have done.
+
+What it wasn't considering was who the guide was for.
+
+Most of the people encountering these problems were using the free plan, and the guide assumed access that many readers didn't have.
+
+I ended up rebuilding the workflow around a different question. Instead of asking, "What's the most capable solution?" I started asking, "What's the most capable solution available to the person reading this guide?"
+
+The workflow could evaluate options. It couldn't see the end user and predict what their needs were.
+
+## When the System Becomes the Question
+
+The last surprise took longer to recognize.
+
+The earlier issues showed up in ways I could see. A guide described an interface that didn't exist. A workflow assumed access to features many readers didn't have. Once I noticed the problem, I could trace it back to a specific decision.
+
+This one felt different.
+
+The guides weren't obviously wrong. The citations were present. The recommendations made sense. Nothing failed validation.
+
+But something about them felt off.
+
+Sections repeated ideas that had already been covered elsewhere. The voice drifted from one section to the next. Parts of the guide felt disconnected, as though each section had a slightly different understanding of what the guide was trying to accomplish.
+
+For a while, I treated those as quality issues. I adjusted prompts. I tightened instructions. I experimented with different review steps.
+
+None of it really solved the problem.
+
+The answer turned out to have very little to do with the content itself.
+
+The audit stage of the workflow used parallel agents. Each document could be evaluated independently, so parallelization improved speed without changing the result. When I built the drafting stage, I followed the same pattern. Different agents wrote different sections at the same time. I assumed that the agents would stitch the different parts together into a cohesive story the way a human author would.
+
+What I eventually realized was that reading and writing weren't the same kind of work.
+
+The audit and drafting stages turned out to be fundamentally different. Evaluating a source page is largely independent. Writing a guide isn't. A guide is a single argument moving toward a goal, and no individual agent could see enough of that argument to write its section well.
+
+The issue wasn't that the agents were producing bad content. The issue was that the architecture never gave them enough context.
+
+Once I stopped parallelizing the draft and allowed a single agent to write with the full context in scope, most of those issues disappeared. The workflow slowed down, but the guides became more coherent because the system finally had access to the context the task required.
+
+By this time, I'd stopped assuming that every problem was waiting for a better automation.
+
+For a while, I'd assumed that as AI systems improved, more of the remaining work would disappear.
+
+Maybe that's still true.
+
+But after building these systems, I'm less certain than I used to be.
+
+What I've seen so far is that judgment keeps moving further upstream in the process. The more capable the automation became, the less time I spent executing decisions and the more time I spent deciding what should be executed in the first place.
+
+That's a very different future than the one I grew up reading about.
+
+And it may be a more interesting one.
+
+This post is part of the [Per the Docs](https://perthedocs.com) article series, a monthly collaborative series where technical writers explore different aspects of our craft. Each month features a new theme with perspectives from writers across the community.
+
+Previous article: Nicholas Galinski - [ Timmy Techwriter and the Sorcerer's Schema](https://nicholasgalinski.com/blog/techwriter-schema)
+Next article: James Beach - [Turning Constraints Into Structure](https://jamesmbeach.com/archives/5923)
+
+[See the full list of participants and articles →](https://perthedocs.com)
+
+_Disclaimer: Each article in this series is written and owned by its respective author. The views, opinions, and experiences shared belong solely to the individual writer and do not represent the perspectives of other participants or their employers (past or present)._
