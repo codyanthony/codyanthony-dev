@@ -34,6 +34,7 @@ pnpm-debug.log*
 !.claude/README.md
 .claude/skills/writer-context/
 scripts/
+.markdownlint-cli2.jsonc
 
 # Photo source set (189MB) — used to generate site headshot and LinkedIn assets
 Cody Pro Photos 2026/
