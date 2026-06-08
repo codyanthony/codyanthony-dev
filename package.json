@@ -2,13 +2,16 @@
   "name": "codyanthony-dev",
   "type": "module",
   "version": "0.1.0",
-  "packageManager": "pnpm@11.1.1",
+  "packageManager": "pnpm@11.5.2",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro build && wrangler dev --config dist/server/wrangler.json",
-    "deploy": "astro build && wrangler deploy --config dist/server/wrangler.json",
+    "lint:js": "eslint .",
+    "lint:md": "markdownlint-cli2",
+    "lint": "pnpm run lint:js && pnpm run lint:md",
+    "build": "pnpm run lint && pnpm astro check && astro build",
+    "preview": "pnpm run build && wrangler dev --config dist/server/wrangler.json",
+    "deploy": "pnpm run build && wrangler deploy --config dist/server/wrangler.json",
     "astro": "astro"
   },
   "dependencies": {
@@ -21,7 +24,12 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@eslint/js": "^9.39.2",
+    "@typescript-eslint/eslint-plugin": "^8.60.1",
+    "@typescript-eslint/parser": "^8.60.1",
     "eslint": "^9.39.2",
+    "eslint-plugin-astro": "^1.7.0",
+    "eslint-plugin-mdx": "^3.8.1",
+    "markdownlint-cli2": "^0.22.1",
     "puppeteer": "^25.1.0",
     "typescript": "^6.0.3",
     "wrangler": "^4.95.0"

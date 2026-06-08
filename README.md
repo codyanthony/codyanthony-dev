@@ -32,7 +32,7 @@ pnpm astro check  # TypeScript / Astro diagnostics
 
 ## Project structure
 
-```
+```text
 src/
   pages/                    # routes: Home, About, About-This-Site, case studies
     og/[slug].png.ts        #   on-demand: per-page OG image (cached to R2)

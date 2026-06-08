@@ -26,6 +26,7 @@ pnpm-debug.log*
 # (CLAUDE.md is tracked: it's shared project guidance, version-controlled with the code)
 .claude/
 scripts/
+.markdownlint-cli2.jsonc
 
 # Photo source set (189MB) — used to generate site headshot and LinkedIn assets
 Cody Pro Photos 2026/
