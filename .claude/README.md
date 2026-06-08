@@ -91,12 +91,12 @@ Adversarial review of an existing draft. Read-only, does not modify the file. Re
 
 Commands defer to scripts for anything that should produce the same output given the same input. Current deterministic scripts referenced by this system:
 
-| Script                                 | Purpose                                                                  | Called from                                            |
-| -------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------ |
-| `scripts/check-blog-prose.mjs`         | Deterministic prose validation (banned words, em dashes, leading spaces) | `/blog-draft` Phase 4; `blog-checklist`                |
-| `scripts/generate-og.mjs`              | Renders site-level OG image                                              | Not part of blog flow; run manually when brand changes |
-| `scripts/generate-linkedin-assets.mjs` | Renders LinkedIn banner + headshot                                       | Not part of blog flow; run when brand or photo changes |
-| `pnpm astro check` (via Bash)          | Validates Astro/MDX syntax + types                                       | `blog-checklist` operational checks                    |
+| Script                                 | Purpose                                                   | Called from                                               |
+| -------------------------------------- | --------------------------------------------------------- | --------------------------------------------------------- |
+| `scripts/generate-blog-og.mjs`         | Renders per-post 1200×630 OG images from blog frontmatter | `/blog-draft` Step 6; `blog-checklist` operational checks |
+| `scripts/generate-og.mjs`              | Renders site-level OG image                               | Not part of blog flow; run manually when brand changes    |
+| `scripts/generate-linkedin-assets.mjs` | Renders LinkedIn banner + headshot                        | Not part of blog flow; run when brand or photo changes    |
+| `pnpm astro check` (via Bash)          | Validates Astro/MDX syntax + types                        | `blog-checklist` operational checks                       |
 
 If a deterministic operation isn't yet scripted but should be (e.g., word count, frontmatter schema validation), add the script under `scripts/` and reference it from the relevant skill or command. Don't reimplement deterministic work in LLM context — it produces drift between runs.
 

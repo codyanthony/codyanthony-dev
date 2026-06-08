@@ -427,7 +427,7 @@ node scripts/check-blog-prose.mjs src/content/blog/{slug}.mdx
 
 If exit code is non-zero: STOP. This catches anything that got reintroduced between Phase 4 and now.
 
-### 6d. Word count
+### 6e. Word count + reading time
 
 ```bash
 # Strip frontmatter, count words
