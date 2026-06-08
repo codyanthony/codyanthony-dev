@@ -136,6 +136,7 @@ ls .claude/plans/*.md 2>/dev/null
 Read `.claude/plans/{slug}.md` and extract: central claim, architecture and required parts, anchor story, evidence map, beat outline, opener shape, working title, slug, links/cross-references, and open questions.
 
 **If no blueprint exists:**
+
 - **Substantial or systems post:** stop and recommend running `/blog-plan` first. The anchor-fit gate is the cheap checkpoint; skipping it is what produces throwaway drafts.
 - **Simple post, one obvious example:** run a quick inline plan now (central claim in one sentence, the single anchor, a three-beat outline, opener shape) and continue. Keep it to a few minutes.
 
@@ -219,6 +220,7 @@ Options:
 ```
 
 Behavior:
+
 - `resume`: read the file, skip to Phase 4. Skip Phases 2d (branch rename — assume already on the right branch), 2e (outline), 2f (tags), and Phase 3 (compose).
 - `overwrite`: delete file with `rm`, continue normally to Phase 2d.
 - `rename`: return to Phase 2b.

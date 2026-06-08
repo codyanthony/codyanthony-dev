@@ -91,12 +91,12 @@ Adversarial review of an existing draft. Read-only, does not modify the file. Re
 
 Commands defer to scripts for anything that should produce the same output given the same input. Current deterministic scripts referenced by this system:
 
-| Script | Purpose | Called from |
-|---|---|---|
-| `scripts/check-blog-prose.mjs` | Deterministic prose validation (banned words, em dashes, leading spaces) | `/blog-draft` Phase 4; `blog-checklist` |
-| `scripts/generate-og.mjs` | Renders site-level OG image | Not part of blog flow; run manually when brand changes |
-| `scripts/generate-linkedin-assets.mjs` | Renders LinkedIn banner + headshot | Not part of blog flow; run when brand or photo changes |
-| `pnpm astro check` (via Bash) | Validates Astro/MDX syntax + types | `blog-checklist` operational checks |
+| Script                                 | Purpose                                                                  | Called from                                            |
+| -------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------ |
+| `scripts/check-blog-prose.mjs`         | Deterministic prose validation (banned words, em dashes, leading spaces) | `/blog-draft` Phase 4; `blog-checklist`                |
+| `scripts/generate-og.mjs`              | Renders site-level OG image                                              | Not part of blog flow; run manually when brand changes |
+| `scripts/generate-linkedin-assets.mjs` | Renders LinkedIn banner + headshot                                       | Not part of blog flow; run when brand or photo changes |
+| `pnpm astro check` (via Bash)          | Validates Astro/MDX syntax + types                                       | `blog-checklist` operational checks                    |
 
 If a deterministic operation isn't yet scripted but should be (e.g., word count, frontmatter schema validation), add the script under `scripts/` and reference it from the relevant skill or command. Don't reimplement deterministic work in LLM context — it produces drift between runs.
 
@@ -113,12 +113,12 @@ After copying, run `/commands` in OpenCode to refresh the discovery index. No co
 
 Differences worth knowing:
 
-| Layer | Claude Code | OpenCode |
-|---|---|---|
-| Skill discovery | `.claude/skills/<name>/SKILL.md` (project-level) | `~/.config/opencode/skills/<name>/SKILL.md` (user-level) |
-| Command discovery | `.claude/commands/<name>.md` (project-level) | `~/.config/opencode/commands/<name>.md` (user-level) |
-| Skill invocation | Skill tool (auto-discovered) | Loaded by commands at runtime via skill name |
-| Slash commands | Available in chat | Available via `/<name>` |
+| Layer             | Claude Code                                      | OpenCode                                                 |
+| ----------------- | ------------------------------------------------ | -------------------------------------------------------- |
+| Skill discovery   | `.claude/skills/<name>/SKILL.md` (project-level) | `~/.config/opencode/skills/<name>/SKILL.md` (user-level) |
+| Command discovery | `.claude/commands/<name>.md` (project-level)     | `~/.config/opencode/commands/<name>.md` (user-level)     |
+| Skill invocation  | Skill tool (auto-discovered)                     | Loaded by commands at runtime via skill name             |
+| Slash commands    | Available in chat                                | Available via `/<name>`                                  |
 
 The CF `opencode-commands` repo at `opencode-commands/` (gitignored, reference only) is the source pattern this system follows.
 

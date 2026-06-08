@@ -30,56 +30,56 @@ regardless of what other skills are loaded.
 
 Never use these words. Replace or remove them.
 
-| Banned | Replacement |
-|--------|-------------|
-| leverage | use |
-| utilize | use |
-| seamless | say what makes it smooth |
-| robust | say what makes it strong |
-| comprehensive | say what it covers |
-| ecosystem | name the actual things |
-| synergy | delete the sentence |
-| paradigm | say what changed |
-| ideate | delete the sentence |
-| streamline | say what it simplifies |
-| empower | state the action directly |
-| unlock | state what becomes possible |
-| harness | use |
-| optimize | improve, or say what gets better |
-| landscape | say what you mean (market, ecosystem, field) |
-| cutting-edge | remove — let the feature speak |
-| best-in-class | remove |
-| world-class | remove |
-| next-generation | remove |
-| holistic | say what it covers |
-| scalable | say how it scales |
-| innovative | remove — show, do not label |
-| facilitate | allow, enable, or just state it |
-| bolster | strengthen, or say what improves |
-| whilst | while |
-| moreover | cut or restructure |
-| furthermore | cut or restructure |
-| thus | cut or restructure |
-| hence | cut or restructure |
-| thereof | rewrite |
-| therein | rewrite |
-| definitely | remove or qualify |
-| certainly | remove or qualify |
-| guarantees | remove or qualify — say what it does, not that it guarantees |
-| eliminates | remove or qualify — say what it reduces or prevents |
-| impossible | remove or qualify — say what is not supported |
+| Banned          | Replacement                                                  |
+| --------------- | ------------------------------------------------------------ |
+| leverage        | use                                                          |
+| utilize         | use                                                          |
+| seamless        | say what makes it smooth                                     |
+| robust          | say what makes it strong                                     |
+| comprehensive   | say what it covers                                           |
+| ecosystem       | name the actual things                                       |
+| synergy         | delete the sentence                                          |
+| paradigm        | say what changed                                             |
+| ideate          | delete the sentence                                          |
+| streamline      | say what it simplifies                                       |
+| empower         | state the action directly                                    |
+| unlock          | state what becomes possible                                  |
+| harness         | use                                                          |
+| optimize        | improve, or say what gets better                             |
+| landscape       | say what you mean (market, ecosystem, field)                 |
+| cutting-edge    | remove — let the feature speak                               |
+| best-in-class   | remove                                                       |
+| world-class     | remove                                                       |
+| next-generation | remove                                                       |
+| holistic        | say what it covers                                           |
+| scalable        | say how it scales                                            |
+| innovative      | remove — show, do not label                                  |
+| facilitate      | allow, enable, or just state it                              |
+| bolster         | strengthen, or say what improves                             |
+| whilst          | while                                                        |
+| moreover        | cut or restructure                                           |
+| furthermore     | cut or restructure                                           |
+| thus            | cut or restructure                                           |
+| hence           | cut or restructure                                           |
+| thereof         | rewrite                                                      |
+| therein         | rewrite                                                      |
+| definitely      | remove or qualify                                            |
+| certainly       | remove or qualify                                            |
+| guarantees      | remove or qualify — say what it does, not that it guarantees |
+| eliminates      | remove or qualify — say what it reduces or prevents          |
+| impossible      | remove or qualify — say what is not supported                |
 
 **Certainty terms with context-dependent rules:**
 
 The following words are not universally banned. They are banned when the agent chooses
 them to sound authoritative, but permitted when they appear in source material:
 
-| Word | Banned when | Permitted when |
-|------|-------------|----------------|
-| always | Agent adds for emphasis ("always use HTTPS") | Matches source docs, UI element names ("Always Use HTTPS"), or documented behavior ("DDoS protection is always on") |
-| never | Agent adds for emphasis ("never skip this step") | Matches source docs or documented constraint |
-| every | Agent adds for emphasis ("every request is checked") | Matches source docs ("shows every request that your rules...") |
-| all | Agent adds for emphasis ("all traffic is protected") | Matches source docs, UI labels ("All remaining custom rules"), or factual scope ("available on all plans" when sourced) |
+| Word   | Banned when                                          | Permitted when                                                                                                          |
+| ------ | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| always | Agent adds for emphasis ("always use HTTPS")         | Matches source docs, UI element names ("Always Use HTTPS"), or documented behavior ("DDoS protection is always on")     |
+| never  | Agent adds for emphasis ("never skip this step")     | Matches source docs or documented constraint                                                                            |
+| every  | Agent adds for emphasis ("every request is checked") | Matches source docs ("shows every request that your rules...")                                                          |
+| all    | Agent adds for emphasis ("all traffic is protected") | Matches source docs, UI labels ("All remaining custom rules"), or factual scope ("available on all plans" when sourced) |
 
 The test: did the word come from source documentation, a UI element name, or a documented
 product behavior? If yes, keep it. If the agent chose it to sound confident, replace it
@@ -300,7 +300,7 @@ Real writers might use this construction once in a career. LLMs reach for it con
 
 The fact that the same structure carries three different verbs is the tell. Variation is the point of prose. Rewrite at least one sentence to break the rhythm.
 
-**Schematic identical templates across parallel sections.** When a piece has multiple sections that each describe a parallel set of items (cases, examples, layers), AI tends to render every section with the *same* template (same bold-label structure, same bullet count, same closing-sentence shape).
+**Schematic identical templates across parallel sections.** When a piece has multiple sections that each describe a parallel set of items (cases, examples, layers), AI tends to render every section with the _same_ template (same bold-label structure, same bullet count, same closing-sentence shape).
 
 Real writing varies the rendering even when the underlying structure is parallel. One section might be a narrative paragraph. Another a bulleted list. A third a short scene. Same beats, different shapes.
 

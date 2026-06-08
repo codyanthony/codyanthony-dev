@@ -59,10 +59,12 @@ Per `ai-antipatterns`. The only acceptable em dashes are in description lists, l
 Patterns like "I write the documentation, not just edit it" or "This is content strategy, not copy editing" read as AI-generated tells. They also frame writers negatively (implying that what readers do is the lesser version).
 
 Replace contrast framings with positive declarative statements:
+
 - Bad: "I design content infrastructure, not just write docs."
 - Good: "I design content infrastructure. The writing is one of the deliverables."
 
 Or skip the comparison entirely:
+
 - Bad: "Documentation strategy, not just technical writing."
 - Good: "Documentation strategy."
 
@@ -83,6 +85,7 @@ When possible, open with something the reader already knows or can immediately p
 ### Canonical title
 
 **Documentation Strategist.** Use this across all surfaces:
+
 - Site header, about page, OG image, meta descriptions
 - LinkedIn headline + summary
 - Resume header (paired with "Senior Technical Writer" via pipe separator)
@@ -94,11 +97,11 @@ Variants like "Documentation Architect," "Senior Technical Writer" (alone), or "
 
 ### Three principles framework
 
-| Principle | What it means |
-|---|---|
-| **Docs-as-Product** | Documentation is shaped during product design, not after. By the time I write, I've already helped shape the thing I'm writing about. |
-| **Docs-as-Data** | Documentation engineered as structured, reusable data. Componentized content that LLMs, AI agents, and human readers can each consume on their own terms. |
-| **Jobs-to-Be-Done & Instructional Design** | Content structured around the jobs developers are trying to do. Learning theory and user-centered design cut friction and shorten time-to-first-success. |
+| Principle                                  | What it means                                                                                                                                             |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Docs-as-Product**                        | Documentation is shaped during product design, not after. By the time I write, I've already helped shape the thing I'm writing about.                     |
+| **Docs-as-Data**                           | Documentation engineered as structured, reusable data. Componentized content that LLMs, AI agents, and human readers can each consume on their own terms. |
+| **Jobs-to-Be-Done & Instructional Design** | Content structured around the jobs developers are trying to do. Learning theory and user-centered design cut friction and shorten time-to-first-success.  |
 
 These are referenced on the home page Core Philosophy section and should anchor blog posts that touch on documentation strategy or content systems.
 
@@ -139,8 +142,8 @@ The implication for every piece:
 
 - Substance must signal craft-depth for the senior IC reader. A recruiter skimming should be able to identify expertise from the specifics, not from credentialing language.
 - No need to address recruiters directly. They read over the shoulder of the primary audience and form their own conclusions from what they see.
-- Avoid writing that *only* lands for peers (insider jokes, jargon without context) without also being substantively legible to a senior reader from an adjacent field.
-- Avoid writing that *only* lands for recruiters (resume-style claims, credential-stacking) without also being substantively useful to the peer audience.
+- Avoid writing that _only_ lands for peers (insider jokes, jargon without context) without also being substantively legible to a senior reader from an adjacent field.
+- Avoid writing that _only_ lands for recruiters (resume-style claims, credential-stacking) without also being substantively useful to the peer audience.
 
 When in doubt, write for the peer; the recruiter signal follows from the substance.
 

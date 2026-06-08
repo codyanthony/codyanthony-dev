@@ -74,11 +74,11 @@ node scripts/check-blog-prose.mjs src/content/blog/{slug}.mdx
 
 The script flags (and the checklist marks pass/fail based on its exit code):
 
-- [ ] Zero em dashes in prose (description lists + link lists exempt) — *script: `em-dash-in-prose`*
-- [ ] No words from `ai-antipatterns` banned-words list — *script: `banned-word`*
-- [ ] No throat-clearing openers, summary padding, forced enthusiasm, filler transitions, "A common framing in…" patterns — *script: `throat-clearing`*
-- [ ] No "Without X, Y. Without Y, X." inversions — *script: `without-inversion`*
-- [ ] No triple-repetition (3+ consecutive sentences opening with the same word) — *script: `triple-repetition` (warning)*
+- [ ] Zero em dashes in prose (description lists + link lists exempt) — _script: `em-dash-in-prose`_
+- [ ] No words from `ai-antipatterns` banned-words list — _script: `banned-word`_
+- [ ] No throat-clearing openers, summary padding, forced enthusiasm, filler transitions, "A common framing in…" patterns — _script: `throat-clearing`_
+- [ ] No "Without X, Y. Without Y, X." inversions — _script: `without-inversion`_
+- [ ] No triple-repetition (3+ consecutive sentences opening with the same word) — _script: `triple-repetition` (warning)_
 
 **Exit code:** 0 = pass on critical rules; 1 = critical findings. Do not advance past this check until the script exits 0.
 
@@ -89,7 +89,7 @@ The script does not cover these patterns; they require structural judgment:
 - [ ] No aphoristic closing slogans (especially as bookends)
 - [ ] Parallel sections render with structural variety (not identical bullet templates across cases/examples)
 - [ ] Parallel examples developed to comparable depth (per `blog-post-framework`)
-- [ ] Artifacts named where legitimately nameable (own work or public); abstracted only for NDA/proprietary/reputational concerns. Vague references to artifacts that *could* be named are a substance gap.
+- [ ] Artifacts named where legitimately nameable (own work or public); abstracted only for NDA/proprietary/reputational concerns. Vague references to artifacts that _could_ be named are a substance gap.
 - [ ] No paired synonyms ("detect and identify," "manage and control")
 - [ ] No tripled lists for emphasis ("fast, reliable, and efficient")
 - [ ] No fake precision (statistics without sources)
@@ -152,11 +152,13 @@ Before declaring the post ready:
 ## Scope boundary
 
 This skill covers:
+
 - Pre-publish checks aggregated from voice, style, structure, and operational skills
 - Frontmatter validation against the project's content collection schema
 - Operational gates (OG image regen, astro check, preview deploy)
 
 This skill does **not** cover:
+
 - **Style guidance during drafting** → `ai-antipatterns`, `personal-tone`
 - **Structural framework** → `blog-post-framework`
 - **Orchestration of the draft → review → save flow** → `commands/blog-draft.md`, `commands/blog-review.md`

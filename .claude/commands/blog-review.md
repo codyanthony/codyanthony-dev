@@ -24,6 +24,7 @@ The command is **read-only on the draft** — it does not modify the file. The w
 **Required skills:** `ai-antipatterns`, `personal-tone`, `blog-post-framework`, `blog-checklist`.
 
 **Required input:** path to a draft file, either:
+
 - An MDX file already in `src/content/blog/` (most common)
 - A markdown draft anywhere on the local filesystem (for unsaved drafts)
 
@@ -51,6 +52,7 @@ If the file is in `src/content/blog/`, also gather context: the most recent 2–
 ## Step 2: Read and parse the draft
 
 Read the full file. Separate frontmatter from body. Note:
+
 - Word count of body
 - Slug from filename
 - Date from frontmatter
@@ -59,6 +61,7 @@ Read the full file. Separate frontmatter from body. Note:
 ## Step 3: Run all four skill checks
 
 For each skill, run every checklist item against the draft. Record each item as:
+
 - **PASS** — clean
 - **FAIL** — specific issue
 - **WARN** — borderline, judgment call
@@ -87,7 +90,7 @@ After the mechanical checks above, do one additional pass with explicit skeptici
 
 1. **Is the portable insight actually portable?** Read the sentence the writer is treating as the takeaway. Could it be shared on LinkedIn? Does it state something specific and defensible, or restate consensus? Flag if weak.
 
-2. **Does each example earn its place? (deletion test)** For *every* example, ask: if it were removed, would the argument lose something essential — a decision, consequence, tradeoff, ambiguity, constraint, or competing interpretation? An example that only illustrates a point already made does not pass, even when it is concrete, accurate, and relevant. Flag each one that fails. Run this per example, not once per beat. (Criteria live in `blog-post-framework` → Structural integrity → Examples apply pressure.)
+2. **Does each example earn its place? (deletion test)** For _every_ example, ask: if it were removed, would the argument lose something essential — a decision, consequence, tradeoff, ambiguity, constraint, or competing interpretation? An example that only illustrates a point already made does not pass, even when it is concrete, accurate, and relevant. Flag each one that fails. Run this per example, not once per beat. (Criteria live in `blog-post-framework` → Structural integrity → Examples apply pressure.)
 
 3. **Could a thoughtful peer disagree?** If no thoughtful peer would push back on the post's claims, the post is restating consensus. Flag if the post lacks a defensible claim.
 
