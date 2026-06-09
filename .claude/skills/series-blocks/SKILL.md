@@ -1,20 +1,20 @@
 ---
 name: series-blocks
-description: Templates and conventions for blog posts that participate in a collaborative series or roundup. Defines the intro and navigation block formats per series, the frontmatter contract, and the placeholder convention for unknowns at draft time.
-tags: [blog, series, roundup, templates]
+description: Templates and conventions for blog posts that participate in a collaborative series. Defines inline intro and navigation block formats, the frontmatter contract, placeholder convention, coordinator-confirmation workflow, and theme-fit checks for draft-time and pre-launch review.
+tags: [blog, series, collaboration, templates]
 ---
 
 # Skill: series-blocks
 
 ## When to load this skill
 
-Load when drafting or reviewing a blog post that participates in a collaborative series (e.g., Per the Docs). Pair with `blog-post-framework`, `personal-tone`, and `ai-antipatterns`.
+Load when drafting or reviewing a blog post that participates in a collaborative series, such as Per the Docs. Pair with `blog-post-framework`, `personal-tone`, `ai-antipatterns`, and `blog-checklist`.
 
-For standalone (non-series) blog posts, this skill is not needed.
+For standalone blog posts, this skill is not needed.
 
 ## Frontmatter contract
 
-A series post has a `series` frontmatter field whose value matches one of the supported series slugs below. The presence of this field signals to the blog system (commands, layout, checklist) that series blocks must be inserted into the body.
+A series post has a `series` frontmatter field whose value matches one of the supported series slugs below. The presence of this field signals to the commands, checklist, and reviewer that series blocks must be present in the MDX body and that series-specific pre-launch checks apply.
 
 ```yaml
 series: per-the-docs
@@ -22,16 +22,34 @@ series: per-the-docs
 
 If the field is absent or empty, the post is treated as standalone.
 
+Optional structured fields may be present when the series uses a named theme:
+
+```yaml
+series_theme: "Theme Name"
+series_theme_url: "https://example.com/theme-page"
+```
+
+These fields do not replace the inline navigation block. They give commands and future layouts structured access to the theme data.
+
 ## Where the blocks live
 
-Series blocks (intro at top, navigation at bottom, disclaimer) live **inline in the MDX body**, not auto-rendered by the layout. Reasoning:
+Series blocks live **inline in the MDX body**, not auto-rendered by the layout.
 
-- Writers see the actual rendered text in the file (no surprises at build time)
-- Per-post overrides are trivial (custom disclaimer, different navigation order)
-- Pre-launch placeholder fill-in happens by editing the same file the prose lives in
-- No layout component or schema complexity required
+Blocks may include:
 
-The blog-draft command inserts the blocks at draft time, applying the template for the chosen series. The writer fills in placeholders before launch (the launch coordinator typically provides previous/next post details 24-48 hours pre-launch).
+- Intro block at the top of the body
+- Navigation block at the bottom of the body
+- Disclaimer block, when required by the series
+
+Reasoning:
+
+- Writers see the actual rendered text in the file.
+- Per-post overrides are easy.
+- Pre-launch placeholder fill-in happens in the same file as the prose.
+- No hidden layout behavior changes the published post.
+- The final draft is portable and reviewable as a single artifact.
+
+The `blog-draft` command inserts the blocks at draft time, applying the template for the chosen series. The writer fills in placeholders before launch after the coordinator confirms chain assignments, theme links, or participant details.
 
 ## Placeholder convention
 
@@ -43,22 +61,44 @@ grep -rn "CONFIRM PRE-LAUNCH" src/content/blog/
 
 Required placeholder coverage before publishing: zero `CONFIRM PRE-LAUNCH` markers remaining in the post body.
 
+Do not publish a series post while placeholders remain unless the writer explicitly decides to publish without the series block being complete.
+
+## Theme fit
+
+Series participation is not only a formatting choice. The post must fit the monthly or collaborative theme through substance.
+
+The theme connection should usually live in the post's argument, not in heavy explicit labeling. A post on a theme like "Mind the Gap" might examine taxonomy as a gap-finding mechanism. A post on a theme like "Content Alchemy" might examine transformation between inputs and outputs. The connection is woven through the claim, examples, and portable insight.
+
+Avoid forcing the theme into the opener or conclusion unless it is genuinely part of the post's motivating question or reader movement.
+
+Before drafting, confirm:
+
+- The post's central claim fits the series theme.
+- The theme connection is substantive, not decorative.
+- The series context does not distort the post's architecture.
+- The post can stand alone outside the series.
+- The series block provides context without making the post depend on the reader clicking elsewhere.
+
+If the writer cannot articulate how the post connects to the theme, surface that during `blog-plan` or `blog-draft`, not at final pre-publish review.
+
 ## Supported series
 
 ### Per the Docs
 
-A monthly collaborative series where technical writers explore different aspects of their craft. Each month features a new topic with perspectives from writers across the community. The chain is circular — the first participant's "Previous" link points to the last participant; the last's "Next" link points to the first.
+A monthly collaborative series where technical writers explore different aspects of their craft. Each month features a new topic with perspectives from writers across the community. The chain is circular: the first participant's "Previous" link points to the last participant, and the last participant's "Next" link points to the first.
 
 **Series identifier:** `per-the-docs`
 
-**Required intro block** (insert at the very top of the post body, immediately after frontmatter):
+**Required intro block**
+Insert at the very top of the post body, immediately after frontmatter and before all prose:
 
 ```markdown
 This post is part of the [Per the Docs]([CONFIRM PRE-LAUNCH: PER-THE-DOCS-URL]) article series.
 Links to the rest of the series are at the end of this piece.
 ```
 
-**Required navigation block** (insert at the very bottom of the post body, after a horizontal rule):
+**Required navigation block**
+Insert at the very bottom of the post body, after a horizontal rule:
 
 ```markdown
 ---
@@ -70,73 +110,114 @@ Next article: [CONFIRM PRE-LAUNCH: NEXT-AUTHOR] - [[CONFIRM PRE-LAUNCH: NEXT-POS
 
 [See the full list of participants and articles →]([CONFIRM PRE-LAUNCH: PER-THE-DOCS-URL])
 
-*Disclaimer: Each article in this series is written and owned by its respective author. The views, opinions, and experiences shared belong solely to the individual writer and do not represent the perspectives of other participants or their employers (past or present).*
+_Disclaimer: Each article in this series is written and owned by its respective author. The views, opinions, and experiences shared belong solely to the individual writer and do not represent the perspectives of other participants or their employers (past or present)._
 ```
 
-**Theme-name pattern.** Observed in published Per the Docs posts: the navigation block sometimes names the specific monthly theme and links to a theme-specific landing page (e.g., "the April 2026 topic Mind the Gap" linking to a Jill Shaheen blog post indexing that month's participants). When the writer has the theme name and landing URL at draft time, populate the `THEME-NAME` and `THEME-LANDING-URL` placeholders directly. When unknown, leave the placeholders for pre-launch fill-in.
+### Theme-name pattern
 
-The theme name and theme URL can also live in frontmatter as `series_theme` and `series_theme_url` fields (defined in `src/content.config.ts`) for structured access.
+The navigation block may name the specific monthly theme and link to a theme-specific landing page. When the writer has the theme name and landing URL at draft time, populate the `THEME-NAME` and `THEME-LANDING-URL` placeholders directly. When unknown, leave the placeholders for pre-launch fill-in.
 
-**Placeholders used:**
+The theme name and theme URL can also live in frontmatter as `series_theme` and `series_theme_url` fields, if those fields are defined in `src/content.config.ts`.
 
-| Placeholder | What to fill in pre-launch |
-|---|---|
-| `PER-THE-DOCS-URL` | The series landing-page URL provided by the coordinator (unique per month until perthedocs.com goes live) |
-| `THEME-NAME` | The monthly theme name (e.g., "Content Alchemy", "Mind the Gap"). May also be set in frontmatter as `series_theme`. |
-| `THEME-LANDING-URL` | URL to the theme-specific landing page on the series host's site. May also be set in frontmatter as `series_theme_url`. |
-| `PREV-AUTHOR` | Author name of the previous post in the chain |
-| `PREV-POST-TITLE` | Title of the previous post (becomes linked text) |
-| `PREV-POST-URL` | URL of the previous post (becomes the link target) |
-| `NEXT-AUTHOR` | Author name of the next post in the chain |
-| `NEXT-POST-TITLE` | Title of the next post |
-| `NEXT-POST-URL` | URL of the next post |
+Do not assume the theme landing page URL pattern. Use the URL provided by the coordinator.
 
-**Coordinator confirmation timing:** Coordinator confirms PER-THE-DOCS-URL and previous/next chain assignments at least 48 hours before launch. Do not publish until all placeholders are filled.
+### Placeholders used
+
+| Placeholder         | What to fill in pre-launch                                                                                   |
+| ------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `PER-THE-DOCS-URL`  | The series or monthly landing-page URL provided by the coordinator                                           |
+| `THEME-NAME`        | The monthly theme name, if the series uses one. May also be set in frontmatter as `series_theme`.            |
+| `THEME-LANDING-URL` | URL to the theme-specific landing page, if applicable. May also be set in frontmatter as `series_theme_url`. |
+| `PREV-AUTHOR`       | Author name of the previous post in the chain                                                                |
+| `PREV-POST-TITLE`   | Title of the previous post                                                                                   |
+| `PREV-POST-URL`     | URL of the previous post                                                                                     |
+| `NEXT-AUTHOR`       | Author name of the next post in the chain                                                                    |
+| `NEXT-POST-TITLE`   | Title of the next post                                                                                       |
+| `NEXT-POST-URL`     | URL of the next post                                                                                         |
+
+### Coordinator confirmation timing
+
+The coordinator typically confirms the series landing URL, theme details, and previous/next chain assignments close to launch. Do not publish until all placeholders are filled and all links resolve.
+
+If the coordinator has not provided final chain details, keep the post in draft or hold the merge until the placeholders can be filled.
 
 ## Adding a new series
 
-When a new collaborative series comes along (e.g., a different roundup or hopping pattern), add a new section to this skill following the structure above:
+When a new collaborative series comes along, add a new section to this skill following the structure above:
 
-1. Series identifier (the slug used in frontmatter)
+1. Series identifier: the slug used in frontmatter
 2. Required intro block template
 3. Required navigation block template
-4. Placeholder table
-5. Coordinator confirmation timing or relevant operational notes
+4. Disclaimer block, if required
+5. Placeholder table
+6. Theme-fit notes, if the series has monthly themes
+7. Coordinator confirmation timing or relevant operational notes
 
 Also extend the `series` enum in `src/content.config.ts` to accept the new slug.
+
+## Draft-time checklist for series posts
+
+Run during `blog-plan` or `blog-draft` before composing the final post:
+
+- [ ] `series` frontmatter value is set to a supported slug.
+- [ ] The post's central claim fits the series theme through substance.
+- [ ] The series theme does not distort the post's architecture, reader movement, or opener.
+- [ ] The post can stand alone for readers who arrive outside the series chain.
+- [ ] Unknown coordinator-provided values use `[CONFIRM PRE-LAUNCH: ...]` placeholders.
+- [ ] `series_theme` and `series_theme_url` are set in frontmatter if known and supported by `src/content.config.ts`.
 
 ## Pre-launch checklist for series posts
 
 Run before publishing any post with a `series` frontmatter value:
 
 - [ ] All `CONFIRM PRE-LAUNCH` placeholders filled in with real values
-- [ ] Series landing-page URL resolves (no 404)
-- [ ] Theme-name and theme-landing URL resolve (when the navigation block includes them)
+- [ ] Series landing-page URL resolves
+- [ ] Theme-name and theme-landing URL resolve, when the navigation block includes them
 - [ ] Previous post URL resolves
 - [ ] Next post URL resolves
 - [ ] Author names match what the coordinator confirmed
-- [ ] Disclaimer block present unchanged (legal/social-contract requirement)
-- [ ] Intro block present at the very top of the body (before all prose)
-- [ ] Navigation block present at the very bottom of the body (after a `---` horizontal rule)
+- [ ] Post titles match what the coordinator confirmed
+- [ ] Disclaimer block present unchanged, when required
+- [ ] Intro block present at the very top of the body, before all prose
+- [ ] Navigation block present at the very bottom of the body, after a `---` horizontal rule
+- [ ] Frontmatter `series` value matches the supported series slug
+- [ ] Frontmatter `series_theme` and `series_theme_url` match the navigation block, if present
 
 ## Theme tie-back convention
 
-Observed in the Per the Docs series: posts tie back to the monthly theme through **substance, not explicit labeling.** A post on the "Mind the Gap" theme might be about taxonomy as a gap-finding mechanism; a post on a "Content Alchemy" theme might be about transformation between input and output formats. The connection is woven through the post's argument, not stated as "this month's theme is X, here's my take."
+Posts tie back to a monthly theme through **substance, not explicit labeling**.
 
-Heavy theme-labeling reads as forced and undercuts the post's substance. Light theme references in the navigation block (via the THEME-NAME placeholder) are sufficient.
+Heavy theme-labeling reads as forced and can undercut the post's argument. Light theme references in the navigation block are usually sufficient. If the theme appears in the prose, it should be because the theme names the real pressure of the post, not because the post needs to prove it belongs.
 
-If the writer can't articulate how the post connects to the theme, the post probably isn't a fit for the series this month. Surface that during the `blog-draft` flow, not at pre-publish.
+Good theme tie-back:
+
+- The motivating question naturally intersects with the theme.
+- The post's anchor story demonstrates the theme.
+- The portable insight would still make sense without the series, but gains context from it.
+
+Weak theme tie-back:
+
+- The intro says "this month's theme is X" and then the post proceeds as if the theme does not matter.
+- The conclusion adds a theme sentence that was not earned by the body.
+- The post changes its claim to match the theme label rather than using the theme to sharpen the claim.
+
+If the theme connection only works through explicit labeling, the post probably is not a fit for the series this month.
 
 ## Scope boundary
 
 This skill covers:
+
 - Series block templates and placeholders
 - Frontmatter contract for series participation
-- Per-series operational notes (coordinator timing, chain shape)
+- Per-series operational notes
+- Coordinator timing and chain-confirmation workflow
+- Theme-fit checks specific to series posts
 - Pre-launch checklist items specific to series posts
 
 This skill does **not** cover:
+
 - The main blog post structure → `blog-post-framework`
+- Systems-post architecture and evidence guidance → `systems-writing`
 - Voice and brand alignment → `personal-tone`
 - Universal style banishments → `ai-antipatterns`
 - Per-post OG cards → generated dynamically by the `/og/[slug].png` endpoint

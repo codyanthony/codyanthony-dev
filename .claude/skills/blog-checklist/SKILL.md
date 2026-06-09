@@ -1,6 +1,6 @@
 ---
 name: blog-checklist
-description: Pre-publish checklist for blog posts on the Cody Anthony brand — beat presence, voice scan, anti-pattern scan, frontmatter validation, OG image regeneration. Runs before any post ships to production.
+description: Pre-publish checklist for blog posts on the Cody Anthony brand — blueprint consistency, beat presence, voice scan, anti-pattern scan, frontmatter validation, dynamic OG card checks, and operational gates. Runs before any post ships to production.
 tags: [writing, blog, checklist, pre-publish]
 ---
 
@@ -10,27 +10,46 @@ tags: [writing, blog, checklist, pre-publish]
 
 Load when a blog post draft is complete and ready for pre-publish review. Runs after drafting (via `commands/blog-draft.md`) and as the final gate before merging to `main`.
 
-For mid-draft style guidance, use `ai-antipatterns` and `personal-tone` directly. This skill is the **final gate** — it aggregates checks from those skills, plus structural checks from `blog-post-framework`, plus operational checks specific to publishing.
+For mid-draft style guidance, use `ai-antipatterns` and `personal-tone` directly. This skill is the **final gate** — it aggregates checks from blueprint context, voice rules, style rules, structural checks from `blog-post-framework`, systems-writing checks where applicable, and operational checks specific to publishing.
 
 ## The checklist
 
-Run each item against the draft. Report pass/fail per item. Revise the draft before submitting if any item fails.
+Run each item against the draft. Report pass/fail/skip per item. Revise the draft before submitting if any item fails.
 
 ### Frontmatter validation
 
 - [ ] `title` is present, descriptive, not clickbait
 - [ ] `description` is present, one sentence, mirrors what's promised in the post
 - [ ] `description` reads as concrete as (or more concrete than) the strongest line in the post — not a softer abstraction of the thesis. If the description sounds more abstract than the post, revise.
-- [ ] `date` is set to the intended publish date (ISO 8601 format, e.g. `2026-06-08`)
+- [ ] `date` is set to the intended publish date (ISO 8601 format, e.g., `2026-06-08`)
 - [ ] `tags` array contains at least 2 topical tags (data-only — UI is deferred)
 - [ ] `draft: false` (or absent — default is false)
 - [ ] For series posts, `series_theme` and `series_theme_url` set if the navigation block uses them
 - [ ] No stray frontmatter fields not defined in `src/content.config.ts`
 
+### Blueprint consistency, if `.claude/plans/{slug}.md` exists
+
+- [ ] Motivating question is preserved: the draft is still driven by the question the plan identified, not merely by the topic.
+- [ ] Violated expectation is preserved: the draft carries what the writer expected, assumed, or believed before the work complicated it.
+- [ ] Central claim is preserved: the draft answers or complicates the planned claim rather than drifting into a neighboring idea.
+- [ ] Architecture is preserved: the draft uses the blueprint's governing structure unless the drift clearly improves the post.
+- [ ] Reader movement is preserved: the draft moves from starting point → first pressure → escalation → turn → landing, or an intentionally improved equivalent.
+- [ ] Draft has not collapsed into a static framework tour unless enumeration is explicitly the intended reader movement.
+- [ ] Anchor story is preserved or any change is explicitly justified.
+- [ ] Evidence map is represented: each required part / move appears in the draft.
+- [ ] Collision events are present: every load-bearing example includes the pressure that made the example matter.
+- [ ] Beat outline is satisfied as content checks, not rendered as a visible template.
+- [ ] Blueprint drift is classified: no drift, drafting-level drift, beneficial blueprint-level drift, or accidental blueprint-level drift.
+- [ ] Beneficial blueprint-level drift has been reflected back into `.claude/plans/{slug}.md` before publish.
+- [ ] Accidental blueprint-level drift has been repaired or explicitly accepted by the writer.
+
+If no blueprint exists, mark this section `SKIP — no blueprint found`; do not invent blueprint failures.
+
 ### Beat presence (per `blog-post-framework`)
 
 - [ ] **Why this** beat establishes stakes by the second paragraph
-- [ ] **What's true** beat includes at least one concrete example with detail
+- [ ] Opener authenticity: the opener connects to the motivating question, violated expectation, starting point, or first pressure. It could not open any generic article on the topic.
+- [ ] **What's true** beat develops the chosen architecture through concrete examples, evidence-map moments, collision events, and reader movement
 - [ ] **What's portable** insight is extractable as a single shareable sentence
 - [ ] Opener shape varies from the writer's last 2–3 posts (consult `src/content/blog/` history; skip if fewer than 2 posts exist)
 - [ ] Opener earns its abstraction (`blog-post-framework` → Earn the abstraction): an abstraction-first opener is paid off with concrete evidence, not merely decorated
@@ -38,15 +57,34 @@ Run each item against the draft. Report pass/fail per item. Revise the draft bef
 ### Structural integrity (per `blog-post-framework`)
 
 - [ ] Every example passes the deletion test (remove it; if the argument loses nothing essential, it is decoration) — run per example, not once per beat
+- [ ] Every load-bearing example has a collision event: a decision, tradeoff, ambiguity, contradiction, failed assumption, boundary condition, consequence, escalation, or changed understanding. If the example only illustrates a claim already made, revise or cut it.
+- [ ] Reader movement is clear: the post changes the reader's understanding as it moves, rather than presenting a static framework or list of parts.
+- [ ] Paragraph rhythm varies: the post does not stack too many thesis-heavy, abstraction-first, or equally emphatic paragraphs in a row.
+- [ ] Emphasis density is controlled: high-weight claims have room to land through concrete detail, consequence, transition, or quieter observation.
+- [ ] Paragraph functions vary across the post: observation, example, pressure, interpretation, transition, consequence, earned claim, and landing are not all rendered in the same shape.
+- [ ] No architecture announcement unless the architecture itself is the story. The post should not overexplain its own structure.
 - [ ] One dominant idea per section; no two competing decompositions overloaded into one section
 - [ ] Conclusion thesis discipline: the final-emphasis positions (last sentence, and the sentence closing the penultimate paragraph) land the thesis, not a supporting idea
-- [ ] **Systems essays only:** the served party stays visible — a reader can answer "who cares?" from the essay (`systems-writing` → Keep the served party visible; skip for non-systems posts)
+- [ ] Conclusion lands as discovery: the ending carries the changed understanding the post earned, not a summary of the architecture, a restated central claim, or a slogan.
+- [ ] Final sentence emerges from the post's evidence, collision events, reader movement, or violated expectation. It could not be attached unchanged to any competent article on the topic.
+- [ ] **Systems posts only:** the served party stays visible — a reader can answer "who cares?" from the blog post (`systems-writing` → Keep the served party visible; skip for non-systems posts)
+
+### Systems-writing checks, for systems posts
+
+- [ ] The selected system-shaped or inquiry-shaped architecture still fits the draft.
+- [ ] The served party stays visible — a reader can answer "who cares?" from the blog post.
+- [ ] Collision events are present for load-bearing examples.
+- [ ] The draft does not force an inquiry post into a layer decomposition.
+- [ ] The draft does not convert a changed-belief post into a static framework tour.
+- [ ] Sensitive examples are abstracted or screened when needed.
+
+Skip this section for non-systems posts.
 
 ### Voice scan (per `personal-tone`)
 
 - [ ] First-person, present tense (unless retrospective)
 - [ ] Contractions natural unless single-sentence weight required
-- [ ] Builder voice: recounts what was built or observed, not essayist/philosophy drift; abstraction sits after the evidence (`personal-tone` → Builder voice)
+- [ ] Builder voice: recounts what was built or observed, not blogger/philosophy drift; abstraction sits after the evidence (`personal-tone` → Builder voice)
 - [ ] Zero "X, not Y" contrast framings, including the variants ("doesn't X but Y," "not in A but in B," "instead of X, Y," the negative cleft "what X couldn't do was Y")
 - [ ] No verbatim praise quotes
 - [ ] No effort or scale flexing ("huge effort," "really proud of," "after months of work," difficulty-flex variants); scale mentioned only when it explains the system's behavior
@@ -111,7 +149,7 @@ The script does not cover these patterns; they require structural judgment:
 
 - [ ] Word count in a comfortable range (~600–1,200); shorter or longer is fine if every section earns its place (no reading-time targets — word count is the measure)
 - [ ] No section runs more than 4–5 paragraphs without a structural break (subheading, list, code block, blockquote)
-- [ ] Closing line delivers the portable insight, not a CTA
+- [ ] Closing line delivers the portable insight as discovered understanding, not a CTA, slogan, summary, or generic maxim
 
 ### Cross-references
 
@@ -147,7 +185,7 @@ Per `series-blocks` skill:
 
 ### Pre-LinkedIn-share
 
-- [ ] OG card preview displays correctly (test by sharing the URL in a LinkedIn draft and checking the auto-generated preview card)
+- [ ] OG card preview displays correctly (test with LinkedIn Post Inspector or by sharing the URL in a LinkedIn draft and checking the auto-generated preview card)
 - [ ] Post URL is direct: `codyanthony.dev/blog/{slug}/`, not the home page
 - [ ] LinkedIn share text drafted separately, not just the URL (the share text matters more than the post title for LinkedIn algorithm + click-through)
 
@@ -155,21 +193,24 @@ Per `series-blocks` skill:
 
 Before declaring the post ready:
 
-- [ ] All checklist items above either pass or are explicitly waived with reason
+- [ ] All checklist items above either pass, skip with reason, or are explicitly waived with reason
 - [ ] No item is skipped silently
 - [ ] If any item fails and is not addressed, the user is the one deciding to publish anyway — not the AI
+- [ ] If the draft changed the plan in a meaningful way, the blueprint was updated or the writer explicitly waived the mismatch.
 
 ## Scope boundary
 
 This skill covers:
 
-- Pre-publish checks aggregated from voice, style, structure, and operational skills
+- Blueprint consistency checks when `.claude/plans/{slug}.md` exists
+- Pre-publish checks aggregated from blueprint, voice, style, structure, systems-writing, and operational skills
 - Frontmatter validation against the project's content collection schema
-- Operational gates (OG image regen, astro check, preview deploy)
+- Operational gates (dynamic OG card verification, astro check, preview deploy)
 
 This skill does **not** cover:
 
 - **Style guidance during drafting** → `ai-antipatterns`, `personal-tone`
 - **Structural framework** → `blog-post-framework`
+- **Systems-writing architecture and evidence guidance** → `systems-writing`
 - **Orchestration of the draft → review → save flow** → `commands/blog-draft.md`, `commands/blog-review.md`
 - **Post-publish promotion** (LinkedIn share copy, X share, etc.) — out of scope; handled per-post manually

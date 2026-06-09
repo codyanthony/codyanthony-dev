@@ -1,13 +1,15 @@
 ---
-description: Draft a blog post for codyanthony.dev/blog/ using the three-beat framework, personal-tone voice, and ai-antipatterns universal style guide. Interactive flow with branch management, system-generated proposals, series support, deterministic-script validation, and optional commit/deploy.
-version: 1.1
+description: Draft a blog post for codyanthony.dev/blog/ from an approved blog-plan blueprint. Executes the motivating question, violated expectation, architecture, reader movement, evidence map with collision events, personal-tone voice, and ai-antipatterns style guide into a ready-to-merge draft. Interactive flow with branch management, proposals, series support, deterministic-script validation, and optional commit/deploy.
+version: 1.2
+---
+
 ---
 
 # /blog-draft
 
-Executes an approved blueprint from `/blog-plan` into a ready-to-merge draft. The architecture, anchor story, and outline are already decided and validated in the plan; this command does not re-plan. Eight phases: Setup → Blueprint → Proposals → Compose → Validate → Review → Save → Ship. Each phase gates on user confirmation; the deterministic script runs before LLM judgment during validation.
+Executes an approved blueprint from `/blog-plan` into a ready-to-merge draft. The motivating question, violated expectation, central claim, architecture, reader movement, anchor story, evidence map with collision events, beat outline, opener shape, working title, slug, and links are already decided and validated in the plan. This command does not re-plan. Eight phases: Setup → Blueprint → Proposals → Compose → Validate → Review → Save → Ship. Each phase gates on user confirmation; the deterministic script runs before LLM judgment during validation.
 
-> **Running blog-draft v1.1** — Skill load + verification gate → branch management → load the blueprint (`.claude/plans/{slug}.md`) + confirm remaining metadata → confirm proposals (title, slug, outline from blueprint, tags) → compose direct to file → deterministic + LLM validation → user review → deterministic save gates → optional commit/deploy.
+> **Running blog-draft v1.2** — Skill load + verification gate → branch management → load the blueprint (`.claude/plans/{slug}.md`) + confirm remaining metadata → confirm proposals (title, slug, blueprint summary, tags) → compose direct to file → deterministic + LLM validation → user review → deterministic save gates → optional commit/deploy.
 
 > Run `/blog-plan` first. It produces the blueprint this command consumes. Starting here without one is only for a simple post with one obvious example; anything with real architecture should be planned first.
 
@@ -21,7 +23,7 @@ Print the banner above verbatim before doing anything else. Then print:
 
 - `.claude/skills/ai-antipatterns/SKILL.md` — universal negative style guide (canonical)
 - `.claude/skills/personal-tone/SKILL.md` — voice, brand alignment, audience layering
-- `.claude/skills/blog-post-framework/SKILL.md` — three-beat structure, opener shapes
+- `.claude/skills/blog-post-framework/SKILL.md` — three-beat content checks, opener shapes, structural integrity
 - `.claude/skills/blog-checklist/SKILL.md` — pre-publish gates
 - `writer-context` (**global skill, not in this repo**) — verified work history, role specifics, NDA/proprietary reference guidance, common overclaims to refuse. Personal to the writer, so it lives at `~/.claude/skills/writer-context/` rather than in the repo; load it by name via the Skill tool.
 
@@ -49,11 +51,11 @@ Load the project-local skills (`ai-antipatterns`, `personal-tone`, `blog-post-fr
 
 Confirm each skill is loaded by listing one key rule from each in this format:
 
-```
+```text
 Skills loaded:
   [x] ai-antipatterns — "Zero em dashes in prose (description lists / link lists exempt)"
   [x] personal-tone — "Audience layering: peers primary, recruiters always reading too"
-  [x] blog-post-framework — "Three beats: Why this / What's true / What's portable"
+  [x] blog-post-framework — "Three beats are content checks, not section templates"
   [x] blog-checklist — "Deterministic gate runs check-blog-prose.mjs before LLM judgment"
   [x] writer-context — "Refuse 'founding writer for ROSA' (he joined post-GA); refuse 'inherited' framing for AWS XML migration"
 ```
@@ -71,7 +73,7 @@ echo "Current branch: $CURRENT_BRANCH"
 
 **If `CURRENT_BRANCH` is `main`:** drafting on main is not allowed without explicit override. Prompt:
 
-```
+```text
 Current branch: main
 
 Drafting on main is not recommended — feature branches keep production
@@ -86,18 +88,21 @@ Options:
 Wait for response.
 
 - `setup`: if working tree has uncommitted changes, prompt `stash / commit / discard / cancel`. After resolution, run:
+
   ```bash
   git -C . checkout main
   git -C . pull origin main
   git -C . checkout -b "blog/wip-$(date +%Y-%m-%d)"
   ```
+
   This branch will be renamed to `blog/{slug}` in Phase 2 once the slug is chosen.
+
 - `continue`: proceed on main, print warning.
 - `cancel`: exit.
 
 **If `CURRENT_BRANCH` starts with `blog/`:** existing feature branch. Ask:
 
-```
+```text
 On existing feature branch: {branch}
 
 Options:
@@ -108,7 +113,7 @@ Options:
 
 **If `CURRENT_BRANCH` is any other branch:** ask:
 
-```
+```text
 On branch: {branch}
 
 Options:
@@ -123,7 +128,7 @@ Print the resolved branch and proceed.
 
 ## Phase 1: Load the blueprint
 
-Drafting consumes a blueprint produced by `/blog-plan`. The central claim, architecture and its parts, anchor story, evidence map, beat outline, opener shape, working title, slug, and links are already decided and validated there. **Do not re-open them here.** This command executes the plan; it does not re-plan.
+Drafting consumes a blueprint produced by `/blog-plan`. The motivating question, violated expectation, central claim, architecture and required parts / moves, reader movement, anchor story, evidence map with collision events, beat outline, opener shape, working title, slug, and links are already decided and validated there. **Do not re-open them here.** This command executes the plan; it does not re-plan.
 
 ### 1a. Read the blueprint
 
@@ -133,20 +138,82 @@ Ask the writer for the slug, or locate the blueprint:
 ls .claude/plans/*.md 2>/dev/null
 ```
 
-Read `.claude/plans/{slug}.md` and extract: central claim, architecture and required parts, anchor story, evidence map, beat outline, opener shape, working title, slug, links/cross-references, contentious decisions (employer name/abstract, sensitive examples screened, opener register, second-instance/on-ramp budget), and open questions. The employer name/abstract decision feeds the employer-abstraction check at Phase 4b.
+Read `.claude/plans/{slug}.md` and extract:
+
+- motivating question
+- violated expectation
+- central claim
+- architecture and required parts / moves
+- reader movement
+- anchor story
+- evidence map, including collision events and status for each row
+- beat outline
+- opener shape/register
+- working title
+- slug
+- links/cross-references
+- contentious decisions:
+  - employer name/abstract
+  - sensitive examples screened
+  - opener shape/register
+  - second-instance/on-ramp budget
+
+- open questions / placeholders
+
+The employer name/abstract decision feeds the employer-abstraction check at Phase 4b. Evidence-map rows marked `weak` or `empty`, or rows missing collision events, block drafting and route back to `/blog-plan`.
 
 **If no blueprint exists:**
 
-- **Substantial or systems post:** stop and recommend running `/blog-plan` first. The anchor-fit gate is the cheap checkpoint; skipping it is what produces throwaway drafts.
-- **Simple post, one obvious example:** run a quick inline plan now (central claim in one sentence, the single anchor, a three-beat outline, opener shape) and continue. Keep it to a few minutes.
+- **Substantial or systems post:** stop and recommend running `/blog-plan` first. The motivating-question, reader-movement, anchor-fit, and collision-event gates are the cheap checkpoints; skipping them is what produces throwaway drafts.
+- **Simple post, one obvious example:** run a quick inline plan now:
+  - motivating question or violated expectation
+  - central claim in one sentence
+  - chosen architecture
+  - reader movement
+  - single anchor
+  - collision event
+  - three-beat outline
+  - opener shape
+
+  Keep it short. If the quick plan reveals more than one real architecture choice, stop and route to `/blog-plan`.
 
 ### 1b. Confirm remaining metadata
 
 The blueprint settles structure. Confirm the few draft-time items it does not carry, one at a time:
 
 - **Publish date.** Default today ({YYYY-MM-DD}); ISO 8601. For series posts, match the coordinator's confirmed window.
-- **Tags.** Propose 3–5 topical tags from the claim, audience, and title; writer confirms or edits.
-- **Series specifics** (only if the blueprint marks this a series post): load `series-blocks`; confirm `series_theme` name and `series_theme_url`, or leave `[CONFIRM PRE-LAUNCH: ...]` placeholders; confirm the theme tie-back is by substance, not labeling.
+- **Tags.** Propose 3–5 topical tags from the central claim, audience, title, and subject. Writer confirms or edits.
+- **Series specifics** (only if the blueprint marks the post series-participating): load `series-blocks`; confirm `series_theme` name and `series_theme_url`, or leave `[CONFIRM PRE-LAUNCH: ...]` placeholders; confirm the theme tie-back is by substance, not labeling.
+
+### 1c. Blueprint revision boundary
+
+The blueprint is the source of truth for drafting, but it must stay honest.
+
+If drafting reveals a better motivating question, violated expectation, central claim, architecture, reader movement, anchor story, evidence-map row, collision event, or conclusion landing, stop and update `.claude/plans/{slug}.md` before continuing. Do not keep drafting against a stale blueprint, and do not patch prose around a plan that no longer describes the post.
+
+Use this boundary:
+
+- **Drafting-level change:** improves expression while preserving the blueprint.
+  - sentence-level tightening
+  - paragraph rhythm adjustment
+  - transition repair
+  - title or description refinement
+  - cutting repetition
+  - moving a paragraph within the same reader movement
+
+- **Blueprint-level change:** changes what the post is.
+  - different motivating question
+  - different violated expectation
+  - material change to central claim
+  - architecture change
+  - reader movement change
+  - anchor change
+  - required part / move added or removed
+  - evidence-map row becomes weak or empty
+  - collision event changes
+  - conclusion lands a different changed understanding
+
+If unsure, treat it as blueprint-level and route back to `/blog-plan`.
 
 ---
 
@@ -156,22 +223,23 @@ System generates each artifact; writer confirms or proposes alternative.
 
 ### 2a. Title
 
-The blueprint carries a working title; start from it. If the writer wants options, generate **3–5 distinct title candidates** from the blueprint's working title and central claim. Constraints:
+The blueprint carries a working title; start from it. If the writer wants options, generate **3–5 distinct title candidates** from the blueprint's working title, motivating question, violated expectation, central claim, and reader movement. Constraints:
 
 - No buzzwords from `ai-antipatterns` banned-words list
 - No "X, not Y" contrast framing (per `personal-tone`)
 - No anchoring on "Documentation Strategist" as the hook
 - Lead with substance, not brand
-- Vary across shapes: descriptive, provocative, structural, scene-led — at least three distinct shapes
+- Vary across shapes: descriptive, provocative, structural, scene-led, question-led — at least three distinct shapes
+- Do not over-index on the architecture if the reader movement or violated expectation is the stronger hook
 
 Present with brief framing notes:
 
-```
+```text
 Title candidates:
 
-A. {title} — {frame: e.g., "Descriptive; promises N concrete examples"}
-B. {title} — {frame: e.g., "Provocative; sets up a contrarian claim"}
-C. {title} — {frame: e.g., "Structural; promises a teardown"}
+A. {title} — {frame: e.g., "Descriptive; foregrounds the changed belief"}
+B. {title} — {frame: e.g., "Provocative; sets up the violated expectation"}
+C. {title} — {frame: e.g., "Structural; names the system boundary"}
 D. {title} — {frame: ...}
 E. {title} — {frame: ...}
 
@@ -186,10 +254,10 @@ Derive 2–3 slug variants from the chosen title:
 
 - kebab-case, no special characters
 - 2–4 words ideally
-- Reads well as a permanent URL
-- Doesn't repeat brand framing in URL form
+- reads well as a permanent URL
+- does not repeat brand framing in URL form
 
-```
+```text
 Slug candidates (file will save to src/content/blog/{slug}.mdx):
 
 A. {slug-a}
@@ -209,7 +277,7 @@ test -f "src/content/blog/{slug}.mdx" && echo "EXISTS" || echo "NEW"
 
 If `EXISTS`: prompt:
 
-```
+```text
 A draft already exists at src/content/blog/{slug}.mdx (dated {date}, {N} words).
 
 Options:
@@ -221,7 +289,7 @@ Options:
 
 Behavior:
 
-- `resume`: read the file, skip to Phase 4. Skip Phases 2d (branch rename — assume already on the right branch), 2e (outline), 2f (tags), and Phase 3 (compose).
+- `resume`: read the file, skip to Phase 4. Also load the blueprint, if it exists, so validation can check drift against motivating question, architecture, reader movement, evidence map, and collision events.
 - `overwrite`: delete file with `rm`, continue normally to Phase 2d.
 - `rename`: return to Phase 2b.
 - `cancel`: exit with no changes.
@@ -236,17 +304,57 @@ git -C . branch -m "blog/{slug}"
 
 If on any other branch, leave alone.
 
-### 2e. Outline (from the blueprint)
+### 2e. Blueprint confirmation
 
-The beat outline, opener shape, and the anchor walked through the architecture's parts are already in the blueprint. **Do not regenerate them.** Restate the outline back to the writer for a final confirmation before composing.
+The motivating question, violated expectation, central claim, architecture, reader movement, anchor story, evidence map with collision events, beat outline, and opener shape are in the blueprint. If the writer wants a structural change — different motivating question, violated expectation, central claim, architecture, reader movement, anchor, evidence-map row, collision event, close landing, or beat that does not fit — that is a blueprint-level change, not a drafting change. Stop and route it back to `/blog-plan` so the blueprint is updated and the fit gates run again. Do not absorb structural rework into the draft flow; that is the loop this split exists to prevent.
 
-If the writer wants a structural change (different architecture, different anchor, a beat that does not fit), that is a planning change, not a drafting change. Stop and route it back to `/blog-plan` so the anchor-fit gate runs again. Do not absorb structural rework into the draft flow; that is the loop this split exists to prevent.
+Use this format:
+
+```text
+Blueprint summary:
+
+Motivating question:
+  {motivating question}
+
+Violated expectation:
+  {violated expectation}
+
+Central claim:
+  {central claim}
+
+Architecture:
+  {architecture}
+  Required parts / moves: {list}
+
+Reader movement:
+  Starting point: {starting point}
+  First pressure: {first pressure}
+  Escalation: {escalation}
+  Turn: {turn}
+  Landing: {landing}
+
+Evidence map:
+  {N} rows filled
+  {N} weak
+  {N} empty
+  Missing collision events: {N}
+
+Beat outline:
+  Why this: {summary}
+  What's true: {summary}
+  What's portable: {summary}
+  What's next: {summary or "skip"}
+```
+
+If any evidence-map row is `weak` or `empty`, or any collision event is missing, stop and route back to `/blog-plan`.
+
+If the writer wants a structural change (different motivating question, central claim, architecture, reader movement, anchor, collision event, or beat that does not fit), that is a planning change, not a drafting change. Stop and route it back to `/blog-plan` so the fit gates run again. Do not absorb structural rework into the draft flow; that is the loop this split exists to prevent.
 
 ### 2f. Tags
 
-Generate 3–5 topical tags from Q3 audience + Q1 insight + chosen title. Present:
+Generate 3–5 topical tags from the central claim, audience, title, and subject. Present:
 
-```
+```text
 Tag proposal: ["{tag-a}", "{tag-b}", "{tag-c}", "{tag-d}"]
 
 Confirm, edit, or replace.
@@ -262,12 +370,23 @@ Write the draft directly to `src/content/blog/{slug}.mdx`. **Do not show the dra
 
 ### Composition rules
 
-Compose to the approved blueprint: its beat outline, anchor story, and architecture parts are the spine. Apply all loaded skills during composition:
+Compose to the approved blueprint. Its motivating question, violated expectation, architecture, reader movement, anchor story, evidence map with collision events, and beat outline are the spine. Apply all loaded skills during composition:
 
-- **`blog-post-framework`** — three beats present; opener shape per the blueprint. Length is not a compose-time target; write to the blueprint and let structural integrity govern. Apply **structural integrity**: forward motion (each section changes the reader's state, no timeline resets, no re-established context), no semantic duplication (no insight restated in fresh words across the post), earn the abstraction (concrete before claim), and section rendering varies (no schematic-identical templates across parallel sections).
-- **`personal-tone`** — first-person, present tense, contractions natural, no contrast framing, no effort signaling, audience layering, brand alignment
-- **`ai-antipatterns`** — universal style banishments, zero em dashes in prose, no banned words, no aphoristic closings, no "Without X, Y. Without Y, X." inversions, no triple parallel construction
-- **`series-blocks`** (if applicable) — insert intro block at top of body, navigation block at bottom
+- **`blog-post-framework`** — the three beats are present as content checks, not section templates. Opener shape follows the blueprint. Length is not a compose-time target; write to the blueprint and let structural integrity govern.
+- **`personal-tone`** — first-person, present tense, contractions natural, no contrast framing, no effort signaling, audience layering, brand alignment.
+- **`ai-antipatterns`** — universal style banishments, zero em dashes in prose, no banned words, no aphoristic closings, no "Without X, Y. Without Y, X." inversions, no triple parallel construction.
+- **`series-blocks`** (if applicable) — insert intro block at top of body, navigation block at bottom.
+
+Apply these blueprint-specific rules:
+
+- **Reader movement through the architecture.** Use the blueprint's reader movement as the reader-facing path through the post. The architecture governs the draft, but the prose should unfold through pressure, escalation, discovery, contradiction, changed belief, or a sharpening question. Do not render the post as a tour of architecture parts unless the blueprint explicitly says that enumeration is the intended movement.
+- **Opener authenticity.** Draft the opener from the blueprint's motivating question, violated expectation, reader-movement starting point, or first pressure. Do not open by announcing the topic, architecture, or broad field trend. Before writing the body, check whether the opener could only belong to this post, from this writer. If it could open any competent article on the topic, revise before continuing.
+- **Collision events drive examples.** Use the blueprint's evidence map and collision-event column when drafting the substantive middle. Every load-bearing example should include the pressure that made the example matter: a decision, tradeoff, ambiguity, contradiction, failed assumption, boundary condition, consequence, escalation, or changed understanding. Do not draft examples as illustrations of architecture parts. If the blueprint has a weak or missing collision event, stop and route back to `/blog-plan` rather than manufacturing pressure in prose.
+- **Structural integrity.** Apply forward motion (each section changes the reader's state, no timeline resets, no re-established context), semantic duplication checks (no insight restated in fresh words across the post), earn-the-abstraction (concrete before claim unless the abstraction is itself the hook and is paid off), one dominant idea per section, and varied rendering across parallel sections. The reader should feel the post moving, not see the framework operating.
+- **Paragraph rhythm and emphasis density.** Vary paragraph function as the draft moves: concrete observation, specific example, pressure, interpretation, transition, consequence, earned claim, quiet landing. Do not stack too many thesis-heavy, abstraction-first, or equally emphatic paragraphs in a row. If every paragraph ends by explaining what it means, revise so some paragraphs carry evidence, consequence, or movement instead of emphasis.
+- **Conclusion as discovery.** End on the changed understanding the post earned through the anchor story, reader movement, and collision events. Do not end by summarizing the architecture, repeating the central claim unchanged, reaching for a maxim, or adding a CTA disguised as a conclusion. The final sentence should feel discovered by the post, not attached to it.
+- **No architecture announcement.** Do not introduce the post by naming the architecture unless that naming is the story. Architecture is usually hidden support, not reader-facing scaffolding.
+- **No invention.** Do not introduce examples, metrics, quotes, employer claims, or project details not in the blueprint or writer-context. If the draft needs material the blueprint does not supply, stop and ask or route back to `/blog-plan`.
 
 ### Frontmatter
 
@@ -286,14 +405,18 @@ draft: false
 
 **Description specificity check.** The frontmatter `description` is load-bearing (RSS feed, social-card previews, meta tags, search snippets). It should be a sharper version of the strongest concrete line in the post, not a softer abstraction of the thesis. If the description sounds more abstract than the post itself, revise. A good test: paste the description in isolation and ask whether it would compel a reader to open the post. If the answer is "barely," it's too abstract.
 
-### Body order
+### Body shape
 
-1. **If series:** insert intro block at the top (per `series-blocks` template, `[CONFIRM PRE-LAUNCH: ...]` placeholders for unknowns)
-2. **Beat 1** (Why this)
-3. **Beat 2** (What's true) — with concrete examples integrated
-4. **Beat 3** (What's portable)
-5. **Beat 4** (What's next) — if applicable
-6. **If series:** insert navigation block at the bottom (after a `---` horizontal rule)
+The body follows the blueprint's reader movement and beat outline. Do not force fixed section headings or a visible three-beat template.
+
+Requirements:
+
+1. **If series:** insert intro block at the top (per `series-blocks` template, `[CONFIRM PRE-LAUNCH: ...]` placeholders for unknowns).
+2. **Why this** must be present: opener + stakes through the motivating question, violated expectation, starting point, or first pressure.
+3. **What's true** must be present: the chosen architecture developed through the anchor story, evidence map, collision events, and reader movement.
+4. **What's portable** must be present: the changed understanding, sharper question, or single carry-away insight the post earns.
+5. **What's next** is optional and included only if natural.
+6. **If series:** insert navigation block at the bottom (after a `---` horizontal rule).
 
 ### Write the file
 
@@ -303,16 +426,20 @@ Use the Write tool to save to `src/content/blog/{slug}.mdx`.
 
 Before printing the structured summary or inviting review, re-read the draft once as a skeptical senior reader and **correct in place** against the Phase 4b checklist below. Then run the deterministic script (Phase 4a) and fix any critical findings in place. Only after both passes, present.
 
-The principle: *the writer must not be the first to catch a failure on this list.* This is a **re-sequence of the existing validate phase, not a new mechanism** — it moves the first cleanup ahead of presentation so the writer reviews an already-screened draft instead of a raw one. Note in the structured summary how many issues this pass corrected.
+The principle: _the writer must not be the first to catch a failure on this list._ This is a **re-sequence of the existing validate phase, not a new mechanism** — it moves the first cleanup ahead of presentation so the writer reviews an already-screened draft instead of a raw one. Note in the structured summary how many issues this pass corrected.
 
 ### Structured summary
 
 After write, print:
 
-```
+```text
 Composed: src/content/blog/{slug}.mdx
   Word count: {N}
   Self-review (fix-in-place): {N} issues corrected; deterministic script 0 critical
+  Motivating question preserved: {yes|no}
+  Reader movement preserved: {yes|no}
+  Collision events present: {N}/{N}
+  Conclusion lands as discovery: {yes|no}
   Beats present: Why this / What's true / What's portable / What's next ({yes|skip})
   Series: {series-slug or "standalone"}
   CONFIRM PRE-LAUNCH placeholders: {N}
@@ -339,7 +466,7 @@ If exit code is `0`: pass. Continue to 4b.
 
 If exit code is `1` (critical findings): present each finding with the script's output. For each finding, propose a specific fix and ask the writer:
 
-```
+```text
 Finding: {rule}
   L{line} [{severity}] {text}
   Suggested fix: {specific replacement}
@@ -357,19 +484,32 @@ After all findings resolved, re-run the script. If still failing, loop until exi
 
 Run the LLM-judgment checklist from `blog-checklist` — the items the deterministic script does not cover (beat presence, structural integrity, voice scan, anti-pattern LLM-judgment, length/pacing, cross-references). **`blog-checklist` is the canonical list and cites each item's source skill; run it there rather than re-enumerating it here**, so the draft-time pass and the pre-publish gate cannot drift apart.
 
-In addition, run the draft-flow-specific checks `blog-checklist` does not carry:
+In addition, run the draft-flow-specific checks `blog-checklist` may not carry yet:
 
-- Architecture consistency: the draft still delivers the claim through the blueprint's architecture and evidence map. Flag drift, do not silently absorb it; an improvement updates the blueprint, a genuine architecture change routes back to `/blog-plan`, an accidental dropped part gets repaired.
-- Series checks (if applicable): placeholders flagged, intro/nav blocks present
+- **Motivating question preservation:** the draft still feels driven by the blueprint's motivating question, not merely by the topic.
+- **Violated expectation preservation:** the opener, body, or close carries the expectation the work complicated.
+- **Reader movement preservation:** the draft follows the blueprint's reader movement. Flag if it has collapsed into a static framework tour.
+- **Architecture consistency:** the draft still delivers the claim through the blueprint's architecture, without silently swapping in a different structure.
+- **Evidence-map consistency:** every required part / move is represented, and no load-bearing example has been dropped.
+- **Collision-event presence:** every load-bearing example includes the pressure that made the example matter. Flag examples that only illustrate architecture parts.
+- **Opener authenticity:** the opener connects to the motivating question, violated expectation, starting point, or first pressure. Flag if it could open any competent article on the topic.
+- **Paragraph rhythm:** the draft does not feel over-engineered at the paragraph level. Flag runs of thesis-heavy, abstraction-first, or equally emphatic paragraphs, especially where every paragraph ends with a meaning statement.
+- **Conclusion as discovery:** the ending lands the changed understanding the post earned. Flag if the close summarizes the architecture, restates the claim unchanged, turns into a maxim, or could attach unchanged to any competent article on the topic.
+- **Series checks** (if applicable): placeholders flagged, intro/nav blocks present.
 
 Report each item pass/fail per `blog-checklist`'s format. For each failure, propose the fix with the same `yes / edit / skip` interaction.
 
 Print structured summary:
 
-```
+```text
 Validation:
   Deterministic (check-blog-prose.mjs): 0 critical, {N} warnings
   LLM checklist: {P} pass / {F} fail
+  Draft-flow checks:
+    Motivating question preserved: {pass|fail}
+    Reader movement preserved: {pass|fail}
+    Collision events present: {pass|fail}
+    Opener authenticity: {pass|fail}
   {if fails: list each fail with line + brief description}
 ```
 
@@ -379,7 +519,7 @@ Validation:
 
 Present:
 
-```
+```text
 Draft is ready for review.
 
 File: src/content/blog/{slug}.mdx
@@ -430,7 +570,7 @@ node scripts/check-blog-prose.mjs src/content/blog/{slug}.mdx
 
 If exit code is non-zero: STOP. This catches anything that got reintroduced between Phase 4 and now.
 
-### 6e. Word count + reading time
+### 6d. Word count
 
 ```bash
 # Strip frontmatter, count words
@@ -442,7 +582,7 @@ Word count is a sensibility, not a gate. If it is well under ~600 or well past ~
 
 Print summary:
 
-```
+```text
 Save gates passed:
   OG image: dynamic (/og/{slug}.png, rendered + cached on first scrape)
   pnpm astro check: 0 errors
@@ -456,7 +596,7 @@ Save gates passed:
 
 ### 7a. Commit
 
-```
+```text
 Commit this draft to {current-branch}? (commit / skip)
 ```
 
@@ -478,7 +618,7 @@ Generate the message from the post: e.g., `Add blog post: {post title}` or more 
 
 ### 7b. Preview deploy
 
-```
+```text
 Push branch and trigger a Cloudflare preview deploy? (deploy / skip)
 ```
 
@@ -517,7 +657,7 @@ If `skip`: continue to 7c.
 
 ### 7c. Final report
 
-```
+```text
 {post title}
 
 File: src/content/blog/{slug}.mdx
@@ -554,13 +694,13 @@ Next steps:
 ## Rules
 
 - **Skills are canonical.** Do not override `ai-antipatterns` or `personal-tone` rules for stylistic preference within a single post. If the writer asks for an em dash, refuse and point to the exceptions list. If they disagree with a banned word, capture the disagreement and ask them to edit the skill rather than work around it.
-- **One question at a time in Phase 1.** Do not batch Q1–Q6. Each answer shapes the next question.
+- **Blueprint is canonical, but not a prison.** `/blog-draft` executes the blueprint. It does not silently re-plan. If drafting reveals that the motivating question, violated expectation, central claim, architecture, reader movement, anchor, evidence map, collision events, or conclusion landing should change, stop and update `.claude/plans/{slug}.md` before continuing. Do not patch prose around a stale plan.
 - **System proposes, writer confirms.** Phases 2a–2f are generation steps. The writer picks or proposes alternatives; the agent does not pre-decide.
 - **Deterministic before LLM.** Phase 4a (script) runs before Phase 4b (LLM judgment). Critical script findings block advancement.
 - **Writer is not first to catch.** Compose ends with a fix-in-place self-review (Phase 3) that runs the Phase 4b checklist and the deterministic script before the draft is presented; Phase 4 is then writer-in-the-loop verification, not the first catch. This is a re-sequence of the existing validate phase, not a new mechanism.
-- **No invention.** Do not introduce examples, metrics, or quotes the writer did not provide. If a beat needs an example and the writer didn't offer one, pause and ask.
+- **No invention.** Do not introduce examples, metrics, or quotes the writer did not provide. If a beat needs an example and the writer didn't offer one, pause and ask or route back to `/blog-plan`.
 - **AI credit honesty.** Per `personal-tone`, name AI involvement when AI did the work. If the writer prompts a draft with minimal input, the post is AI-drafted — flag in the draft itself where contextually appropriate, not just hidden disclosure.
-- **No save without all gates passing.** Phase 6 deterministic gates (OG, astro check, prose re-check, word count) all must pass. If any fail, surface the error and do not declare success.
+- **No save without all gates passing.** Phase 6 deterministic gates (astro check, prose re-check, word count warning) all must run. If any hard gate fails, surface the error and do not declare success.
 - **Cancel preserves the file.** Cancel at Phase 5 sets `draft: true` in frontmatter and leaves the file on disk. Writer can resume by re-running `/blog-draft` on the same slug. Cancel before any file is written (Phases 0–2) just exits.
 - **Existing draft check before overwrite.** Phase 2c surfaces the existing draft and offers `resume / overwrite / rename / cancel`. Never silently overwrite.
 - **Branch hygiene.** Never write a new blog post directly to `main` without explicit writer consent in Phase 0b. Default to feature-branch flow. Temporary `blog/wip-{date}` branch is fine; gets renamed to `blog/{slug}` once the slug exists.
