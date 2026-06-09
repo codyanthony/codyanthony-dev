@@ -1,0 +1,58 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+function hrefFor(entry: (typeof posts)[number]) {
+  return `/blog/${entry.id.replace(/\.(md|mdx)$/, "")}/`;
+}
+
+function shortDate(d: Date) {
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+---
+
+<BaseLayout
+  title="Blog"
+  description="Writing on technical communication, content systems, and AI-assisted workflows."
+>
+  <section class="section">
+    <div class="prose-wide">
+      <p class="section__eyebrow">Blog</p>
+      <h1>Writing on technical communication, content systems, and AI-assisted workflows.</h1>
+      <p class="section__lede">
+        Essays about the craft and systems behind technical communication. From authoring and information architecture to content operations, docs-as-code, and AI-assisted content creation, I explore how complex information becomes useful.</p>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="prose-wide">
+      <ul class="cs-list">
+        {
+          posts.map((entry) => (
+            <li class="cs-list__item">
+              <a class="cs-list__link" href={hrefFor(entry)}>
+                <span class="cs-list__title">{entry.data.title}</span>
+                <span class="cs-list__description">
+                  {entry.data.description}
+                </span>
+                <span class="cs-list__meta">
+                  <time datetime={entry.data.date.toISOString()}>
+                    {shortDate(entry.data.date)}
+                  </time>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

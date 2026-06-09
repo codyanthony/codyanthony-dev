@@ -22,11 +22,25 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# Local tooling — not for public consumption
-# (CLAUDE.md is tracked: it's shared project guidance, version-controlled with the code)
-.claude/
-scripts/
+# Local tooling — not for public consumption.
+# CLAUDE.md is tracked (shared project guidance, versioned with the code).
+# .claude/ local settings are ignored, but the reusable blog authoring
+# commands/skills are tracked.
+.claude/*
+!.claude/skills/
+!.claude/commands/
+!.claude/README.md
+
+# scripts/: track the workflow tooling (prose gate, screenshot harness, docs);
+# keep the asset generators local (they depend on the 189MB photo set below).
+scripts/*
+!scripts/check-blog-prose.mjs
+!scripts/screenshot.mjs
+!scripts/README.md
 .markdownlint-cli2.jsonc
 
 # Photo source set (189MB) — used to generate site headshot and LinkedIn assets
 Cody Pro Photos 2026/
+
+# Drop-in source repo for OpenCode skills/commands — reference only, not part of this site
+opencode-commands/

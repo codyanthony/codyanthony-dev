@@ -48,6 +48,12 @@ const resolvedOgImage = ogImage
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Cody Anthony — Writing"
+      href={new URL("/rss.xml", Astro.site).toString()}
+    />
 
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -58,6 +64,8 @@ const resolvedOgImage = ogImage
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={resolvedOgImage} />
+
+    <slot name="head" />
   </head>
   <body>
     <Header />

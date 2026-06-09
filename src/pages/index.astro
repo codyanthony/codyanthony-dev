@@ -21,6 +21,10 @@ const featuredEntries = featuredIds.map((id) => {
   if (!entry) throw new Error(`Featured case study not found: ${id}`);
   return entry;
 });
+
+const latestPosts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
 ---
 
 <BaseLayout
@@ -210,4 +214,31 @@ const featuredEntries = featuredIds.map((id) => {
       </div>
     </div>
   </section>
+
+  {
+    latestPosts.length > 0 && (
+      <section class="section">
+        <div class="prose-wide">
+          <p class="section__eyebrow">Latest Writing</p>
+          <h2>From the blog.</h2>
+
+          <div class="featured-grid">
+            {latestPosts.map((entry) => (
+              <LinkCard
+                title={entry.data.title}
+                href={`/blog/${entry.id.replace(/\.(md|mdx)$/, "")}/`}
+                description={entry.data.description}
+              />
+            ))}
+          </div>
+
+          <div style="margin-top: var(--sp-8);">
+            <Button href="/blog/" variant="primary">
+              View All Writing →
+            </Button>
+          </div>
+        </div>
+      </section>
+    )
+  }
 </BaseLayout>

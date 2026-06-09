@@ -1,0 +1,41 @@
+---
+import { getCollection, render } from "astro:content";
+import BlogPostLayout from "../../layouts/BlogPostLayout.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("blog", ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace(/\.(md|mdx)$/, "") },
+    props: { entry },
+  }));
+}
+
+type Props = { entry: Awaited<ReturnType<typeof getCollection<"blog">>>[number] };
+
+const { entry } = Astro.props as Props;
+const { Content } = await render(entry);
+
+const slug = entry.id.replace(/\.(md|mdx)$/, "");
+
+// Reader-facing expectation marker only (the conventional "N min read"). The
+// authoring system never uses reading time in its logic; word count is the
+// internal measure there.
+const readingTime = Math.max(1, Math.round((entry.body?.trim().split(/\s+/).length ?? 0) / 200));
+
+// OG card is generated on demand by /og/[slug].png (rendered + cached to R2 on
+// first scrape), not a committed static file. Pass the post title so the card
+// renders with it; BlogPostLayout uses this for both the og:image meta and the
+// JSON-LD image.
+const ogImage = `/og/${slug}.png?title=${encodeURIComponent(entry.data.title)}`;
+---
+
+<BlogPostLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  date={entry.data.date}
+  readingTime={readingTime}
+  ogImage={ogImage}
+  slug={slug}
+>
+  <Content />
+</BlogPostLayout>
