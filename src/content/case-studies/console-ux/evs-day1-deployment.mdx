@@ -31,9 +31,10 @@ The work spanned private preview, public preview, and general availability launc
 </Aside>
 
 <Image src={evsGetStarted} alt="EVS Console Get Started Page" />
-_EVS console Get Started page guiding customers through deployment prerequisites_
+_EVS console Get Started page guiding customers through deployment
+prerequisites_
 
-## The Challenge
+## The challenge
 
 ### Reducing Day 1 Friction for VMware Workload Migration
 
@@ -53,7 +54,8 @@ Early customer testing revealed a deployment barrier: free-form DNS hostname inp
 VMware administrators migrating to AWS needed contextual guidance bridging on-prem VMware concepts with AWS service integration patterns.
 
 <Image src={evsDnsHostnames} alt="DNS Hostname Configuration Step" />
-_DNS hostname configuration step where validation failures revealed need for improved guidance_
+_DNS hostname configuration step where validation failures revealed need for
+improved guidance_
 
 ## Addressing DNS Validation Friction
 
@@ -70,10 +72,12 @@ When public preview customer feedback revealed DNS validation as a primary frict
 - Confirmation checkbox with acknowledgement text that hostname inputs match DNS records (required to ensure alignment with custom DNS provider configurations)
 
 <Image src={evsDnsHelpPanel1} alt="DNS Configuration Help Panel" />
-_Management appliance DNS hostnames help panel explaining DNS configuration requirements_
+_Management appliance DNS hostnames help panel explaining DNS configuration
+requirements_
 
 <Image src={evsDnsContraintText} alt="DNS Validation Error" />
-_Validation error state when customers attempt to continue without required hostname inputs_
+_Validation error state when customers attempt to continue without required
+hostname inputs_
 
 **Documentation improvements:**
 
@@ -107,7 +111,8 @@ Beyond DNS validation fixes, the project involved creating the complete EVS cons
 - Troubleshooting guidance for common validation errors
 
 <Image src={evsNetworkConfigHelpPanel} alt="Network Configuration Help Panel" />
-_Network configuration step with contextual help guiding customers through complex VLAN subnet requirements_
+_Network configuration step with contextual help guiding customers through
+complex VLAN subnet requirements_
 
 The help panels addressed VMware admin knowledge gaps about AWS services. For example, the VPC Route Server help panel explained BGP routing requirements and peer ASN configuration. These concepts were familiar to network engineers but potentially new to customers migrating from on-prem VMware.
 
