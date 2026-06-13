@@ -1,0 +1,77 @@
+---
+title: Cloudflare Cross-Product Solution Guides
+description: Goal-first, cross-product solution guides on the public Cloudflare docs site. Cookbook-style guidance that maps several products into one customer workflow, authored docs-as-code and completable on Free plans.
+section: technical-documentation
+order: 50
+---
+
+import Aside from "@components/Aside.astro";
+
+This is a set of public, cross-product solution guides I authored for the Cloudflare developer documentation site. They sit outside any single product's docs at [`/use-cases/solutions/`](https://developers.cloudflare.com/use-cases/solutions/) and answer a question product-siloed docs could not: _how do I get from this product to that one to solve an actual problem?_ Each guide starts from a customer goal, not a feature, and walks a complete workflow that may touch several Cloudflare products along the way.
+
+Before this collection existed, the docs site had no cross-product, goal-first content of this kind. I built the content type, the authoring system behind it, and the first guides. This case study covers the guides themselves as writing samples. The companion case study, [Solution Guide Content Type & Authoring System](/case-studies/cloudflare/solution-guide-system/), covers the content model and the agentic authoring workflow.
+
+## Project context
+
+Customers regularly asked how to combine Cloudflare products to accomplish a security or delivery outcome, but the existing documentation assumed the reader had already chosen a product. A reader who knows they want to "stop malicious bots" had to already know which products and features to assemble before the docs were useful.
+
+The solution guides close that gap. They are organized by workflow stage rather than by product, each section has a clear outcome, and the core workflow is achievable on a Free or Pro plan, with higher-tier capabilities placed in plan-aware callouts rather than the main path.
+
+## My role and ownership
+
+I authored four of the guides end to end and reviewed a fifth authored by a peer for structure and pattern alignment:
+
+- Defined the goal-first structure: outcome-oriented titles with the applicable plan tiers, workflow-stage organization, and plan-aware headings so a scanning reader immediately sees which sections apply to them.
+- Wrote the guides against source product documentation as the canonical truth, reusing existing procedures through shared partials rather than paraphrasing them, so the guides stay correct as the underlying products change.
+- Curated each guide's related-resources section as a short, next-step reading list rather than a bibliography of every page consulted.
+
+## What the work solved
+
+- **Cross-product navigation.** Readers get one workflow that spans products instead of stitching together separate product docs themselves.
+- **Goal-first entry.** A reader who has a problem but has not chosen a product can follow a guide toward a result.
+- **Plan-aware clarity.** The core workflow is completable on lower plans, so the guidance is as broadly useful as the problem it solves; higher-tier options are clearly marked.
+
+## Deliverables
+
+**Documentation produced:**
+
+- Four authored cross-product solution guides covering bot mitigation, encrypting site traffic, protecting forms from fraud and abuse, and account-takeover defense
+- The `/use-cases/solutions/` hub that organizes the collection
+- Shared procedure partials extracted from product docs so guide steps and source pages render from one maintained file
+
+**Tools and workflow:**
+
+- Markdown/MDX in the public `cloudflare/cloudflare-docs` GitHub repository
+- Git, pull-request-based docs-as-code workflow with peer review
+- Reusable partials and components from the Cloudflare docs platform
+
+## What this sample demonstrates
+
+- Goal-first, JTBD-driven information architecture across product boundaries
+- Cookbook-style procedural writing that stays anchored to source documentation
+- Docs-as-code authoring and review in a large public repository
+- Judgment about audience and plan tier, so guidance reaches the broadest set of readers
+
+<Aside type="note" title="Author's Note for Portfolio Review">
+
+These are live, public artifacts. The links below go to the production guides on the Cloudflare developer documentation site. I authored the first four; the fifth guide in the collection was authored by a peer and reviewed against the patterns established here.
+
+</Aside>
+
+## Live documentation
+
+- [Solutions hub — all cross-product guides](https://developers.cloudflare.com/use-cases/solutions/)
+- [Stop malicious bots while allowing legitimate traffic](https://developers.cloudflare.com/use-cases/solutions/stop-malicious-bots/)
+- [Encrypt all traffic and keep your site secure](https://developers.cloudflare.com/use-cases/solutions/encrypt-all-keep-site-secure/)
+- [Protect sensitive forms from fraud and abuse](https://developers.cloudflare.com/use-cases/solutions/protect-sensitive-forms-fraud-abuse/)
+- [Stop account takeover attacks](https://developers.cloudflare.com/use-cases/solutions/stop-account-takeover-attacks/)
+
+---
+
+<blockquote>
+
+I managed Cody at Cloudflare, and he came in and built something we didn't have yet. Customers had been asking for help navigating across products, and nobody had cracked how to do that well in the docs. Cody designed the solution guides experience from the ground up. He developed the strategy, reuse framework, and AI-assisted authoring so other writers could contribute without it becoming a bottleneck. Solution engineers and customer support managers started sharing them with customers almost immediately.
+
+<cite>— Caley Burton, engineering manager, Cloudflare (managed Cody directly)</cite>
+
+</blockquote>

@@ -9,7 +9,7 @@ order: 20
 
 ### Information Architecture Misalignment
 
-In the service's early stages, ROSA documentation reflected a rapid innovation cycle, with information architecture organized around new product features rather than customer workflows. The service had not had a dedicated technical writer prior to this period, which meant documentation evolved organically through feature launches without strategic information architecture planning.
+Before ROSA had a dedicated technical writer, its documentation reflected a rapid innovation cycle, with information architecture organized around new product features rather than customer workflows. Documentation had evolved organically through feature launches without strategic information architecture planning.
 
 When I joined as ROSA's first dedicated technical writer, Voice-of-Customer data and engagement metrics revealed friction points across the User Guide: content fragmentation, duplication, and complex navigation that forced customers to piece together information from multiple sources.
 
@@ -21,7 +21,7 @@ The challenge was transforming the information architecture from feature-centric
 
 ### Long-Term Vision with Phased Execution
 
-I conducted a comprehensive content audit early in the service's lifecycle identifying opportunities for Jobs-to-be-Done restructuring. With ROSA in an active growth phase, I prioritized new feature documentation while maintaining the strategic vision for eventual information architecture modernization.
+Soon after joining, I conducted a comprehensive content audit identifying opportunities for Jobs-to-be-Done restructuring. With ROSA in an active growth phase, I prioritized new feature documentation while maintaining the strategic vision for eventual information architecture modernization.
 
 Aligning with broader organizational standards regarding workflow-centric content, I re-validated the initial audit findings to ensure continued relevance. With validation complete, I executed the restructuring in the first available two-week sprint, completing among the first in the organizational cohort with first-pass approval from content review.
 
@@ -41,11 +41,11 @@ This approach balanced immediate feature documentation needs with long-term info
 
 ## Impact
 
-**Measurable outcomes:**
+**Outcomes:**
 
-- Reduced support ticket volume for deployment workflows
-- Better customer success rates for first cluster deployments
-- Faster time-to-first-success through consolidated, workflow-based guidance
+- Consolidated duplicate and fragmented content into workflow-based guidance, removing navigation customers previously had to piece together themselves
+- Aligned page titles and structure with customer jobs rather than product features, improving findability
+- Shipped with first-pass content-review approval, among the first in the organizational cohort to complete a Jobs-to-be-Done restructuring
 
 ## Documentation Resources
 

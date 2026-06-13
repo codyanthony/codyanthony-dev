@@ -1,0 +1,62 @@
+---
+title: Solution Guide Content Type & Authoring System
+description: Defining a new cross-product content type at Cloudflare and the agentic authoring system behind it. Content model, information architecture, and a deterministic-plus-agentic pipeline with human judgment as the final gate.
+section: documentation-strategy
+order: 30
+---
+
+import Aside from "@components/Aside.astro";
+
+At Cloudflare I designed a new documentation content type, the cross-product solution guide, and built the authoring system that produces it at a repeatable quality. This case study covers the content model, the information architecture, and the workflow. The companion case study, [Cloudflare Cross-Product Solution Guides](/case-studies/cloudflare/solution-guides/), covers the published guides as writing samples. The judgment thesis behind the workflow is the subject of my blog post, [Where the Script Stops and the Judgment Starts](/blog/where-the-script-stops/).
+
+## The problem
+
+Cloudflare's documentation was organized by product. Customers, though, arrive with a goal that crosses several products. There was no content type for goal-first, cross-product guidance, no shared definition of what one should contain, and no scalable way to produce them without each guide becoming a bespoke, writer-dependent effort.
+
+## Defining the content type
+
+I defined the solution-guide content type in the public Cloudflare style guide, establishing what a solution guide is, how it differs from a tutorial, how-to, or learning path, and the structural rules that make one: organize by workflow stage rather than product, lead from the reader's goal, keep the core workflow completable on lower plans, and treat source product documentation as the canonical truth the guide organizes rather than restates.
+
+After launch, I revised the style guide's content-type selection topic to disambiguate solution guides from the adjacent content types, rewriting the definitions relative to one another so writers know which type to reach for and when.
+
+**Public artifacts:**
+
+- [Solution guide content type definition (Cloudflare style guide)](https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/solution-guide/)
+- [Selecting a content type (Cloudflare style guide)](https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/select-content-type/)
+
+## Information architecture and content model
+
+The content model encodes the decisions that keep guides consistent and maintainable:
+
+- **Workflow-stage organization.** Each guide is structured by the stages of a customer's job, with a clear outcome per stage, not by the products involved.
+- **Goal-first framing.** Titles and sections lead from an outcome, with plan tiers surfaced in headings so a scanning reader sees what applies to them.
+- **Reuse over duplication.** Procedures that exist in product docs are rendered through shared partials, so a guide and its source pages stay in sync from one maintained file. Reference data is summarized and linked rather than copied, to prevent staleness.
+- **Product context in cross-product space.** Because any heading can be a reader's entry point, features carry their product on first mention within each section, so a reader who lands mid-guide is never disoriented.
+
+## The authoring system
+
+The guides are produced by a two-command workflow, an audit followed by a draft, with a structured handoff between them. I built it in three deliberately separated layers using OpenCode and Claude, with Python for the deterministic work.
+
+**Deterministic layer (Python).** Scripts handle the work that needs no judgment and must be identical every run: page discovery, relevance scoring, freshness from version history, broken-link detection, configuration extraction, and mechanical structure validation of the draft. Broken-link counts and structural checks are treated as ground truth.
+
+**Agentic layer (rubric-constrained Claude agents).** A content-auditor subagent reads each candidate page at low temperature and applies fixed rubrics, content health, reuse potential, and goal-first vs. product-first framing, citing one piece of page evidence for every judgment and writing structured output rather than free-form notes. An adversarial challenger then reviews the high-relevance assessments for unsupported claims before they are accepted. The drafting agent writes against source documentation, flags any claim it composes rather than copies with a `VERIFY` tag for human confirmation, and a deterministic check flags regulatory terms (FIPS, PCI DSS, FedRAMP, and similar) so no compliance claim ships without a cited source.
+
+**Human layer.** I designed the decision space the agents operate inside, the rubrics, the goal-first editorial principle, the reuse criteria, and the plan-tier logic, and I make the calls the system structurally cannot. The validation gates between steps are guardrails, not the final authority. Human judgment is.
+
+<Aside type="note" title="Why the layers are separated">
+
+A constraint that proved out early: binding the agents to structured fields with a defined decision space, rather than letting them write free-form assessments, sharply improved accuracy. Constraining the decision space at the start of the workflow paid off at every step downstream. Structure upstream is what makes the rest trustworthy.
+
+</Aside>
+
+## What this demonstrates
+
+- Defining a new content type and getting it adopted through a public style guide
+- Designing a cross-product content model and information architecture from scratch
+- Building a docs-as-code authoring system that scales quality without a writer becoming the bottleneck
+- Integrating deterministic automation and agentic AI under explicit human judgment, with validation gates between steps
+- Shipping the enablement (definitions, patterns, reviews) that lets other writers contribute
+
+## Outcomes
+
+The content type, the guides, and the authoring system shipped to production and remain in use. The published guides are linked from the [companion case study](/case-studies/cloudflare/solution-guides/). The work was peer-reviewed and defended in team workshops to align writers on how the new content type differs from existing ones.

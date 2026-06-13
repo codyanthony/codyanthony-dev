@@ -35,7 +35,7 @@ I established ROSA's AsciiDoc implementation and created a framework enabling sa
 
 The ROSA framework demonstrated scalability potential. Beginning in 2024, I influenced EKS adoption of AsciiDoc and provided strategic and implementation support for their transition through conversion testing, troubleshooting workshops, and authoring best practices documentation.
 
-During the implementation phase, I collaborated with AWS engineering and writers to implement XML entity support for AsciiDoc, enabling reuse of standard AWS entities across converted documentation. Following EKS's adoption, the team reported a significant increase in engineering contribution participation, demonstrating the format's effectiveness in lowering contribution barriers.
+During the implementation phase, I collaborated with AWS engineering and writers to implement XML entity support for AsciiDoc, enabling reuse of standard AWS entities across converted documentation. Following EKS's adoption, engineering contributions to EKS documentation increased by approximately 25%, demonstrating the format's effectiveness in lowering contribution barriers.
 
 I led conversion of six SAP on AWS guides to AsciiDoc in early 2025, establishing a self-service documentation model enabling the SAP service team to maintain content independently, reducing documentation team dependencies while preserving quality through review gates.
 
@@ -51,7 +51,7 @@ The tooling and processes I developed from this work have been adopted by platfo
 
 **Measurable outcomes:**
 
-- Significant increase in engineering contributor participation post-AsciiDoc adoption
+- 25% increase in EKS engineering contributions after AsciiDoc adoption
 - Automation tooling reduces conversion time from days to hours
 - Framework voluntarily adopted across multiple service teams
 - Self-service models established reducing documentation team dependencies
@@ -64,3 +64,9 @@ The tooling and processes I developed from this work have been adopted by platfo
 - Faster iteration cycles through simplified markup
 - Quality maintained through automated validation and review gates
 - Foundation enabling continued organizational adoption
+
+---
+
+> Cody was a leader in converting our team's documentation to AsciiDoc, making our materials more accessible to contributions by PMs and engineers. The success of that project extended across the organization, with other documentation teams adopting our tooling and instructions for their own conversions. He developed Python scripts using Anthropic Claude and Cline workflows to drastically reduce manual documentation conversion time.
+>
+> — Chris Negus, author and technical writer, AWS (worked with Cody on the same team)
