@@ -1,0 +1,29 @@
+---
+title: EVS VLAN Subnet Naming
+description: Naming a new EVS networking component so it serves both VMware and AWS audiences, and carrying the term consistently across every EVS surface.
+section: content-design
+order: 47
+---
+
+Amazon EVS introduced a new networking component built on capability from a partner networking team. I led the naming for it and carried that name consistently across every EVS surface, so it reads clearly to the two very different audiences using it: VMware administrators and AWS users. This is one example of the upstream work in [Design Influence and Upstream Collaboration](/case-studies/console-ux/console-api-design/).
+
+## The challenge
+
+The component gives EVS Layer 2 network segmentation, which VMware workloads need in an AWS-native VPC. Naming it well was harder than it looked, because the two audiences bring different mental models. VMware administrators reason in terms of VLANs. AWS users reason in terms of VPC subnets. The same component had to feel native to both, and the name had to stay consistent everywhere a customer might encounter it: the EVS API, CloudFormation, the SDK, the console, and the user guide, as well as the dependent services it builds on.
+
+## Naming the component
+
+I worked the name on the customer's behalf, across the EVS team and the partner team whose capability the component builds on. The name I proposed, and the one we shipped, was EVS VLAN subnet, and each part does a job. VLAN is the concept VMware administrators expect to see. Subnet lets AWS users map the component onto the VPC model they already know, which is why I recommended it over the originally proposed network. The EVS prefix marks it clearly as an EVS-owned resource.
+
+Because EVS depended on several of the partner team's services, I also tracked their in-flight documentation and flagged terminology inconsistencies during cross-team review, so the component was described the same way across both teams' surfaces.
+
+## What this demonstrates
+
+- Naming as product strategy, resolved on customer mental models across two audiences
+- Cross-team terminology coordination across dependent services
+- Carrying one term consistently across every product surface
+- Bridging VMware and AWS mental models in a single name
+
+## Outcomes
+
+EVS shipped with one coherent name for the component, EVS VLAN subnet, used the same way everywhere a customer encounters it. VMware administrators see the concept they expect, and AWS users can place it in the VPC model they already understand.

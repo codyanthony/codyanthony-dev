@@ -1,0 +1,29 @@
+---
+title: AI-Assisted Content Gap Analysis
+description: Using an internal AI research tool to mine developer feedback across public and internal channels, quantify cross-product documentation gaps, and ground the solution-guide content type in evidence.
+section: documentation-strategy
+order: 25
+---
+
+Cloudflare was introducing a new documentation content type, the solution guide: a goal-first guide that starts from a customer's outcome and walks a complete workflow across whatever Cloudflare products it takes. This case study covers the research I ran to shape it, the work that led to the [Solution Guide Content Type and Authoring System](/case-studies/cloudflare/solution-guide-system/).
+
+## The challenge
+
+To build the right guide, I first had to understand the gap it would fill, and that gap was not yet well understood. The documentation was organized by product, so there was no clear view of where customers got stuck once their goals crossed products. The unknowns were specific: which products customers were actually trying to combine, what outcomes they were pursuing, where the existing product docs left them stranded, and how common each of those gaps was. Without that picture, the scope of the content type and the choice of where to start would come down to guesswork.
+
+## Mining the signal
+
+I used an internal AI research tool that, given a natural-language prompt, pulls developer feedback from public channels (the Cloudflare community forum, Stack Overflow, GitHub, Reddit, and similar) and internal sources, then finds patterns, groups related feedback, and synthesizes the trends through a chat interface.
+
+I set it a specific objective: surface feedback that showed cross-product gaps causing real user friction, then group and synthesize the themes. I directed the analysis and kept the judgment on what counted as a genuine gap, then turned the synthesized result into a content gap analysis report for stakeholders and documentation leadership. What would have been days of manual research became a focused lookup.
+
+## What this demonstrates
+
+- Data-driven content strategy: shaping a new content type to fit real user-feedback evidence
+- AI-assisted research with a human-set objective and human synthesis judgment
+- Turning scattered community signal into prioritized, decision-ready evidence
+- A repeatable approach to community-feedback triage, rather than a one-off manual pass
+
+## Outcomes
+
+The analysis mapped the shape of the gap and pointed to the highest-leverage place to start: the Application Security product space, where cross-product friction showed up most and the most customers stood to benefit. That shape and that starting point sized and aimed the first guides, and the analysis became the evidence behind the content type and the authoring system built to produce it. The guides that came out of that work are collected in [Cloudflare Cross-Product Solution Guides](/case-studies/cloudflare/solution-guides/).

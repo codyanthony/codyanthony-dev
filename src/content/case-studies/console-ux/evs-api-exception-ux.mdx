@@ -1,0 +1,38 @@
+---
+title: EVS API Exception UX
+description: Aligning a public API's exceptions with real product behavior and AWS API standards, choosing standards-aligned errors with clear deprecation guidance over removing API surface.
+section: content-design
+order: 45
+---
+
+As Amazon EVS prepared its public API for general availability, a few of its exceptions had names that did not clearly map to the behavior that triggered them. I helped align the error surface with actual behavior, using standards-aligned exceptions and clear deprecation guidance, while keeping the API backward compatible through its public debut. This is one example of the upstream API work in [Design Influence and Upstream Collaboration](/case-studies/console-ux/console-api-design/).
+
+## The challenge
+
+A few of the API's exceptions had names that did not match the conditions that actually raised them. `TooManyTagsException` was returned when a customer exceeded an EVS service quota, and `TagPolicyException` was returned for invalid inputs on environment operations. The names point toward tags and IAM policies, while the real conditions are a service quota and input validation, a mismatch visible in the reference itself. Aligning the names with the behavior before GA kept the error surface clear about what a developer actually needs to fix.
+
+One option on the table was to deprecate and remove the mismatched exceptions while usage was still low.
+
+## Aligning the error surface with behavior
+
+I suggested a different approach. AWS APIs stay backward compatible for the life of the service, so removing API surface at a public debut, for a service running regulated VMware workloads, carries customer-trust and adoption risk that outweighs the short-term simplicity. To ground the decision in AWS API design standards rather than preference, I suggested a senior API-design review, which supported the standards-aligned path.
+
+Instead of removing anything, the team introduced the correct standard exceptions, `ServiceQuotaExceededException` and `ValidationException`, with deprecation guidance on the older ones pointing developers to the right exception. I drafted that guidance and recommended the precise term deprecated, since softer language would leave developers unsure whether the old exception still applied. I also recommended grouping these under the API's service-specific errors rather than a generic common-errors section, since a developer working with EVS sees these as EVS errors and looks for them there.
+
+## What this demonstrates
+
+- Treating an API's error surface as a developer-experience surface in its own right
+- Working from AWS API design standards and backward-compatibility constraints
+- Grounding a design decision in AWS API standards through a senior design review
+- Precise, honest error messaging that tells developers exactly what to do next
+
+## Outcomes
+
+Developers who hit these errors now get an accurate exception for what they actually did, with guidance to the right one, classified where they would expect to find it. The change shipped without removing API surface and without delaying GA, and the exceptions are visible in the public EVS API reference.
+
+## Live documentation
+
+- [ServiceQuotaExceededException](https://docs.aws.amazon.com/evs/latest/APIReference/API_ServiceQuotaExceededException.html) ([archived snapshot](https://web.archive.org/web/20260211210649/https://docs.aws.amazon.com/evs/latest/APIReference/API_ServiceQuotaExceededException.html))
+- [ValidationException](https://docs.aws.amazon.com/evs/latest/APIReference/API_ValidationException.html) ([archived snapshot](https://web.archive.org/web/20260211190730/https://docs.aws.amazon.com/evs/latest/APIReference/API_ValidationException.html))
+- [TooManyTagsException](https://docs.aws.amazon.com/evs/latest/APIReference/API_TooManyTagsException.html) — legacy, with deprecation guidance ([archived snapshot](https://web.archive.org/web/20260211070354/https://docs.aws.amazon.com/evs/latest/APIReference/API_TooManyTagsException.html))
+- [TagPolicyException](https://docs.aws.amazon.com/evs/latest/APIReference/API_TagPolicyException.html) — legacy, with deprecation guidance ([archived snapshot](https://web.archive.org/web/20260212073015/https://docs.aws.amazon.com/evs/latest/APIReference/API_TagPolicyException.html))

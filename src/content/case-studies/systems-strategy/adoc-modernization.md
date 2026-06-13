@@ -5,7 +5,7 @@ section: documentation-strategy
 order: 10
 ---
 
-AWS documentation ran on a legacy XML format that only specialists could contribute to. I led a multi-year program to modernize it to AsciiDoc, a lightweight, markdown-like format that lowers the barrier for engineers, product managers, and partners to contribute and that suits AI-assisted authoring. It started with ROSA and grew into an org-wide standard. The judgment thesis behind the AI-assisted side of this work is the subject of my blog post, [Where the Script Stops and the Judgment Starts](/blog/where-the-script-stops/).
+AWS documentation ran on a legacy XML format that only specialists could contribute to. I led a multi-year program to modernize it to AsciiDoc, a lightweight, markdown-like format that lowers the barrier for engineers, product managers, and partners to contribute and that suits AI-assisted authoring. It started with ROSA and grew into an org-wide standard. The judgment thesis behind the AI-assisted side of this work is the subject of my blog post, [Where the Script Stops and the Judgment Starts](/blog/where-the-script-stops/). I ran it alongside my ROSA and EVS documentation work, sequencing across those concurrent workstreams with a [Documentation Prioritization Framework](/case-studies/systems-strategy/rosa-doc-prioritization/).
 
 ## The challenge
 
