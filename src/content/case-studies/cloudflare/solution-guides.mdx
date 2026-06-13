@@ -41,7 +41,7 @@ I authored four of the guides end to end and reviewed a fifth authored by a peer
 
 **Tools and workflow:**
 
-- Markdown/MDX in the public `cloudflare/cloudflare-docs` GitHub repository
+- Markdown/MDX in the [public `cloudflare/cloudflare-docs` GitHub repository](https://github.com/cloudflare/cloudflare-docs)
 - Git, pull-request-based docs-as-code workflow with peer review
 - Reusable partials and components from the Cloudflare docs platform
 
@@ -60,11 +60,51 @@ These are live, public artifacts. The links below go to the production guides on
 
 ## Live documentation
 
-- [Solutions hub — all cross-product guides](https://developers.cloudflare.com/use-cases/solutions/)
-- [Stop malicious bots while allowing legitimate traffic](https://developers.cloudflare.com/use-cases/solutions/stop-malicious-bots/)
-- [Encrypt all traffic and keep your site secure](https://developers.cloudflare.com/use-cases/solutions/encrypt-all-keep-site-secure/)
-- [Protect sensitive forms from fraud and abuse](https://developers.cloudflare.com/use-cases/solutions/protect-sensitive-forms-fraud-abuse/)
-- [Stop account takeover attacks](https://developers.cloudflare.com/use-cases/solutions/stop-account-takeover-attacks/)
+Live links go to the production guides. Because public documentation evolves as other contributors maintain it, each entry also links an archived snapshot that preserves the page close to when I authored it.
+
+- [Solutions hub — all cross-product guides](https://developers.cloudflare.com/use-cases/solutions/) — [archived snapshot](https://web.archive.org/web/20260519201341/https://developers.cloudflare.com/use-cases/solutions/)
+- [Stop malicious bots while allowing legitimate traffic](https://developers.cloudflare.com/use-cases/solutions/stop-malicious-bots/) — [archived snapshot](https://web.archive.org/web/20260503095040/https://developers.cloudflare.com/use-cases/solutions/stop-malicious-bots/)
+- [Encrypt all traffic and keep your site secure](https://developers.cloudflare.com/use-cases/solutions/encrypt-all-keep-site-secure/) — [archived snapshot](https://web.archive.org/web/20260613022450/https://developers.cloudflare.com/use-cases/solutions/encrypt-all-keep-site-secure/)
+- [Protect sensitive forms from fraud and abuse](https://developers.cloudflare.com/use-cases/solutions/protect-sensitive-forms-fraud-abuse/) — [archived snapshot](https://web.archive.org/web/20260521053623/https://developers.cloudflare.com/use-cases/solutions/protect-sensitive-forms-fraud-abuse/)
+- [Stop account takeover attacks](https://developers.cloudflare.com/use-cases/solutions/stop-account-takeover-attacks/) — [archived snapshot](https://web.archive.org/web/20260613022520/https://developers.cloudflare.com/use-cases/solutions/stop-account-takeover-attacks/)
+
+## Source pull requests
+
+Each guide was merged through the public `cloudflare/cloudflare-docs` GitHub repository. These pull requests are a verifiable record of authorship — the commit history, diff, and date stay fixed even as the live pages are maintained over time.
+
+- [Stop malicious bots (#29531)](https://github.com/cloudflare/cloudflare-docs/pull/29531)
+- [Encrypt all traffic (#30251)](https://github.com/cloudflare/cloudflare-docs/pull/30251)
+- [Protect sensitive forms (#30456)](https://github.com/cloudflare/cloudflare-docs/pull/30456)
+- [Stop account takeover attacks (#30049)](https://github.com/cloudflare/cloudflare-docs/pull/30049)
+- [Create the cross-product solutions section (#29874)](https://github.com/cloudflare/cloudflare-docs/pull/29874)
+
+## Documentation excerpt (curated)
+
+A short excerpt from "Stop malicious bots while allowing legitimate traffic" shows the two signature moves of the content type. The title leads with the customer's goal and names the applicable plans, and section headings carry the plan tier so a reader sees at a glance which sections apply to them.
+
+---
+
+# Stop malicious bots while allowing legitimate traffic (Free, Pro, and Business)
+
+The right defense against malicious bot traffic depends on the traffic patterns on your site and your plan. This guide covers a layered approach using Cloudflare Bots, Cloudflare Application Security (also known as Web Application Firewall or WAF), and Turnstile, from baseline protection to targeted custom rules. The core workflow uses features on Free, Pro, and Business plans, with callouts for Enterprise options.
+
+## Block automated traffic with Bot Fight Mode
+
+Bot Fight Mode identifies requests that match known bot patterns and issues a computational challenge. It reduces automated traffic across your entire site without requiring you to write any rules.
+
+### Turn on Bot Fight Mode (Free plan)
+
+_Dashboard steps omitted for brevity._
+
+### Enable Super Bot Fight Mode (Pro, Business, and Enterprise)
+
+Super Bot Fight Mode adds verified bot allowlisting, per-category actions, static resource protection, and JavaScript detections.
+
+<Aside type="note" title="Plan availability">
+
+Super Bot Fight Mode is available on Pro, Business, and Enterprise plans. Free plan users can use Bot Fight Mode for baseline protection. Enterprise customers who need machine learning-based bot scoring and custom allow/block rules can add Bot Management.
+
+</Aside>
 
 ---
 
@@ -72,6 +112,8 @@ These are live, public artifacts. The links below go to the production guides on
 
 I managed Cody at Cloudflare, and he came in and built something we didn't have yet. Customers had been asking for help navigating across products, and nobody had cracked how to do that well in the docs. Cody designed the solution guides experience from the ground up. He developed the strategy, reuse framework, and AI-assisted authoring so other writers could contribute without it becoming a bottleneck. Solution engineers and customer support managers started sharing them with customers almost immediately.
 
-<cite>— Caley Burton, engineering manager, Cloudflare (managed Cody directly)</cite>
+<cite>
+  — Caley Burton, engineering manager, Cloudflare (managed Cody directly)
+</cite>
 
 </blockquote>

@@ -10,9 +10,23 @@ pdf:
 
 import Aside from "@components/Aside.astro";
 
-This API reference for Amazon Elastic VMware Service demonstrates my approach to developer-focused API documentation. I participated in the API design phase, shaping parameter names, validation rules, and error messages before writing the reference documentation. The CreateEnvironment operation is the core deployment API for EVS, requiring comprehensive documentation of complex networking, licensing, and infrastructure parameters.
+This API reference for Amazon Elastic VMware Service demonstrates my approach to developer-focused API documentation.
 
-## Deliverables & Impact
+## Project context
+
+The CreateEnvironment operation is the core deployment API for EVS, requiring comprehensive documentation of complex networking, licensing, and infrastructure parameters.
+
+## My role and ownership
+
+I participated in the API design phase, shaping parameter names, validation rules, and error messages before writing the reference documentation.
+
+## What the work solved
+
+- Prevented trial-and-error through upfront constraint documentation
+- Eliminated common integration errors by explicitly defining parameter dependencies and validation rules
+- Enabled developer self-service through actionable, scenario-based error messages
+
+## Deliverables
 
 **Documentation produced:**
 
@@ -30,17 +44,17 @@ This API reference for Amazon Elastic VMware Service demonstrates my approach to
 - Python scripts for executing complex resource creation
 - CloudFormation for automating test deployments in developer environments
 
-**Developer experience impact:**
+## What this sample demonstrates
 
-- Prevented trial-and-error through upfront constraint documentation
-- Eliminated common integration errors by explicitly defining parameter dependencies and validation rules
-- Enabled developer self-service through actionable, scenario-based error messages
+- Developer-focused API reference for a complex, multi-parameter deployment operation
+- Constraint, validation-rule, and parameter-dependency documentation that prevents integration errors
+- Request and error examples verified by hand against the live API
+- A reference precise enough to serve as the upstream source for the AWS SDK team's published SDK documentation
 
-## Documentation Sample
+## Live documentation
 
-**PDF Snapshot:** [Download EVS API Reference Sample](/Cody_Anthony_Sample_2_API_Reference_CreateEnvironment.pdf)
-
-**Live Documentation:** [CreateEnvironment API Reference on docs.aws.amazon.com](https://docs.aws.amazon.com/evs/latest/APIReference/API_CreateEnvironment.html)
+- [PDF snapshot — EVS API Reference sample](/Cody_Anthony_Sample_2_API_Reference_CreateEnvironment.pdf)
+- [CreateEnvironment API Reference on docs.aws.amazon.com](https://docs.aws.amazon.com/evs/latest/APIReference/API_CreateEnvironment.html)
 
 ---
 
@@ -51,6 +65,8 @@ Response syntax and administrative parameters (e.g., tags, names, site IDs) have
 </Aside>
 
 ---
+
+## Documentation excerpt (curated)
 
 ## CreateEnvironment
 

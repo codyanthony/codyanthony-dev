@@ -12,12 +12,6 @@ import Aside from "@components/Aside.astro";
 
 This guide for Amazon Elastic VMware Service documents the networking requirements for deploying VMware Cloud Foundation (VCF) on AWS infrastructure. It’s written for VMware administrators coming from on-premises environments who are new to AWS networking constructs.
 
-I owned the guide end-to-end: defined cross-service requirements, designed the information architecture, authored the content, and coordinated SME validation and cross-service documentation updates.
-
-I translated VMware-based networking requirements into AWS terms while defining the new Layer 2 networking constructs introduced by EVS. To reduce failed deployments and configuration mismatches, I surfaced architectural constraints early so customers can validate service fit and compliance requirements before provisioning.
-
-The scope of this work spanned Private Preview (Q4 2024), Public Preview (Q2 2025), and General Availability (Q3 2025). For each launch, I partnered with EVS and EC2 product, UX, engineering, and solutions architects to close documentation gaps, reduce Day 1 friction, and coordinate cross-service updates.
-
 <blockquote>
 
 He showed an exceptional ability to quickly absorb deep technical details and translate them into clear, approachable documentation that customers could easily understand. Cody's superpower was looking around corners to anticipate where customers might struggle. His instincts and insights directly influenced multiple service changes that materially improved our customer experience.
@@ -28,10 +22,22 @@ He showed an exceptional ability to quickly absorb deep technical details and tr
 
 For more information about EVS console and API work, see [EVS Day 1 Deployment Experience (Console + User Guide)](/case-studies/console-ux/evs-day1-deployment/) and [EVS CreateEnvironment API Reference](/case-studies/api-documentation/evs-createenvironment/).
 
-## Deliverables & Impact
+## Project context
 
-**Role:** Owned end-to-end (requirements discovery, information architecture, authoring, SME validation, cross-service coordination)
-**Audience:** On-prem VMware administrators deploying VCF on AWS via EVS
+The work spanned Private Preview (Q4 2024), Public Preview (Q2 2025), and General Availability (Q3 2025). For each launch, I partnered with EVS and EC2 product, UX, engineering, and solutions architects to close documentation gaps, reduce Day 1 friction, and coordinate cross-service updates.
+
+## My role and ownership
+
+I owned the guide end-to-end: defined cross-service requirements, designed the information architecture, authored the content, and coordinated SME validation and cross-service documentation updates. I translated VMware-based networking requirements into AWS terms while defining the new Layer 2 networking constructs introduced by EVS.
+
+## What the work solved
+
+To reduce failed deployments and configuration mismatches, I surfaced architectural constraints early so customers can validate service fit and compliance requirements before provisioning.
+
+- Reduced failed deployments by surfacing hard requirements before provisioning (e.g., Route Server endpoint/peer/ASN rules)
+- Prevented security boundary misconfigurations by clarifying NACL vs. security group enforcement on EVS VLAN subnets
+
+## Deliverables
 
 **Documentation produced:**
 
@@ -40,17 +46,16 @@ For more information about EVS console and API work, see [EVS Day 1 Deployment E
 - Step-by-step deployment procedure (environment creation with embedded constraint checks)
 - Prerequisites and architectural limitations (go/no-go constraints with business/compliance implications)
 
-**Impact:**
+## What this sample demonstrates
 
-- Reduced failed deployments by surfacing hard requirements before provisioning (e.g., Route Server endpoint/peer/ASN rules)
-- Prevented security boundary misconfigurations by clarifying NACL vs. security group enforcement on EVS VLAN subnets
+- Translating VMware networking requirements into AWS terms for a dual audience
+- Cross-service constraint documentation (BGP dependencies on VPC Route Server)
+- A clear security boundary model (NACLs vs. security groups on EVS VLAN subnets)
+- Surfacing compliance and service-fit constraints before customers provision resources
 
-## Documentation Samples
+## Live documentation
 
-**PDF excerpt:** [Download EVS Deployment Guide Sample](/Cody_Anthony_Sample_1_Technical_Procedure_EVS_Architecture.pdf)
-
-**Live AWS docs:**
-
+- [PDF excerpt — EVS Deployment Guide sample](/Cody_Anthony_Sample_1_Technical_Procedure_EVS_Architecture.pdf)
 - [Getting started with Amazon Elastic VMware Service](https://docs.aws.amazon.com/evs/latest/userguide/getting-started.html)
 - [Data protection in Amazon EVS](https://docs.aws.amazon.com/evs/latest/userguide/data-protection.html)
 
@@ -130,7 +135,7 @@ If you plan to configure HCX internet connectivity, ensure that the network ACL 
 
 ### Create an Amazon EVS environment
 
-<Aside type="note" title="Author's Note for Portfolio Review">
+<Aside type="note">
 
 Steps 1–5 (licensing & host configuration) omitted for brevity.
 

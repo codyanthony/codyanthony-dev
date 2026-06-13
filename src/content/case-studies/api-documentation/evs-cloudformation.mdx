@@ -23,20 +23,96 @@ I owned the EVS CloudFormation reference across the service's launch arc, in par
 - **Consistency across surfaces.** The same validation rules and parameter relationships are documented identically in the API reference, the CloudFormation reference, and the user guide, so customers do not get conflicting guidance depending on how they deploy.
 - **Integration guidance.** The user guide page ties the resource reference to a working getting-started path, so a reader sees both the property-level detail and how to use it end to end.
 
+## Deliverables
+
+**Documentation produced:**
+
+- The `AWS::EVS::Environment` resource reference, covering the full environment-creation surface as declarative template properties
+- Typed property documentation with constraints, patterns, and required or optional status
+- Cross-surface consistency with the EVS API reference and user guide
+
 ## What this sample demonstrates
 
 - Reference documentation for infrastructure-as-code, a distinct discipline from prose docs
 - Cross-surface consistency between API and CloudFormation references owned by one writer
 - Accurate documentation of typed properties, constraints, and resource relationships
 
-<Aside type="note" title="Author's Note for Portfolio Review">
-
-The links below go to the live, public Amazon EVS CloudFormation documentation on docs.aws.amazon.com.
-
-</Aside>
-
 ## Live documentation
 
 - [Amazon EVS resource type reference (CloudFormation Template Reference)](https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/AWS_EVS.html)
-- [`AWS::EVS::Environment` resource specification](https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-evs-environment.html)
+- [`AWS::EVS::Environment` resource specification](https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-evs-environment.html) — [archived snapshot](https://web.archive.org/web/20250720140448/https://docs.aws.amazon.com/AWSCloudFormation/latest/TemplateReference/aws-resource-evs-environment.html)
 - [Create Amazon EVS resources with AWS CloudFormation (user guide)](https://docs.aws.amazon.com/evs/latest/userguide/creating-resources-with-cloudformation.html)
+
+---
+
+<Aside type="note" title="Author's Note for Portfolio Review">
+
+This curated excerpt shows the `AWS::EVS::Environment` resource definition, a trimmed syntax skeleton, and a selection of property definitions. I've narrowed the full property list to the service-specific networking, licensing, and version inputs. The property text is reproduced from the live reference.
+
+</Aside>
+
+---
+
+## Documentation excerpt (curated)
+
+## AWS::EVS::Environment
+
+Creates an Amazon EVS environment that runs VCF software, such as SDDC Manager, NSX Manager, and vCenter Server.
+
+During environment creation, Amazon EVS performs validations on DNS settings, provisions VLAN subnets and hosts, and deploys the supplied version of VCF.
+
+<Aside type="note">
+
+You cannot use the `dedicatedHostId` and `placementGroupId` parameters together in the same `CreateEnvironment` action. This results in a `ValidationException` response.
+
+</Aside>
+
+### Syntax (JSON, trimmed to selected properties)
+
+```json
+{
+  "Type": "AWS::EVS::Environment",
+  "Properties": {
+    "ConnectivityInfo": ConnectivityInfo,
+    "Hosts": [ HostInfoForCreate, ... ],
+    "InitialVlans": InitialVlans,
+    "LicenseInfo": LicenseInfo,
+    "ServiceAccessSubnetId": String,
+    "VcfHostnames": VcfHostnames,
+    "VcfVersion": String,
+    "VpcId": String
+  }
+}
+```
+
+### Properties (selected)
+
+**`InitialVlans`**
+
+The initial VLAN subnets for the environment. Amazon EVS VLAN subnets have a minimum CIDR block size of /28 and a maximum size of /24. Amazon EVS VLAN subnet CIDR blocks must not overlap with other subnets in the VPC.
+
+Required for environment resource creation.
+
+- **Required:** Conditional
+- **Type:** InitialVlans
+- **Update requires:** Updates are not supported.
+
+**`ServiceAccessSubnetId`**
+
+The subnet that is used to establish connectivity between the Amazon EVS control plane and VPC. Amazon EVS uses this subnet to perform validations and create the environment.
+
+- **Required:** Yes
+- **Type:** String
+- **Pattern:** `^subnet-[a-f0-9]{8}([a-f0-9]{9})?$`
+- **Minimum:** 15
+- **Maximum:** 24
+- **Update requires:** Updates are not supported.
+
+**`VcfVersion`**
+
+The VCF version of the environment.
+
+- **Required:** Yes
+- **Type:** String
+- **Allowed values:** `VCF-5.2.1 | VCF-5.2.2`
+- **Update requires:** Updates are not supported.
