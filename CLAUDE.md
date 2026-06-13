@@ -30,16 +30,15 @@ Important: an earlier iteration ran on the **Starlight** documentation theme. St
 
 Content collections are defined in `src/content.config.ts`:
 
-- **`case-studies`** — every portfolio entry. Files live in `src/content/case-studies/<subdirectory>/<slug>.{md,mdx}`. The subdirectory is purely organizational; what determines display grouping is each entry's `section` + `subcategory` frontmatter.
-- **`blog`** — placeholder collection for future blog posts. `src/content/blog/` is empty today; the empty-directory warning during `pnpm dev` and `pnpm astro check` is informational.
+- **`case-studies`** — every portfolio entry. Files live in `src/content/case-studies/<subdirectory>/<slug>.{md,mdx}`. The subdirectory is purely organizational; what determines display grouping is each entry's `section` frontmatter.
+- **`blog`** — published blog posts. `src/content/blog/` holds the live posts (e.g. `where-the-script-stops.mdx`).
 
 Case-study frontmatter schema (validated at build time):
 
 ```yaml
 title: string
 description: string
-section: "product-content-design" | "technical"
-subcategory: "narrative" | "api-references" | "architecture-guides" | "docs-as-code"
+section: "content-design" | "technical-documentation" | "documentation-strategy"
 order: number          # used to sort within a section
 draft: boolean         # default false; drafts are filtered from getCollection()
 pdf:                   # optional — attaches a download button to the case-study layout

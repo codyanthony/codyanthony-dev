@@ -5,65 +5,38 @@ section: documentation-strategy
 order: 10
 ---
 
-## The Challenge
+AWS documentation ran on a legacy XML format that only specialists could contribute to. I led a multi-year program to modernize it to AsciiDoc, a lightweight, markdown-like format that lowers the barrier for engineers, product managers, and partners to contribute and that suits AI-assisted authoring. It started with ROSA and grew into an org-wide standard. The judgment thesis behind the AI-assisted side of this work is the subject of my blog post, [Where the Script Stops and the Judgment Starts](/blog/where-the-script-stops/).
 
-### The Documentation Infrastructure Gap
+## The challenge
 
-In the early stages of this initiative, AWS documentation infrastructure presented barriers to external contribution and emerging AI workflows. The standard XML-based format, while feature-rich, required specialized tooling knowledge that excluded engineers, product managers, and external partners from easy contribution. For services requiring external collaboration (like ROSA's partnership with Red Hat technical writers), this created bottlenecks.
+The XML format was feature-rich but required specialized tooling knowledge, which kept engineers, product managers, and external partners from contributing easily. Services without dedicated writer headcount had no practical way to maintain their own content. For ROSA specifically, the XML toolchain was the wall between Red Hat's writers and the AWS-side docs they wanted to contribute to. The same complexity made the content a poor fit for AI-assisted workflows. AWS needed a lightweight, contribution-friendly format that still met production requirements.
 
-Service teams without dedicated writer headcount had no way to maintain documentation themselves, creating dependencies and content freshness challenges. The XML complexity also positioned documentation poorly for AI-assisted workflows, making it less accessible for LLM processing and transformation.
+## A pilot-driven rollout
 
-AWS needed a lightweight, markdown-like format that would lower contribution barriers for human contributors and AI-assisted tools while maintaining production documentation requirements. The challenge was proving viability, demonstrating value through measurable outcomes, and enabling voluntary adoption across teams.
+I ran the program as a pilot that expanded by proving value at each step:
 
-## Strategic Approach
+- **ROSA.** Researched and proposed AsciiDoc, established the first continuously maintained AsciiDoc package at AWS, and built a framework for safe contributions from PMs and engineers. ROSA has stayed in AsciiDoc since.
+- **EKS (from 2024).** Supported the team's adoption with conversion testing, troubleshooting workshops, and authoring best-practices documentation, and collaborated with AWS engineering to add XML entity support for AsciiDoc so standard AWS entities carried over. EKS engineering contributions rose about 25% after adoption.
+- **SAP on AWS (early 2025).** Converted six guides and set up a self-service model so the team maintains its own content, with review gates preserving quality.
+- **Regulated and air-gapped regions (later 2025).** Converted hundreds of files, 296+ in a single quarter, with human-in-the-loop validation for compliance and technical accuracy.
 
-### Pilot-Driven Adoption
+## AI-assisted conversion tooling
 
-I pursued a pilot approach: establish viability with early adopters, demonstrate measurable value, enable voluntary adoption across teams.
+To convert at scale without sacrificing accuracy, I built AI-assisted Python transformation scripts using Claude (with Cline), including a custom XML-entity-to-AsciiDoc-attribute conversion pipeline that preserves shared content after conversion. I treated the model like a junior engineer: tight constraints to transform structure only and never change content, line-by-line review of every diff, and automated link and build validation. Conversion cycles dropped from days to hours.
 
-This progression moved from proving the concept with ROSA's Red Hat collaboration, to expanding with EKS open source contributions, to enabling self-service models for engineering teams without dedicated writers, to scaling for specialized high-compliance regions. Each phase validated the approach for different use cases: cross-company collaboration, external open source contributions, teams without writer support, and compliance-heavy regulated environments.
+The conversion work also surfaced gaps in the build system itself. I shared the stop-gap scripts and documentation with the engineering managers who owned the build tooling, and they reverse-engineered them into permanent improvements to how the system handles conversion. Other writers and platform engineering teams have since built on the tooling and processes.
 
-## Implementation Timeline
+## What this demonstrates
 
-### ROSA Foundation
+- Leading a multi-year documentation-infrastructure modernization, from pilot to org-wide standard
+- Designing for contribution, lowering the barrier for engineers, PMs, and partners
+- Building AI-assisted automation with deterministic validation and human-in-the-loop review
+- Prototypes that drove an engineering-owned system change
+- Preparing documentation for AI-assisted, LLM-friendly workflows
 
-ROSA required close collaboration with external Red Hat technical writers. I researched and proposed AsciiDoc adoption over the standard format, recognizing that a markdown-like source format would lower contribution barriers for product and engineering teams and make content ready for LLM consumption.
+## Outcomes
 
-I established ROSA's AsciiDoc implementation and created a framework enabling safe contributions from product managers and engineers. This foundation work proved sustainable. ROSA has remained continuously maintained in AsciiDoc format since adoption. The lessons learned from ROSA informed conversion standards that were later adopted by other teams.
-
-### Cross-Service Expansion
-
-The ROSA framework demonstrated scalability potential. Beginning in 2024, I influenced EKS adoption of AsciiDoc and provided strategic and implementation support for their transition through conversion testing, troubleshooting workshops, and authoring best practices documentation.
-
-During the implementation phase, I collaborated with AWS engineering and writers to implement XML entity support for AsciiDoc, enabling reuse of standard AWS entities across converted documentation. Following EKS's adoption, engineering contributions to EKS documentation increased by approximately 25%, demonstrating the format's effectiveness in lowering contribution barriers.
-
-I led conversion of six SAP on AWS guides to AsciiDoc in early 2025, establishing a self-service documentation model enabling the SAP service team to maintain content independently, reducing documentation team dependencies while preserving quality through review gates.
-
-### Regulated Regions Modernization
-
-Later in 2025, I converted documentation for multiple high-compliance and air-gapped regions, processing hundreds of files and establishing reusable processes for future conversions.
-
-To accelerate these conversions while maintaining quality, I developed AI-assisted Python transformation scripts using Claude coding assistant, including a custom XML-to-AsciiDoc attribute conversion pipeline that preserves shared content post-conversion. This automation reduced conversion cycles from days to hours while preserving human-in-the-loop validation for compliance requirements and technical accuracy.
-
-The tooling and processes I developed from this work have been adopted by platform engineering teams and other writers, who continue building on this foundation to improve conversion processes across the organization.
-
-### Impact
-
-**Measurable outcomes:**
-
-- 25% increase in EKS engineering contributions after AsciiDoc adoption
-- Automation tooling reduces conversion time from days to hours
-- Framework voluntarily adopted across multiple service teams
-- Self-service models established reducing documentation team dependencies
-- Successfully converted multiple service user guides and high-compliance region documentation sets
-
-**Strategic positioning:**
-
-- Documentation infrastructure prepared for AI-assisted workflows
-- Lightweight format more accessible to LLM processing
-- Faster iteration cycles through simplified markup
-- Quality maintained through automated validation and review gates
-- Foundation enabling continued organizational adoption
+ROSA has stayed continuously maintained in AsciiDoc since adoption, and the patterns became an org-wide standard adopted by EKS and the SAP on AWS team. EKS engineering contributions rose about 25%. The AI-assisted tooling cut conversion time from days to hours, and engineering managers and other writers have continued building on it across the organization.
 
 ---
 
